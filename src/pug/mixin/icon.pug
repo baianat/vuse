@@ -1,0 +1,9 @@
+//- SVG Icon to be used with SVG sprite
+
+mixin icon(name, sizeClass)
+  - var size = 24;
+  - var sprite = '/dist/img/icons.svg'
+  - var prefix = 'icon-'
+
+  svg.icon(viewBox='0 0 ' + size + ' ' + size, class=sizeClass)
+    use(xlink:href=sprite + '#' + prefix + name)

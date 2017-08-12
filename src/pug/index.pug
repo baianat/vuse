@@ -1,0 +1,19 @@
+extends layout.pug
+
+append content
+  .artboard#artboard
+    component(
+      v-for="el in elements"
+      :is="el.name" 
+      :key="el.id" 
+      :id="el.id"
+      :editable="el.editable"
+      :content="el.content"
+      :title="el.title"
+      :button="el.button"
+      :images="el.images"
+      :section="el.section"
+      :columns="el.columns"
+    )
+
+  controller(:show-intro="!elements.length" :editable="editable")

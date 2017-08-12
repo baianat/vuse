@@ -1,0 +1,17 @@
+.is-editable
+.is-uploader
+  position: relative
+  &:focus
+    outline: 0
+  &:hover
+    &:before
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      margin: -10px
+      display: block
+      content: ''
+      border: 1px solid transparent
+      border: 1px solid $blue

@@ -1,0 +1,16 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en"></html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div class="artboard" id="artboard">
+      <component v-for="el in elements" :is="el.name" :key="el.id" :id="el.id" :editable="el.editable" :content="el.content" :title="el.title" :button="el.button" :images="el.images" :section="el.section" :columns="el.columns"></component>
+    </div>
+    <controller :show-intro="!elements.length" :editable="editable"></controller>
+  </div>
+<script type="text/javascript" src="/dist/js/vendor.js"></script><script type="text/javascript" src="/dist/js/app.js"></script></body>
