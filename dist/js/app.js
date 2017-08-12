@@ -14345,7 +14345,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-palettes"
+      "xlink:href": "dist/img/icons.svg#icon-palettes"
     }
   })])]), _c('div', {
     staticClass: "styler-selector is-hidden"
@@ -14390,7 +14390,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-link"
+      "xlink:href": "dist/img/icons.svg#icon-link"
     }
   })])]), _c('div', {
     staticClass: "styler-selector input is-rounded is-button is-hidden"
@@ -14412,7 +14412,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-link"
+      "xlink:href": "dist/img/icons.svg#icon-link"
     }
   })])])])]) : _vm._e(), (_vm.type == 'header' || _vm.type == 'section') ? _c('li', [_c('button', {
     staticClass: "styler-button",
@@ -14426,7 +14426,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-trash"
+      "xlink:href": "dist/img/icons.svg#icon-trash"
     }
   })])])]) : _vm._e(), (_vm.type == 'text') ? _c('li', {
     ref: "colorButton"
@@ -14444,7 +14444,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-palettes"
+      "xlink:href": "dist/img/icons.svg#icon-palettes"
     }
   })])]), _c('div', {
     staticClass: "styler-selector is-hidden"
@@ -14490,7 +14490,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-bold"
+      "xlink:href": "dist/img/icons.svg#icon-bold"
     }
   })])])]) : _vm._e(), (_vm.type == 'text') ? _c('li', [_c('button', {
     staticClass: "styler-button",
@@ -14506,7 +14506,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-italic"
+      "xlink:href": "dist/img/icons.svg#icon-italic"
     }
   })])])]) : _vm._e(), (_vm.type == 'text') ? _c('li', [_c('button', {
     staticClass: "styler-button",
@@ -14522,7 +14522,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-underline"
+      "xlink:href": "dist/img/icons.svg#icon-underline"
     }
   })])])]) : _vm._e(), (_vm.type == 'text') ? _c('li', [_c('button', {
     staticClass: "styler-button",
@@ -14538,7 +14538,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-left"
+      "xlink:href": "dist/img/icons.svg#icon-left"
     }
   })])])]) : _vm._e(), (_vm.type == 'text') ? _c('li', [_c('button', {
     staticClass: "styler-button",
@@ -14554,7 +14554,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-center"
+      "xlink:href": "dist/img/icons.svg#icon-center"
     }
   })])])]) : _vm._e(), (_vm.type == 'text') ? _c('li', [_c('button', {
     staticClass: "styler-button",
@@ -14570,7 +14570,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-right"
+      "xlink:href": "dist/img/icons.svg#icon-right"
     }
   })])])]) : _vm._e()])]) : _vm._e()
 }
@@ -14849,7 +14849,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-plus"
+      "xlink:href": "dist/img/icons.svg#icon-plus"
     }
   })])])]), _c('div', {
     staticClass: "column is-screen-3"
@@ -14865,7 +14865,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('use', {
     attrs: {
-      "xlink:href": "/dist/img/icons.svg#icon-tic"
+      "xlink:href": "dist/img/icons.svg#icon-tic"
     }
   })])])])])])])
 }

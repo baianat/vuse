@@ -22,7 +22,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].js',
-        publicPath: '/dist/'
+        publicPath: 'dist/'
     },
 
     plugins: [
