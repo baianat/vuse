@@ -28,7 +28,9 @@
 </template>
 
 <script>
-  import { getElementProps } from '../util';
+  import JSZip from 'JSZip';
+  import saveAs from 'save-as'
+  import { getElementProps, getImageBlob } from '../util';
 
   export default {
     name: 'Controller',
@@ -71,32 +73,50 @@
         const editable = Array.from(document.querySelectorAll('.is-editable'));
         const uploder = Array.from(document.querySelectorAll('.is-uploader'));
         const stylers = Array.from(document.querySelectorAll('.styler'));
+        const images =  Array.from(document.querySelectorAll('img'));
         const artboadrd = document.querySelector('#artboard');
         const head = document.querySelector('head');
+        const zip = new JSZip();
+        const output = zip.folder('project');
+        const imgFolder = output.folder('assets/img');
 
-        editable.forEach((el) => {
-          el.contentEditable = 'false';
-          el.classList.remove('is-editable');
-        });
-        uploder.forEach((el) => {
-          const input = el.querySelector(':scope > input');
-          input.remove();
-          el.classList.remove('is-uploader');
-        });
-        stylers.forEach((styler) => {
-          styler.remove();
+        images.forEach((image) => {
+          const imageLoader = getImageBlob(image.src);
+          imageLoader.then((img) => {
+            imgFolder.file(img.name, img.blob, { base64: true });
+            image.setAttribute('src',  `assets/img/${img.name}`);
+          })
         });
 
-        const newWindow = window.open('');
-        newWindow.document.write(`
-        <html>
-          <head>
-            ${head.innerHTML}
-          </head>
-          <body>
-            ${artboadrd.innerHTML}
-          </body>
-        </html>`);
+
+        setTimeout(() => {
+          editable.forEach((el) => {
+            el.contentEditable = 'false';
+            el.classList.remove('is-editable');
+          });
+          uploder.forEach((el) => {
+            const input = el.querySelector(':scope > input');
+            input.remove();
+            el.classList.remove('is-uploader');
+          });
+          stylers.forEach((styler) => {
+            styler.remove();
+          });
+
+          output.file("index.html",
+            `<html>
+            <head>
+              ${head.innerHTML}
+            </head>
+            <body>
+              ${artboadrd.innerHTML}
+            </body>
+          </html>`);
+
+          zip.generateAsync({ type: "blob" })
+            .then((blob) => saveAs(blob, "project.zip"));
+        }, 2000);
+        
       }
     }
   };

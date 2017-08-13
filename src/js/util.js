@@ -39,3 +39,19 @@ export function getElementProps(el, id, editable) {
     editable: editable
   };
 }
+
+export function getImageBlob(URL) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', URL);
+    xhr.responseType = 'blob';
+  
+    xhr.onload = function () {
+      console.log(this.response)
+      const imageBlob = this.response;
+      const filename = `image-${new Date().getUTCMilliseconds()}.${this.response.type.split("/")[1]}`;
+      resolve({ blob: imageBlob, name: filename });
+    }
+    xhr.send(null);
+  });  
+}
