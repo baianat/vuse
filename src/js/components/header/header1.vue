@@ -1,5 +1,5 @@
 <template lang="pug">
-  .header(
+  header.header(
     v-styler:section="section" 
     :data-v-id="id"
     :class="[{'is-editable': editable}, section.class]"

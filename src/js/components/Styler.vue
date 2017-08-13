@@ -2,42 +2,40 @@
   include ../../pug/mixin/icon.pug
 
   .styler(ref="styler" v-if="editable")
+
     ul.styler-list
-      li(
-        ref="colorButton"
-        v-if="type == 'button' || type == 'section'"
-        )
-        button.styler-button(@click="toogleInput('colorButton')")
+      li(v-if="type == 'button' || type == 'section'")
+        button.styler-button(@click="updateOption('colorer')")
           +icon('palettes', 'is-large')
-        .styler-selector.is-hidden
-          ul.colorer
-            li(v-for="color in colors")
-              input(
-                type="radio"
-                :id="`color${color.charAt(0).toUpperCase() + color.slice(1)}`"
-                name="colorer"
-                :value="color"
-                v-model="colorerColor"
-                )
-      li(ref="linkButton" v-if="type == 'button'")
-        button.styler-button(@click="toogleInput('linkButton')")
+      li(v-if="type == 'button'")
+        button.styler-button(@click="updateOption('link')")
           +icon('link', 'is-large')
-        .styler-selector.input.is-rounded.is-button.is-hidden
-          input(type="text" placeholder="type your link" ref="linkInput")
-          button.button.is-green(@click="addLink")
-            +icon('link', 'is-large')
-      
       li(v-if="type == 'header' || type == 'section'")
         button.styler-button(@click="removeSection")
           +icon('trash', 'is-large')
-
-      li(
-        ref="colorButton"
-        v-if="type == 'text'"
-        )
-        button.styler-button(@click="toogleInput('colorButton')")
+      li(v-if="type == 'text'")
+        button.styler-button(@click="updateOption('textColor')")
           +icon('palettes', 'is-large')
-        .styler-selector.is-hidden
+      li(v-if="type == 'text'")
+        button.styler-button(@click="updateOption('align')")
+          +icon('align', 'is-large')
+      li(v-if="type == 'text'")
+          button.styler-button(@click="updateOption('textStyle')")
+            +icon('textStyle', 'is-large')
+
+
+    ul.styler-list
+      li(v-show="currentOption  == 'colorer'")
+        ul.colorer
+          li(v-for="color in colors")
+            input(
+              type="radio"
+              :id="`color${color.charAt(0).toUpperCase() + color.slice(1)}`"
+              name="colorer"
+              :value="color"
+              v-model="colorerColor"
+              )
+      li(v-show="currentOption  == 'textColor'")
           ul.colorer
             li(v-for="(color, index) in colors")
               input(
@@ -48,25 +46,30 @@
                 v-model="textColor"
                 @click="excute('forecolor', textColor)"
                 )
-      li(v-if="type == 'text'")
-        button.styler-button(@click="excute('bold')")
-          +icon('bold', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="excute('italic')")
-          +icon('italic', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="excute('underline')")
-          +icon('underline', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="excute('justifyleft')")
-          +icon('left', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="excute('justifycenter')")
-          +icon('center', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="excute('justifyright')")
-          +icon('right', 'is-large')
-            
+      li(v-show="currentOption  == 'link'")
+        .input.is-rounded.is-button
+          input(type="text" placeholder="type your link" ref="linkInput")
+          button.button.is-green(@click="addLink")
+            +icon('link', 'is-large')
+
+      li(v-show="currentOption == 'align'")
+        ul.align
+          li: button.styler-button(@click="excute('justifyleft')")
+            +icon('left', 'is-large')
+          li: button.styler-button(@click="excute('justifycenter')")
+            +icon('center', 'is-large')
+          li: button.styler-button(@click="excute('justifyright')")
+            +icon('right', 'is-large')
+
+      li(v-show="currentOption == 'textStyle'")
+        ul.align
+          li: button.styler-button(@click="excute('bold')")
+            +icon('bold', 'is-large')
+          li: button.styler-button(@click="excute('italic')")
+            +icon('italic', 'is-large')
+          li: button.styler-button(@click="excute('underline')")
+            +icon('underline', 'is-large')
+
 </template>
 
 <script>
@@ -85,7 +88,8 @@ export default {
       textColor: '',
       oldColorerColor: '',
       colorerColor: '',
-      mouseTarget: ''
+      mouseTarget: '',
+      currentOption: ''
     }
   },
 
@@ -96,24 +100,9 @@ export default {
   },
 
   methods: {
-    toogleInput(el) {
-      this.closeAll();
-      const wrapper = this.$refs[el];
-      const button = wrapper.querySelector('.styler-button');
-      const selector = wrapper.querySelector('.styler-selector');
-      button.classList.toggle('is-hidden');
-      selector.classList.toggle('is-hidden');
+    updateOption(option) {
+      this.currentOption = option;
       this.popper.update();
-    },
-    closeAll() {
-      const buttons = Array.from(this.styler.querySelectorAll('.styler-button'));
-      const selectors = Array.from(this.styler.querySelectorAll('.styler-selector'));
-      buttons.forEach((button) => {
-         button.classList.remove('is-hidden');
-      });
-      selectors.forEach((selector) => {
-        selector.classList.add('is-hidden');
-      });
     },
     addLink() {
       this.$bus.$emit('updateHref', this.$refs.linkInput.value);
@@ -140,8 +129,8 @@ export default {
       document.execCommand(command, false, value);
     },
     showStyler() {
-      this.closeAll();
       this.styler.classList.add('is-visible');
+      this.currentOption = '';
       this.popper.update();
     },
     hideStyler(evnt) {
@@ -165,7 +154,7 @@ export default {
     this.id = Number(this.el.closest('[data-v-id]').dataset.vId);
 
     // exute popper element
-    const position = this.$props.type == 'section'? 'center-start' : 'top';
+    const position = this.$props.type == 'section'? 'left-start' : 'top';
     this.popper = new Popper(this.el, this.styler, {
       placement: position
     });
@@ -188,13 +177,20 @@ export default {
   visibility: hidden
   opacity: 0
   margin: 10px 0
+  padding: 5px
+  background: $dark
+  border-radius: 26px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
   &-list
     display: flex
-    background: $dark
+    justify-content: center
+    align-items: center
     list-style: none
-    padding: 5px 0
-    border-radius: 42px
     margin: 0
+    padding: 0
   &-button
     display: flex
     justify-content: center
@@ -216,6 +212,12 @@ export default {
   &.is-visible
     visibility: visible
     opacity: 1
+  .input
+    margin: 0
+
+.align
+  @extend .styler-list
+  height: 42px
 
 .colorer
   @extend .styler-list

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .header(
+  header.header(
     v-styler:section="section" 
     :data-v-id="id"
     :class="[{'is-editable': editable}, section.class]"
@@ -29,6 +29,7 @@
         .column.is-screen-8.is-offset-screen-2
           uploader(
             classes="header-image"
+            :editable="editable"
             :imgURL="images[0]"
             :parentId="id"
             :imageId="0"
