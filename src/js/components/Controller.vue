@@ -70,12 +70,20 @@
         this.$bus.$emit('editable');
       },
       submit() {
-        const editable = Array.from(document.querySelectorAll('.is-editable'));
-        const uploder = Array.from(document.querySelectorAll('.is-uploader'));
-        const stylers = Array.from(document.querySelectorAll('.styler'));
-        const images =  Array.from(document.querySelectorAll('img'));
-        const artboadrd = document.querySelector('#artboard');
-        const head = document.querySelector('head');
+        const printPreview = window.open('about:blank', 'print_preview');
+        const printDocument = printPreview.document;
+        printDocument.open();
+        printDocument.write(
+          `<!DOCTYPE html>
+          <html>
+            ${document.documentElement.innerHTML}
+          </html>`);
+        const editable = Array.from(printDocument.querySelectorAll('.is-editable'));
+        const uploder = Array.from(printDocument.querySelectorAll('.is-uploader'));
+        const stylers = Array.from(printDocument.querySelectorAll('.styler'));
+        const images =  Array.from(printDocument.querySelectorAll('img'));
+        const artboadrd = printDocument.querySelector('#artboard');
+        const head = printDocument.querySelector('head');
         const imagePromises = [];
         const zip = new JSZip();
         const output = zip.folder('project');
@@ -116,8 +124,11 @@
           </html>`);
 
           zip.generateAsync({ type: "blob" })
-            .then((blob) => saveAs(blob, "project.zip"));
-        }, 2000);
+            .then((blob) => {
+              saveAs(blob, "project.zip");
+              printPreview.close();
+            });
+        });
         
       }
     }

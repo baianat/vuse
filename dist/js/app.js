@@ -942,7 +942,10 @@ function getImageBlob(URL) {
     xhr.onload = function () {
       console.log(this.response);
       var imageBlob = this.response;
-      var filename = 'image-' + new Date().getUTCMilliseconds() + '.' + this.response.type.split("/")[1];
+      var fileType = this.response.type.split('/')[1].split('+')[0];
+      var randomNumber = new Date().getUTCMilliseconds();
+      console.log(this.response.type);
+      var filename = 'image-' + randomNumber + '.' + fileType;
       resolve({ blob: imageBlob, name: filename });
     };
     xhr.send(null);
@@ -22377,19 +22380,21 @@ exports.push([module.i, "\n.controller-submit:hover,\n.controller-add:hover,\n.c
       const images = Array.from(document.querySelectorAll('img'));
       const artboadrd = document.querySelector('#artboard');
       const head = document.querySelector('head');
+      const imagePromises = [];
       const zip = new __WEBPACK_IMPORTED_MODULE_0_JSZip___default.a();
       const output = zip.folder('project');
       const imgFolder = output.folder('assets/img');
 
       images.forEach(image => {
         const imageLoader = Object(__WEBPACK_IMPORTED_MODULE_2__util__["c" /* getImageBlob */])(image.src);
+        imagePromises.push(imageLoader);
         imageLoader.then(img => {
           imgFolder.file(img.name, img.blob, { base64: true });
           image.setAttribute('src', `assets/img/${img.name}`);
         });
       });
 
-      setTimeout(() => {
+      Promise.all(imagePromises).then(() => {
         editable.forEach(el => {
           el.contentEditable = 'false';
           el.classList.remove('is-editable');

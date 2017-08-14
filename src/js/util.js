@@ -47,11 +47,9 @@ export function getImageBlob(URL) {
     xhr.responseType = 'blob';
   
     xhr.onload = function () {
-      console.log(this.response)
       const imageBlob = this.response;
       const fileType = this.response.type.split('/')[1].split('+')[0];
       const randomNumber = new Date().getUTCMilliseconds();
-      console.log(this.response.type);
       const filename = `image-${randomNumber}.${fileType}`;
       resolve({ blob: imageBlob, name: filename });
     }
