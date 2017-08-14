@@ -25,7 +25,7 @@
 
 
     ul.styler-list
-      li(v-show="currentOption  == 'colorer'")
+      li(v-if="currentOption  == 'colorer'")
         ul.colorer
           li(v-for="color in colors")
             input(
@@ -35,7 +35,7 @@
               :value="color"
               v-model="colorerColor"
               )
-      li(v-show="currentOption  == 'textColor'")
+      li(v-if="currentOption  == 'textColor'")
           ul.colorer
             li(v-for="(color, index) in colors")
               input(
@@ -46,13 +46,13 @@
                 v-model="textColor"
                 @click="excute('forecolor', textColor)"
                 )
-      li(v-show="currentOption  == 'link'")
+      li(v-if="currentOption  == 'link'")
         .input.is-rounded.is-button
           input(type="text" placeholder="type your link" ref="linkInput")
           button.button.is-green(@click="addLink")
             +icon('link', 'is-large')
 
-      li(v-show="currentOption == 'align'")
+      li(v-if="currentOption == 'align'")
         ul.align
           li: button.styler-button(@click="excute('justifyleft')")
             +icon('left', 'is-large')
@@ -61,7 +61,7 @@
           li: button.styler-button(@click="excute('justifyright')")
             +icon('right', 'is-large')
 
-      li(v-show="currentOption == 'textStyle'")
+      li(v-if="currentOption == 'textStyle'")
         ul.align
           li: button.styler-button(@click="excute('bold')")
             +icon('bold', 'is-large')
@@ -154,7 +154,7 @@ export default {
     this.id = Number(this.el.closest('[data-v-id]').dataset.vId);
 
     // exute popper element
-    const position = this.$props.type == 'section'? 'left-start' : 'top';
+    const position = this.$props.type === 'section'? 'left-start' : 'top';
     this.popper = new Popper(this.el, this.styler, {
       placement: position
     });

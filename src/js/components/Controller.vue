@@ -76,12 +76,14 @@
         const images =  Array.from(document.querySelectorAll('img'));
         const artboadrd = document.querySelector('#artboard');
         const head = document.querySelector('head');
+        const imagePromises = [];
         const zip = new JSZip();
         const output = zip.folder('project');
         const imgFolder = output.folder('assets/img');
 
         images.forEach((image) => {
           const imageLoader = getImageBlob(image.src);
+          imagePromises.push(imageLoader);
           imageLoader.then((img) => {
             imgFolder.file(img.name, img.blob, { base64: true });
             image.setAttribute('src',  `assets/img/${img.name}`);
@@ -89,7 +91,7 @@
         });
 
 
-        setTimeout(() => {
+        Promise.all(imagePromises).then(() => {
           editable.forEach((el) => {
             el.contentEditable = 'false';
             el.classList.remove('is-editable');
