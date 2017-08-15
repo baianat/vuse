@@ -10,8 +10,7 @@ new Vue({
   data: {
     docTitle: '',
     editable: true,
-    elements: [],
-    imgBlob: []
+    elements: []
   },
   methods: {
     module() {
@@ -40,7 +39,6 @@ new Vue({
       const section = getSectionById(this.elements, id);
       const imageId = Number(imgId);
       section.images[imageId] = src;
-      this.imgBlob.push(src);
     });
     this.$bus.$on('updateHref', (id, newHref) => {
       const section = getSectionById(this.elements, id);

@@ -83,8 +83,8 @@ export default {
 
   data() {
     return {
-      colors: ['blue', 'green', 'red', 'dark', 'white'],
-      textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#323C47', '#FFFFFF'],
+      colors: ['blue', 'green', 'red', 'black', 'white'],
+      textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#000000', '#FFFFFF'],
       textColor: '',
       oldColorerColor: '',
       colorerColor: '',
@@ -240,8 +240,8 @@ export default {
       background $blue
     &#colorGreen
       background $green
-    &#colorDark
-      background $dark
+    &#colorBlack
+      background $black
     &#colorWhite
       background $white
 
