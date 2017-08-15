@@ -13,10 +13,10 @@ new Vue({
     elements: []
   },
   methods: {
-    module() {
+    module () {
     }
   },
-  created() {
+  created () {
     this.$bus.$on('addElement', (el) => {
       this.elements.push(el);
     });
@@ -31,7 +31,7 @@ new Vue({
       if (section[field]) {
         section[field].text = value;
       } else {
-        const fieldData = field.split("-");
+        const fieldData = field.split('-');
         section.columns[fieldData[1]][fieldData[0]] = value;
       }
     });
@@ -60,6 +60,6 @@ new Vue({
       });
     });
   },
-  mounted() {
+  mounted () {
   }
 });

@@ -1,6 +1,6 @@
 <template lang="pug">
   section.section(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
     :class="[{'is-editable': editable}, section.class]"
   )
@@ -35,20 +35,20 @@
 </template>
 
 <script>
-  import { exciteEditable } from '../../util';
+import { exciteEditable } from '../../util';
 
-  export default {
-    name: 'section1',
-    props: {
-      id: Number,
-      title: Object,
-      content: Object,
-      editable: Boolean,
-      section: Object,
-      columns: Array
-    },
-    mounted() {
-      exciteEditable(this.$el);
-    }
-  };
+export default {
+  name: 'section1',
+  props: {
+    id: Number,
+    title: Object,
+    content: Object,
+    editable: Boolean,
+    section: Object,
+    columns: Array
+  },
+  mounted () {
+    exciteEditable(this.$el);
+  }
+};
 </script>

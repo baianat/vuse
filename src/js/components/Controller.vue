@@ -28,111 +28,107 @@
 </template>
 
 <script>
-  import JSZip from 'jszip';
-  import saveAs from 'save-as'
-  import { getElementProps, getImageBlob } from '../util';
+import JSZip from 'jszip';
+import saveAs from 'save-as'
+import { getElementProps, getImageBlob } from '../util';
 
-  export default {
-    name: 'Controller',
-    props: {
-      showIntro: Boolean,
-      editable: Boolean
-    },
-    data() {
-      return {
-        elements: [
-          'header1',
-          'header2',
-          'section1',
-          'section2',
-          'social1',
-          'social2'
-        ],
-      title: "",
-      id: 0,
-      }
-    },
-    watch: {
-      title: function () {
-        document.title = this.title;
-      }
-    },
-    methods: {
-      addElement(el) {
-        const elementProps = getElementProps(el, this.id++, this.$props.editable);
-        this.$bus.$emit('addElement', elementProps);
-        this.toggleListVisiabilty();
-      },
-      toggleListVisiabilty() {
-        this.$refs.list.classList.toggle('is-hidden');
-      },
-      toogleEditableState() {
-        this.$bus.$emit('editable');
-      },
-      submit() {
-        const printPreview = window.open('about:blank', 'print_preview');
-        const printDocument = printPreview.document;
-        printDocument.open();
-        printDocument.write(
-          `<!DOCTYPE html>
-          <html>
-            ${document.documentElement.innerHTML}
-          </html>`);
-        const editable = Array.from(printDocument.querySelectorAll('.is-editable'));
-        const uploder = Array.from(printDocument.querySelectorAll('.is-uploader'));
-        const stylers = Array.from(printDocument.querySelectorAll('.styler'));
-        const images =  Array.from(printDocument.querySelectorAll('img'));
-        const artboadrd = printDocument.querySelector('#artboard');
-        const head = printDocument.querySelector('head');
-        const imagePromises = [];
-        const zip = new JSZip();
-        const output = zip.folder('project');
-        const imgFolder = output.folder('assets/img');
-
-        images.forEach((image) => {
-          const imageLoader = getImageBlob(image.src);
-          imagePromises.push(imageLoader);
-          imageLoader.then((img) => {
-            imgFolder.file(img.name, img.blob, { base64: true });
-            image.setAttribute('src',  `assets/img/${img.name}`);
-          })
-        });
-
-
-        Promise.all(imagePromises).then(() => {
-          editable.forEach((el) => {
-            el.contentEditable = 'false';
-            el.classList.remove('is-editable');
-          });
-          uploder.forEach((el) => {
-            const input = el.querySelector(':scope > input');
-            input.remove();
-            el.classList.remove('is-uploader');
-          });
-          stylers.forEach((styler) => {
-            styler.remove();
-          });
-
-          output.file("index.html",
-            `<html>
-            <head>
-              ${head.innerHTML}
-            </head>
-            <body>
-              ${artboadrd.innerHTML}
-            </body>
-          </html>`);
-
-          zip.generateAsync({ type: "blob" })
-            .then((blob) => {
-              saveAs(blob, "project.zip");
-              printPreview.close();
-            });
-        });
-        
-      }
+export default {
+  name: 'Controller',
+  props: {
+    showIntro: Boolean,
+    editable: Boolean
+  },
+  data: () => ({
+    elements: [
+      'header1',
+      'header2',
+      'section1',
+      'section2',
+      'social1',
+      'social2'
+    ],
+    title: '',
+    id: 0
+  }),
+  watch: {
+    title: function () {
+      document.title = this.title;
     }
-  };
+  },
+  methods: {
+    addElement (el) {
+      const elementProps = getElementProps(el, this.id++, this.$props.editable);
+      this.$bus.$emit('addElement', elementProps);
+      this.toggleListVisiabilty();
+    },
+    toggleListVisiabilty () {
+      this.$refs.list.classList.toggle('is-hidden');
+    },
+    toogleEditableState () {
+      this.$bus.$emit('editable');
+    },
+    submit () {
+      const printPreview = window.open('about:blank', 'print_preview');
+      const printDocument = printPreview.document;
+      printDocument.open();
+      printDocument.write(
+        `<!DOCTYPE html>
+        <html>
+          ${document.documentElement.innerHTML}
+        </html>`);
+      const editable = Array.from(printDocument.querySelectorAll('.is-editable'));
+      const uploder = Array.from(printDocument.querySelectorAll('.is-uploader'));
+      const stylers = Array.from(printDocument.querySelectorAll('.styler'));
+      const images = Array.from(printDocument.querySelectorAll('img'));
+      const artboadrd = printDocument.querySelector('#artboard');
+      const head = printDocument.querySelector('head');
+      const imagePromises = [];
+      const zip = new JSZip();
+      const output = zip.folder('project');
+      const imgFolder = output.folder('assets/img');
+
+      images.forEach((image) => {
+        const imageLoader = getImageBlob(image.src);
+        imagePromises.push(imageLoader);
+        imageLoader.then((img) => {
+          imgFolder.file(img.name, img.blob, { base64: true });
+          image.setAttribute('src', `assets/img/${img.name}`);
+        })
+      });
+
+      Promise.all(imagePromises).then(() => {
+        editable.forEach((el) => {
+          el.contentEditable = 'false';
+          el.classList.remove('is-editable');
+        });
+        uploder.forEach((el) => {
+          const input = el.querySelector(':scope > input');
+          input.remove();
+          el.classList.remove('is-uploader');
+        });
+        stylers.forEach((styler) => {
+          styler.remove();
+        });
+
+        output.file('index.html',
+          `<html>
+          <head>
+            ${head.innerHTML}
+          </head>
+          <body>
+            ${artboadrd.innerHTML}
+          </body>
+        </html>`);
+
+        zip.generateAsync({ type: 'blob' })
+          .then((blob) => {
+            saveAs(blob, 'project.zip');
+            printPreview.close();
+          });
+      });
+    }
+  }
+};
 </script>
 
 <style lang="stylus">
@@ -182,4 +178,3 @@ $floatHover
 .is-hidden
   display: none
 </style>
-

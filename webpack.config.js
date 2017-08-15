@@ -60,22 +60,38 @@ const config = {
             plugins: [require('babel-plugin-transform-object-rest-spread')]
           }
         }
-      }, {
+      },
+      {
+        test: /.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        enforce: 'pre'
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader'
-      }, {
+      },
+      {
+        test: /\.vue$/,
+        loader: 'eslint-loader',
+        enforce: 'pre'
+      },
+      {
         test: /\.css$/,
         loaders: ['style-loader', 'css-loader']
-      }, {
+      },
+      {
         test: /.styl$/,
         loader: 'style-loader!css-loader!stylus-loader?resolve url'
-      }, {
+      },
+      {
         test: /\.(ttf|eot|svg)(\?.*)?$/,
         loader: 'file-loader',
         query: {
             name: 'fonts/[name].[ext]'
         }
-      }, {
+      },
+      {
         test: /.pug$/,
         exclude: /node_modules/,
         loader: 'pug-loader',

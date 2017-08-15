@@ -5,10 +5,10 @@ const temp = {
   images: ['static/img/baianat.png'],
   quote: 'When you were made a leader, you weren\'t given a crown; you were given the responsibility to bring out the best in others.',
   logos: [
-    "static/img/google.svg",
-    "static/img/atlassian.svg",
-    "static/img/airbnb.svg",
-    "static/img/facebook.svg"
+    'static/img/google.svg',
+    'static/img/atlassian.svg',
+    'static/img/airbnb.svg',
+    'static/img/facebook.svg'
   ],
   caption: 'Client',
   number: '12,920'

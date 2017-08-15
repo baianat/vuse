@@ -1,6 +1,6 @@
 <template lang="pug">
   section.social(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
     :class="[{'is-editable': editable}, section.class]"
   )
@@ -26,29 +26,29 @@
 </template>
 
 <script>
-  import uploader from '../Uploader.vue';
-  import { exciteEditable } from '../../util';
+import uploader from '../Uploader.vue';
+import { exciteEditable } from '../../util';
 
-  export default {
-    name: 'social2',
-    props: {
-      id: Number,
-      editable: Boolean,
-      content: Object,
-      section: Object,
-      images: Array
-    },
-    methods: {
-      updateImage() {
-        const file = this.$refs.uploader.files[0];
-        this.$refs.image.src = URL.createObjectURL(file);
-      }
-    },
-    components: {
-      uploader: uploader
-    },
-    mounted() {
-      exciteEditable(this.$el);
+export default {
+  name: 'social2',
+  props: {
+    id: Number,
+    editable: Boolean,
+    content: Object,
+    section: Object,
+    images: Array
+  },
+  methods: {
+    updateImage () {
+      const file = this.$refs.uploader.files[0];
+      this.$refs.image.src = URL.createObjectURL(file);
     }
-  };
+  },
+  components: {
+    uploader: uploader
+  },
+  mounted () {
+    exciteEditable(this.$el);
+  }
+};
 </script>

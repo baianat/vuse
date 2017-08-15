@@ -44,10 +44,10 @@ const elementsProps = {
     columns: [
       {
         title: temp.title,
-        content: temp.content,
+        content: temp.content
       }, {
         title: temp.title,
-        content: temp.content,
+        content: temp.content
       }
     ]
   },
@@ -59,13 +59,13 @@ const elementsProps = {
     columns: [
       {
         title: temp.title,
-        content: temp.content,
+        content: temp.content
       }, {
         title: temp.title,
-        content: temp.content,
+        content: temp.content
       }, {
         title: temp.title,
-        content: temp.content,
+        content: temp.content
       }
     ]
   },
@@ -96,7 +96,7 @@ const elementsProps = {
       text: temp.content
     },
     images: temp.logos
-  },
+  }
 }
 
 export default elementsProps;

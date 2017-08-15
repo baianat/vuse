@@ -1,7 +1,5 @@
 <template lang="pug">
-  div(
-    :class="[{'is-editable': editable}, 'uploader']"
-  )
+  div(:class="[{ 'is-editable': editable }, 'uploader']")
     img(:src="imgURL" :data-v-id="imageId" ref="image")
     input.uploader-input(
       type="file"
@@ -10,7 +8,6 @@
       v-if="editable"
     )
 </template>
-
 
 <script>
 export default {
@@ -22,7 +19,7 @@ export default {
     imageId: Number
   },
   methods: {
-    updateImage() {
+    updateImage () {
       const file = this.$refs.uploader.files[0];
       const imageURL = URL.createObjectURL(file);
       this.$refs.image.src = imageURL;

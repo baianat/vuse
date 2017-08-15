@@ -1,5 +1,5 @@
 <template lang="pug">
-  include ../../pug/mixin/icon.pug
+  include ../../pug/mixin/icon
 
   .styler(ref="styler" v-if="editable")
 
@@ -22,7 +22,6 @@
       li(v-if="type == 'text'")
           button.styler-button(@click="updateOption('textStyle')")
             +icon('textStyle', 'is-large')
-
 
     ul.styler-list
       li(v-if="currentOption  == 'colorer'")
@@ -81,72 +80,68 @@ export default {
 
   props: ['el', 'type', 'name', 'editable'],
 
-  data() {
-    return {
-      colors: ['blue', 'green', 'red', 'black', 'white'],
-      textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#000000', '#FFFFFF'],
-      textColor: '',
-      oldColorerColor: '',
-      colorerColor: '',
-      mouseTarget: '',
-      currentOption: ''
-    }
-  },
-
+  data: () => ({
+    colors: ['blue', 'green', 'red', 'dark', 'white'],
+    textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#323C47', '#FFFFFF'],
+    textColor: '',
+    oldColorerColor: '',
+    colorerColor: '',
+    mouseTarget: '',
+    currentOption: ''
+  }),
   watch: {
-    colorerColor: function () { 
+    colorerColor () {
       this.changeColor();
     }
   },
-
   methods: {
-    updateOption(option) {
+    updateOption (option) {
       this.currentOption = option;
       this.popper.update();
     },
-    addLink() {
+    addLink () {
       this.$bus.$emit('updateHref', this.$refs.linkInput.value);
     },
-    changeColor() {
+    changeColor () {
       this.removeClass([`is-${this.oldColorerColor}`]);
       this.oldColorerColor = this.colorerColor;
       this.addClass(`is-${this.colorerColor}`);
     },
-    addClass(className) {
+    addClass (className) {
       this.$bus.$emit('addClass', this.id, this.name, className);
     },
-    removeClass(className) {
+    removeClass (className) {
       this.$bus.$emit('removeClass', this.id, this.name, className);
     },
-    removeSection() {
+    removeSection () {
       document.removeEventListener('click', this.hideStyler);
       // TODO: destroy all popperjs instances
       this.popper.destroy();
       this.styler.remove();
       setTimeout(() => this.$bus.$emit('removeSection', this.id), 100);
     },
-    excute(command, value = null) {
+    excute (command, value = null) {
       document.execCommand(command, false, value);
     },
-    showStyler() {
+    showStyler () {
       this.styler.classList.add('is-visible');
       this.currentOption = '';
       this.popper.update();
     },
-    hideStyler(evnt) {
+    hideStyler (evnt) {
       const mouseTarget = evnt.target;
       if (!isParentTo(mouseTarget, this.styler) && !isParentTo(mouseTarget, this.el)) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
-        if(this.el.dataset.vProp) {
+        if (this.el.dataset.vProp) {
           this.$bus.$emit('updateText', this.id, this.el.dataset.vProp, this.el.innerHTML);
         }
       }
     }
   },
 
-  mounted() {
-    if(!this.$props.editable) return;
+  mounted () {
+    if (!this.$props.editable) return;
     // get nessesry data
     this.el = this.$props.el;
     this.styler = this.$refs.styler;
@@ -154,7 +149,7 @@ export default {
     this.id = Number(this.el.closest('[data-v-id]').dataset.vId);
 
     // exute popper element
-    const position = this.$props.type === 'section'? 'left-start' : 'top';
+    const position = this.$props.type === 'section' ? 'left-start' : 'top';
     this.popper = new Popper(this.el, this.styler, {
       placement: position
     });
@@ -248,4 +243,3 @@ export default {
 .is-hidden
   display: none
 </style>
-

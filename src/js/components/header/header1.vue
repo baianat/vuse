@@ -1,6 +1,6 @@
 <template lang="pug">
   header.header(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
     :class="[{'is-editable': editable}, section.class]"
     )
@@ -37,25 +37,25 @@
 </template>
 
 <script>
-  import uploader from '../Uploader.vue';
-  import { exciteEditable } from '../../util';
+import uploader from '../Uploader.vue';
+import { exciteEditable } from '../../util';
 
-  export default {
-    name: 'header1',
-    props: {
-      id: Number,
-      editable: Boolean,
-      title: Object,
-      content: Object,
-      button: Object,
-      section: Object,
-      images: Array
-    },
-    components: {
-      uploader: uploader
-    },
-    mounted() {
-      exciteEditable(this.$el);
-    }
-  };
+export default {
+  name: 'header1',
+  props: {
+    id: Number,
+    editable: Boolean,
+    title: Object,
+    content: Object,
+    button: Object,
+    section: Object,
+    images: Array
+  },
+  components: {
+    uploader: uploader
+  },
+  mounted () {
+    exciteEditable(this.$el);
+  }
+};
 </script>

@@ -1,6 +1,6 @@
 <template lang="pug">
   section.social(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
     :class="[{'is-editable': editable}, section.class]"
   )
@@ -18,34 +18,33 @@
           v-html="column.title"
           v-styler:text="title"
         )
-      
 </template>
 
 <script>
-  import styler from '../Styler.vue';
-  import { exciteEditable } from '../../util';
+import styler from '../Styler.vue';
+import { exciteEditable } from '../../util';
 
-  export default {
-    name: 'social1',
-    props: {
-      id: Number,
-      title: Object,
-      content: Object,
-      editable: Boolean,
-      section: Object,
-      columns: Array
-    },
-    methods: {
-      updateImage() {
-        const file = this.$refs.uploader.files[0];
-        this.$refs.image.src = URL.createObjectURL(file);
-      }
-    },
-    components: {
-      styler: styler
-    },
-    mounted() {
-      exciteEditable(this.$el);
+export default {
+  name: 'social1',
+  props: {
+    id: Number,
+    title: Object,
+    content: Object,
+    editable: Boolean,
+    section: Object,
+    columns: Array
+  },
+  methods: {
+    updateImage () {
+      const file = this.$refs.uploader.files[0];
+      this.$refs.image.src = URL.createObjectURL(file);
     }
-  };
+  },
+  components: {
+    styler: styler
+  },
+  mounted () {
+    exciteEditable(this.$el);
+  }
+};
 </script>
