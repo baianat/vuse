@@ -1,8 +1,7 @@
 <template lang="pug">
   include ../../pug/mixin/icon
 
-  .styler(ref="styler" v-if="editable")
-
+  .styler(ref="styler" v-if="$builder.isEditing")
     ul.styler-list
       li(v-if="type == 'button' || type == 'section'")
         button.styler-button(@click="updateOption('colorer')")
@@ -77,9 +76,7 @@ import { isParentTo } from '../util';
 
 export default {
   name: 'styler',
-
-  props: ['el', 'type', 'name', 'editable'],
-
+  props: ['el', 'type', 'name'],
   data: () => ({
     colors: ['blue', 'green', 'red', 'dark', 'white'],
     textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#323C47', '#FFFFFF'],
@@ -134,14 +131,15 @@ export default {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
         if (this.el.dataset.vProp) {
-          this.$bus.$emit('updateText', this.id, this.el.dataset.vProp, this.el.innerHTML);
+          this.$section.update('text', this.el.innerHTML);
         }
       }
     }
   },
 
   mounted () {
-    if (!this.$props.editable) return;
+    if (!this.$builder.isEditing) return;
+
     // get nessesry data
     this.el = this.$props.el;
     this.styler = this.$refs.styler;

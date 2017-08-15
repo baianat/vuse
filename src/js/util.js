@@ -1,12 +1,3 @@
-import elementsProps from './elementsProps';
-
-export function exciteEditable (wrapper) {
-  const editableContent = Array.from(wrapper.querySelectorAll('.is-editable'));
-  editableContent.forEach((el) => {
-    el.contentEditable = 'true';
-  })
-}
-
 export function getSectionById (elements, id) {
   const getId = (el) => el.id === id;
   const section = elements.find(getId);
@@ -25,18 +16,6 @@ export function isParentTo (target, parent) {
     currentNode = currentNode.parentNode;
   }
   return false;
-}
-
-export function getElementProps (el, id, editable) {
-  // deep clone object
-  const temp = JSON.parse(JSON.stringify(elementsProps[el]));
-
-  return {
-    ...temp,
-    id: id,
-    name: el,
-    editable: editable
-  };
 }
 
 export function getImageBlob (URL) {

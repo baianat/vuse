@@ -1,7 +1,9 @@
-import './bootstrap';
 import Vue from 'vue';
+import './bootstrap';
+import Builder from './builderManager';
 import { getSectionById, removeFromArray } from './util';
 
+Vue.use(Builder);
 const bus = new Vue();
 Vue.prototype.$bus = bus;
 
@@ -25,15 +27,6 @@ new Vue({
       this.elements.forEach((el) => {
         el.editable = this.editable;
       })
-    });
-    this.$bus.$on('updateText', (id, field, value) => {
-      const section = getSectionById(this.elements, id);
-      if (section[field]) {
-        section[field].text = value;
-      } else {
-        const fieldData = field.split('-');
-        section.columns[fieldData[1]][fieldData[0]] = value;
-      }
     });
     this.$bus.$on('updateImage', (id, imgId, src) => {
       const section = getSectionById(this.elements, id);

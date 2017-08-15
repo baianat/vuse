@@ -1,11 +1,11 @@
 <template lang="pug">
-  div(:class="[{ 'is-editable': editable }, 'uploader']")
+  div(:class="[{ 'is-editable': $builder.isEditing }, 'uploader']")
     img(:src="imgURL" :data-v-id="imageId" ref="image")
     input.uploader-input(
       type="file"
       ref="uploader"
       @change="updateImage"
-      v-if="editable"
+      v-if="$builder.isEditing"
     )
 </template>
 
@@ -14,7 +14,6 @@ export default {
   name: 'ploader',
   props: {
     imgURL: String,
-    editable: Boolean,
     parentId: Number,
     imageId: Number
   },

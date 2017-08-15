@@ -9,9 +9,9 @@
             input(placeholder="project name" v-model="title")
 
     ul.controller-list.is-hidden(ref="list")
-      li(v-for="el in elements")
-        a.controller-element(@click="addElement(el)")
-          |{{ el }}
+      li(v-for="section in sections")
+        a.controller-element(@click="addElement(section)")
+          |{{ section }}
 
     .container
       .controller-buttons.grid.is-center
@@ -30,16 +30,16 @@
 <script>
 import JSZip from 'jszip';
 import saveAs from 'save-as'
-import { getElementProps, getImageBlob } from '../util';
+import elementProps from '../elementsProps';
+import { getImageBlob } from '../util';
 
 export default {
   name: 'Controller',
   props: {
-    showIntro: Boolean,
-    editable: Boolean
+    showIntro: Boolean
   },
   data: () => ({
-    elements: [
+    sections: [
       'header1',
       'header2',
       'section1',
@@ -47,8 +47,7 @@ export default {
       'social1',
       'social2'
     ],
-    title: '',
-    id: 0
+    title: ''
   }),
   watch: {
     title: function () {
@@ -56,9 +55,11 @@ export default {
     }
   },
   methods: {
-    addElement (el) {
-      const elementProps = getElementProps(el, this.id++, this.$props.editable);
-      this.$bus.$emit('addElement', elementProps);
+    addElement (name) {
+      this.$builder.add({
+        name: name,
+        data: elementProps()[name]
+      });
       this.toggleListVisiabilty();
     },
     toggleListVisiabilty () {

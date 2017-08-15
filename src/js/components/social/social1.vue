@@ -2,18 +2,18 @@
   section.social(
     v-styler:section="section"
     :data-v-id="id"
-    :class="[{'is-editable': editable}, section.class]"
+    :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .grid.is-center
       .column.is-screen-2.social-item(v-for="(column, index) in columns")
         h6.social-number(
-          :class="{'is-editable': editable}"
+          :class="{'is-editable': $builder.isEditing}"
           :data-v-prop="`content-${index}`"
           v-html="column.content"
           v-styler:text="content"
         )
         b.social-keyword(
-          :class="{'is-editable': editable}"
+          :class="{'is-editable': $builder.isEditing}"
           :data-v-prop="`title-${index}`"
           v-html="column.title"
           v-styler:text="title"
@@ -22,7 +22,6 @@
 
 <script>
 import styler from '../Styler.vue';
-import { exciteEditable } from '../../util';
 
 export default {
   name: 'social1',
@@ -42,9 +41,6 @@ export default {
   },
   components: {
     styler: styler
-  },
-  mounted () {
-    exciteEditable(this.$el);
   }
 };
 </script>

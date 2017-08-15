@@ -12,17 +12,17 @@ import section2 from './section/section2.vue';
 import social1 from './social/social1.vue';
 import social2 from './social/social2.vue';
 
+const StylerInstance = Vue.extend(Styler);
+
 /**
  * creat Vue styler directive
  */
 Vue.directive('styler', {
-  inserted (el, binding) {
-    const StylerInstance = Vue.extend(Styler);
-    const parent = el.parentNode;
+  inserted (el, binding, vnode) {
     const newNode = document.createElement('div');
     newNode.id = 'newNode'
-    parent.appendChild(newNode);
-    new StylerInstance({
+    el.parentNode.appendChild(newNode);
+    const styler = new StylerInstance({
       propsData: {
         el: el,
         type: binding.arg,
@@ -30,6 +30,7 @@ Vue.directive('styler', {
         editable: el.classList.contains('is-editable')
       }
     }).$mount('#newNode');
+    styler.$section = vnode.context.$section;
   }
 });
 

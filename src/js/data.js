@@ -1,4 +1,4 @@
-const temp = {
+const data = {
   title: 'Awesome title',
   content: 'We\'re creating the best place to go when starting a new business or company.With Baianat you can instantly search domain names, social media handles, and see your logo in beautiful logotypes.',
   button: 'click me!',
@@ -12,6 +12,6 @@ const temp = {
   ],
   caption: 'Client',
   number: '12,920'
-}
+};
 
-export default temp;
+export default data;

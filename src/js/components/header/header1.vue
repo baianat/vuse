@@ -2,25 +2,25 @@
   header.header(
     v-styler:section="section"
     :data-v-id="id"
-    :class="[{'is-editable': editable}, section.class]"
+    :class="[{'is-editable': $builder.isEditing}, section.class]"
     )
     .container
       .grid
         .column.is-screen-6.add-center-vertical
           h3.header-title(
-            :class="{'is-editable': editable}"
+            :class="{'is-editable': $builder.isEditing}"
             data-v-prop="title"
             v-html="title.text"
             v-styler:text="title"
             )
           p.header-content(
-            :class="{'is-editable': editable}"
+            :class="{'is-editable': $builder.isEditing}"
             data-v-prop="content"
             v-html="content.text"
             v-styler:text="content"
             )
           a.button(
-            :class="[{'is-editable': editable}, button.class]"
+            :class="[{'is-editable': $builder.isEditing}, button.class]"
             :href="button.href"
             data-v-prop="button"
             v-styler:button="button"
@@ -38,7 +38,6 @@
 
 <script>
 import uploader from '../Uploader.vue';
-import { exciteEditable } from '../../util';
 
 export default {
   name: 'header1',
@@ -53,9 +52,6 @@ export default {
   },
   components: {
     uploader: uploader
-  },
-  mounted () {
-    exciteEditable(this.$el);
   }
 };
 </script>

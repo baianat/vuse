@@ -2,14 +2,14 @@
   section.social(
     v-styler:section="section"
     :data-v-id="id"
-    :class="[{'is-editable': editable}, section.class]"
+    :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .container
       .grid
         .row.is-center
           .column.is-screen-6
             p.social-quote(
-              :class="{'is-editable': editable}"
+              :class="{'is-editable': $builder.isEditing}"
               data-v-prop="content"
               v-html="content.text"
               v-styler:text="content"
@@ -27,7 +27,6 @@
 
 <script>
 import uploader from '../Uploader.vue';
-import { exciteEditable } from '../../util';
 
 export default {
   name: 'social2',
@@ -46,9 +45,6 @@ export default {
   },
   components: {
     uploader: uploader
-  },
-  mounted () {
-    exciteEditable(this.$el);
   }
 };
 </script>
