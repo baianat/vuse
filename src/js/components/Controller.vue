@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import JSZip from 'JSZip';
+  import JSZip from 'jszip';
   import saveAs from 'save-as'
   import { getElementProps, getImageBlob } from '../util';
 

@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const env = process.env.NODE_ENV;
 const production = env === 'production';
@@ -30,6 +31,7 @@ const config = {
           name: 'vendor',
       }),
       page('index'),
+      new FriendlyErrorsWebpackPlugin()
     ],
 
     watchOptions: {
@@ -41,12 +43,6 @@ const config = {
       hot: true,
       inline: true,
       stats: 'errors-only',
-      proxy: {
-        '*': {
-          target: 'http://builder.dev/',
-          changeOrigin: true
-        }
-      },
       host: '0.0.0.0',
       port: 8080
     },
