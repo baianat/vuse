@@ -36,17 +36,12 @@ export default {
   props: {
     showIntro: Boolean
   },
-  data: () => ({
-    sections: [
-      'header1',
-      'header2',
-      'section1',
-      'section2',
-      'social1',
-      'social2'
-    ],
-    title: ''
-  }),
+  data () {
+    return {
+      title: '',
+      sections: Object.keys(this.$builder.components)
+    }
+  },
   watch: {
     title (value) {
       document.title = value;
