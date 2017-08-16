@@ -74,7 +74,7 @@ export default class Builder {
     _Vue = Vue;
   }
 
-  _exportZip () {
+  download () {
     const printPreview = window.open('about:blank', 'print_preview');
     const printDocument = printPreview.document;
     printDocument.open();
@@ -157,7 +157,7 @@ export default class Builder {
 
   export (method = 'zip') {
     if (method === 'zip') {
-      return this._exportZip();
+      return this.download();
     }
 
     if (method === 'json') {
