@@ -77,18 +77,18 @@ export default class Builder {
   _exportZip () {
     const printPreview = window.open('about:blank', 'print_preview');
     const printDocument = printPreview.document;
+    printDocument.open();
     printDocument.write(
       `<!DOCTYPE html>
         <html>
           ${document.documentElement.innerHTML}
         </html>`
     );
-    printDocument.open();
     const editable = Array.from(printDocument.querySelectorAll('.is-editable'));
     const uploder = Array.from(printDocument.querySelectorAll('.is-uploader'));
     const stylers = Array.from(printDocument.querySelectorAll('.styler'));
     const images = Array.from(printDocument.querySelectorAll('img'));
-    const artboadrd = printDocument.querySelector('#artboard');
+    const artboard = printDocument.querySelector('#artboard');
     const head = printDocument.querySelector('head');
     const imagePromises = [];
     const zip = new JSZip();
@@ -124,7 +124,7 @@ export default class Builder {
             ${head.innerHTML}
           </head>
           <body>
-            ${artboadrd.innerHTML}
+            ${artboard.innerHTML}
           </body>
         </html>`);
 
@@ -146,13 +146,13 @@ export default class Builder {
   preview () {
     const printPreview = window.open('about:blank', 'print_preview');
     const printDocument = printPreview.document;
+    printDocument.open();
     printDocument.write(
       `<!DOCTYPE html>
         <html>
           ${document.documentElement.innerHTML}
         </html>`
     );
-    printDocument.open();
   }
 
   export (method = 'zip') {
