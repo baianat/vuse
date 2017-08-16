@@ -8,7 +8,7 @@
           .input.is-rounded
             input(placeholder="project name" v-model="title")
 
-    ul.controller-list.is-hidden(ref="list")
+    ul.controller-list(:class="{ 'is-hidden': !listShown }")
       li(v-for="section in sections")
         a.controller-element(@click="addElement(section)")
           |{{ section }}
@@ -17,7 +17,7 @@
       .controller-buttons.grid.is-center
         .column.is-screen-3
           a.controller-add.button.is-blue.is-block(
-            @click="toggleListVisiabilty"
+            @click="listShown = true"
             ref="addButton"
             :disabled="!title.length"
           )
@@ -39,6 +39,7 @@ export default {
   data () {
     return {
       title: '',
+      listShown: false,
       sections: Object.keys(this.$builder.components)
     }
   },
@@ -54,10 +55,7 @@ export default {
         name: name,
         data: elementProps()[name]
       });
-      this.toggleListVisiabilty();
-    },
-    toggleListVisiabilty () {
-      this.$refs.list.classList.toggle('is-hidden');
+      this.listShown = false;
     },
     toogleEditableState () {
       this.$builder.isEditing = !this.$builder.isEditing;
