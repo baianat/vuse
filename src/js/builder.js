@@ -43,7 +43,11 @@ export default class Builder {
   }
 
   component (name, definition) {
-    definition = _Vue.extend(definition);
+    // if passed a plain object.
+    if (!definition.extend) {
+      definition = _Vue.extend(definition);
+    }
+
     this.components[name] = definition.extend({
       directives: { styler },
       components: { Uploader },
@@ -113,7 +117,6 @@ export default class Builder {
 
     installComponents(_builder);
     const BuilderInstance = Vue.extend(BuilderComponent);
-
     Vue.component('builder', BuilderInstance.extend({
       components: _builder.components,
       provide () {
