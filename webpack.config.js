@@ -89,7 +89,7 @@ const config = {
     {
       test: /\.(ttf|eot|svg)(\?.*)?$/,
       loader: 'file-loader',
-      query: {
+      options: {
         name: 'fonts/[name].[ext]'
       }
     },
