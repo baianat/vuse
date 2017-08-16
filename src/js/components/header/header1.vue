@@ -29,16 +29,12 @@
         .column.is-screen-6
           uploader(
             class="header-image"
-            :editable="editable"
             :imgURL="images[0]"
-            :parentId="id"
             :imageId="0"
           )
 </template>
 
 <script>
-import uploader from '../Uploader.vue';
-
 export default {
   name: 'header1',
   props: {
@@ -49,9 +45,6 @@ export default {
     button: Object,
     section: Object,
     images: Array
-  },
-  components: {
-    uploader: uploader
   }
 };
 </script>

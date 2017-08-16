@@ -1,6 +1,6 @@
 <template lang="pug">
   div(:class="[{ 'is-editable': $builder.isEditing }, 'uploader']")
-    img(:src="imgURL" :data-v-id="imageId" ref="image")
+    img(:src="src")
     input.uploader-input(
       type="file"
       ref="uploader"
@@ -11,19 +11,28 @@
 
 <script>
 export default {
-  name: 'ploader',
+  name: 'uploader',
+  inject: ['$section'],
   props: {
     imgURL: String,
-    parentId: Number,
     imageId: Number
   },
+  data: () => ({
+    src: ''
+  }),
   methods: {
     updateImage () {
       const file = this.$refs.uploader.files[0];
+      if (!file) {
+        return;
+      }
       const imageURL = URL.createObjectURL(file);
-      this.$refs.image.src = imageURL;
-      this.$bus.$emit('updateImage', this.$props.parentId, this.$refs.image.dataset.vId, imageURL);
+      this.src = imageURL;
+      this.$section.data.images[this.imageId] = imageURL;
     }
+  },
+  created () {
+    this.src = this.imgURL;
   }
 }
 </script>

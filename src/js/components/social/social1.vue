@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import styler from '../Styler.vue';
+import styler from '../Styler';
 
 export default {
   name: 'social1',

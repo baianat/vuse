@@ -42,7 +42,7 @@
                 name="colorer"
                 :value="textColors[index]"
                 v-model="textColor"
-                @click="excute('forecolor', textColor)"
+                @click="execute('forecolor', textColor)"
                 )
       li(v-if="currentOption  == 'link'")
         .input.is-rounded.is-button
@@ -52,20 +52,20 @@
 
       li(v-if="currentOption == 'align'")
         ul.align
-          li: button.styler-button(@click="excute('justifyleft')")
+          li: button.styler-button(@click="execute('justifyleft')")
             +icon('left', 'is-large')
-          li: button.styler-button(@click="excute('justifycenter')")
+          li: button.styler-button(@click="execute('justifycenter')")
             +icon('center', 'is-large')
-          li: button.styler-button(@click="excute('justifyright')")
+          li: button.styler-button(@click="execute('justifyright')")
             +icon('right', 'is-large')
 
       li(v-if="currentOption == 'textStyle'")
         ul.align
-          li: button.styler-button(@click="excute('bold')")
+          li: button.styler-button(@click="execute('bold')")
             +icon('bold', 'is-large')
-          li: button.styler-button(@click="excute('italic')")
+          li: button.styler-button(@click="execute('italic')")
             +icon('italic', 'is-large')
-          li: button.styler-button(@click="excute('underline')")
+          li: button.styler-button(@click="execute('underline')")
             +icon('underline', 'is-large')
 
 </template>
@@ -97,27 +97,34 @@ export default {
       this.popper.update();
     },
     addLink () {
-      this.$bus.$emit('updateHref', this.$refs.linkInput.value);
+      this.$section.data.button.href = this.$refs.linkInput.value;
     },
     changeColor () {
-      this.removeClass([`is-${this.oldColorerColor}`]);
+      this.removeClass(`is-${this.oldColorerColor}`);
       this.oldColorerColor = this.colorerColor;
       this.addClass(`is-${this.colorerColor}`);
     },
     addClass (className) {
-      this.$bus.$emit('addClass', this.id, this.name, className);
+      this.$section.data[this.name].class.push(className);
     },
     removeClass (className) {
-      this.$bus.$emit('removeClass', this.id, this.name, className);
+      if (Array.isArray(className)) {
+        return className.forEach(c => {
+          this.removeClass(c);
+        });
+      }
+
+      const idx = this.$section.data[this.name].class.indexOf(className);
+      this.$section.data[this.name].class.splice(idx, 1);
     },
     removeSection () {
       document.removeEventListener('click', this.hideStyler);
       // TODO: destroy all popperjs instances
       this.popper.destroy();
       this.styler.remove();
-      setTimeout(() => this.$bus.$emit('removeSection', this.id), 100);
+      this.$builder.remove(this.id);
     },
-    excute (command, value = null) {
+    execute (command, value = null) {
       document.execCommand(command, false, value);
     },
     showStyler () {

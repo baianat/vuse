@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import uploader from '../Uploader.vue';
-
 export default {
   name: 'social2',
   props: {
@@ -36,15 +34,6 @@ export default {
     content: Object,
     section: Object,
     images: Array
-  },
-  methods: {
-    updateImage () {
-      const file = this.$refs.uploader.files[0];
-      this.$refs.image.src = URL.createObjectURL(file);
-    }
-  },
-  components: {
-    uploader: uploader
   }
 };
 </script>

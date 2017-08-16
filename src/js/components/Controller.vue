@@ -66,7 +66,7 @@ export default {
       this.$refs.list.classList.toggle('is-hidden');
     },
     toogleEditableState () {
-      this.$bus.$emit('editable');
+      this.$builder.isEditing = !this.$builder.isEditing;
     },
     submit () {
       const printPreview = window.open('about:blank', 'print_preview');

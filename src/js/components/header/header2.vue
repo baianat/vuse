@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import uploader from '../Uploader.vue';
-
 export default {
   name: 'header2',
   props: {
@@ -49,9 +47,6 @@ export default {
     button: Object,
     section: Object,
     images: Array
-  },
-  components: {
-    uploader: uploader
   }
 };
 </script>
