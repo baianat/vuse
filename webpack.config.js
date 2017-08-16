@@ -19,7 +19,7 @@ const page = (name) => {
 const config = {
   devtool: production ? 'source-map' : 'cheap-source-map',
   entry: {
-    app: './src/js/builder.js'
+    app: './src/js/index.js'
   },
 
   output: {
@@ -36,7 +36,6 @@ const config = {
     new FriendlyErrorsWebpackPlugin(),
     new ProgressBarPlugin()
   ],
-
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
@@ -103,8 +102,8 @@ const config = {
       }
     }]
   },
-
   resolve: {
+    extensions: ['.js', '.vue', '.json'],
     alias: {
       vue: 'vue/dist/vue.esm.js'
     }
