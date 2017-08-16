@@ -14,6 +14,8 @@ const BUILDER_OPTIONS = {
 
 // To tell if it is installed or not
 let _Vue = null;
+
+// Singleton objects.
 let _builder = null;
 let mixin = null;
 let styler = null;
@@ -45,8 +47,6 @@ export default class Builder {
     this.components[name] = definition.extend({
       directives: { styler },
       components: { Uploader },
-      render: definition.render,
-      props: definition.props,
       ...mixin
     });
   }
