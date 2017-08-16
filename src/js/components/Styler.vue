@@ -3,27 +3,28 @@
 
   .styler(ref="styler" v-if="$builder.isEditing")
     ul.styler-list
-      li(v-if="type == 'button' || type == 'section'")
+      li(v-if="type === 'button' || type === 'section'")
         button.styler-button(@click="updateOption('colorer')")
           +icon('palettes', 'is-large')
-      li(v-if="type == 'button'")
+      li(v-if="type === 'button'")
         button.styler-button(@click="updateOption('link')")
           +icon('link', 'is-large')
-      li(v-if="type == 'header' || type == 'section'")
+      li(v-if="type === 'header' || type === 'section'")
         button.styler-button(@click="removeSection")
           +icon('trash', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="updateOption('textColor')")
-          +icon('palettes', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="updateOption('align')")
-          +icon('align', 'is-large')
-      li(v-if="type == 'text'")
+      template(v-if="type === 'text'")
+        li
+          button.styler-button(@click="updateOption('textColor')")
+            +icon('palettes', 'is-large')
+        li
+          button.styler-button(@click="updateOption('align')")
+            +icon('align', 'is-large')
+        li
           button.styler-button(@click="updateOption('textStyle')")
             +icon('textStyle', 'is-large')
 
     ul.styler-list
-      li(v-if="currentOption  == 'colorer'")
+      li(v-if="currentOption === 'colorer'")
         ul.colorer
           li(v-for="color in colors")
             input(
@@ -33,7 +34,7 @@
               :value="color"
               v-model="colorerColor"
               )
-      li(v-if="currentOption  == 'textColor'")
+      li(v-if="currentOption === 'textColor'")
           ul.colorer
             li(v-for="(color, index) in colors")
               input(
@@ -44,13 +45,13 @@
                 v-model="textColor"
                 @click="execute('forecolor', textColor)"
                 )
-      li(v-if="currentOption  == 'link'")
+      li(v-if="currentOption === 'link'")
         .input.is-rounded.is-button
           input(type="text" placeholder="type your link" ref="linkInput")
           button.button.is-green(@click="addLink")
             +icon('link', 'is-large')
 
-      li(v-if="currentOption == 'align'")
+      li(v-if="currentOption === 'align'")
         ul.align
           li: button.styler-button(@click="execute('justifyleft')")
             +icon('left', 'is-large')
@@ -59,7 +60,7 @@
           li: button.styler-button(@click="execute('justifyright')")
             +icon('right', 'is-large')
 
-      li(v-if="currentOption == 'textStyle'")
+      li(v-if="currentOption === 'textStyle'")
         ul.align
           li: button.styler-button(@click="execute('bold')")
             +icon('bold', 'is-large')
