@@ -32,6 +32,7 @@ import elementProps from '../elementsProps';
 
 export default {
   name: 'Controller',
+  inject: ['$builder'],
   props: {
     showIntro: Boolean
   },

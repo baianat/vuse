@@ -8,20 +8,6 @@
 </head>
 <body>
   <div id="app">
-    <div class="artboard" id="artboard">
-      <component
-        v-for="section in $builder.sections"
-        :is="section.name"
-        :key="section.id"
-        :id="section.id"
-        :content="section.data.content"
-        :title="section.data.title"
-        :button="section.data.button"
-        :images="section.data.images"
-        :section="section.data.section"
-        :columns="section.data.columns"
-      ></component>
-    </div>
-    <controller :show-intro="!$builder.sections.length"></controller>
+    <builder></builder>
   </div>
 <script type="text/javascript" src="dist/js/vendor.js"></script><script type="text/javascript" src="dist/js/app.js"></script></body>

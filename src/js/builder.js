@@ -2,6 +2,9 @@ import JSZip from 'jszip';
 import saveAs from 'save-as'
 import { getImageBlob } from './util';
 import Section from './section';
+import BuilderComponent from './components/Builder';
+import Styler from './components/Styler';
+import Uploader from './components/Uploader'
 import installComponents from './components';
 
 const BUILDER_OPTIONS = {
@@ -12,6 +15,8 @@ const BUILDER_OPTIONS = {
 // To tell if it is installed or not
 let _Vue = null;
 let _builder = null;
+let mixin = null;
+let styler = null;
 
 export default class Builder {
   constructor (options) {
@@ -19,6 +24,7 @@ export default class Builder {
     this.title = options.docTitle;
     this.isEditing = true;
     this.sections = options.sections || [];
+    this.components = {};
   }
 
   add (options) {
@@ -34,17 +40,52 @@ export default class Builder {
     this.sections.splice(idx, 1);
   }
 
+  component (name, definition) {
+    definition = _Vue.extend(definition);
+    this.components[name] = definition.extend({
+      directives: { styler },
+      components: { Uploader },
+      render: definition.render,
+      props: definition.props,
+      ...mixin
+    });
+  }
+
   static install (Vue, options = {}) {
     // already installed
     if (_Vue) {
       return;
     }
 
+    _Vue = Vue;
+
     _builder = new Builder(options);
     Vue.util.defineReactive(_builder, 'sections', _builder.sections);
     Vue.util.defineReactive(_builder, 'isEditing', _builder.isEditing);
 
-    Vue.mixin({
+    const StylerInstance = Vue.extend(Styler).extend({
+      beforeCreate () {
+        this.$builder = _builder;
+      }
+    });
+    styler = {
+      inserted (el, binding, vnode) {
+        const newNode = document.createElement('div');
+        newNode.id = 'newNode'
+        el.parentNode.appendChild(newNode);
+        const styler = new StylerInstance({
+          propsData: {
+            el: el,
+            type: binding.arg,
+            name: binding.expression,
+            editable: el.classList.contains('is-editable')
+          }
+        }).$mount('#newNode');
+        styler.$section = vnode.context.$section;
+      }
+    };
+
+    mixin = {
       provide: function providesBuilder () {
         const provides = {};
         if (this.$builder) {
@@ -68,10 +109,22 @@ export default class Builder {
           el.contentEditable = 'true';
         });
       }
-    });
+    };
 
-    installComponents(Vue);
-    _Vue = Vue;
+    installComponents(_builder);
+    const BuilderInstance = Vue.extend(BuilderComponent);
+
+    Vue.component('builder', BuilderInstance.extend({
+      components: _builder.components,
+      provide () {
+        return {
+          $builder: this.$builder
+        }
+      },
+      beforeCreate () {
+        this.$builder = _builder;
+      }
+    }));
   }
 
   download () {

@@ -12,7 +12,7 @@
 <script>
 export default {
   name: 'uploader',
-  inject: ['$section'],
+  inject: ['$builder', '$section'],
   props: {
     imgURL: String,
     imageId: Number
