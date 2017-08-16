@@ -1,5 +1,5 @@
 <template lang="pug">
-  include ../../pug/mixin/icon.pug
+  include ../../pug/mixin/icon
   .controller
     .controller-intro(v-if="showIntro")
       h1 Hello, start your project
@@ -28,10 +28,7 @@
 </template>
 
 <script>
-import JSZip from 'jszip';
-import saveAs from 'save-as'
 import elementProps from '../elementsProps';
-import { getImageBlob } from '../util';
 
 export default {
   name: 'Controller',
@@ -50,8 +47,9 @@ export default {
     title: ''
   }),
   watch: {
-    title: function () {
-      document.title = this.title;
+    title (value) {
+      document.title = value;
+      this.$builder.title = value;
     }
   },
   methods: {
@@ -69,64 +67,7 @@ export default {
       this.$builder.isEditing = !this.$builder.isEditing;
     },
     submit () {
-      const printPreview = window.open('about:blank', 'print_preview');
-      const printDocument = printPreview.document;
-      printDocument.open();
-      printDocument.write(
-        `<!DOCTYPE html>
-        <html>
-          ${document.documentElement.innerHTML}
-        </html>`);
-      const editable = Array.from(printDocument.querySelectorAll('.is-editable'));
-      const uploder = Array.from(printDocument.querySelectorAll('.is-uploader'));
-      const stylers = Array.from(printDocument.querySelectorAll('.styler'));
-      const images = Array.from(printDocument.querySelectorAll('img'));
-      const artboadrd = printDocument.querySelector('#artboard');
-      const head = printDocument.querySelector('head');
-      const imagePromises = [];
-      const zip = new JSZip();
-      const output = zip.folder('project');
-      const imgFolder = output.folder('assets/img');
-
-      images.forEach((image) => {
-        const imageLoader = getImageBlob(image.src);
-        imagePromises.push(imageLoader);
-        imageLoader.then((img) => {
-          imgFolder.file(img.name, img.blob, { base64: true });
-          image.setAttribute('src', `assets/img/${img.name}`);
-        })
-      });
-
-      Promise.all(imagePromises).then(() => {
-        editable.forEach((el) => {
-          el.contentEditable = 'false';
-          el.classList.remove('is-editable');
-        });
-        uploder.forEach((el) => {
-          const input = el.querySelector(':scope > input');
-          input.remove();
-          el.classList.remove('is-uploader');
-        });
-        stylers.forEach((styler) => {
-          styler.remove();
-        });
-
-        output.file('index.html',
-          `<html>
-          <head>
-            ${head.innerHTML}
-          </head>
-          <body>
-            ${artboadrd.innerHTML}
-          </body>
-        </html>`);
-
-        zip.generateAsync({ type: 'blob' })
-          .then((blob) => {
-            saveAs(blob, 'project.zip');
-            printPreview.close();
-          });
-      });
+      this.$builder.export('zip');
     }
   }
 };
