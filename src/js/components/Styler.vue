@@ -1,31 +1,30 @@
 <template lang="pug">
-  include ../../pug/mixin/icon.pug
+  include ../../pug/mixin/icon
 
-  .styler(ref="styler" v-if="editable")
-
+  .styler(ref="styler" v-if="$builder.isEditing")
     ul.styler-list
-      li(v-if="type == 'button' || type == 'section'")
+      li(v-if="type === 'button' || type === 'section'")
         button.styler-button(@click="updateOption('colorer')")
           +icon('palettes', 'is-large')
-      li(v-if="type == 'button'")
+      li(v-if="type === 'button'")
         button.styler-button(@click="updateOption('link')")
           +icon('link', 'is-large')
-      li(v-if="type == 'header' || type == 'section'")
+      li(v-if="type === 'header' || type === 'section'")
         button.styler-button(@click="removeSection")
           +icon('trash', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="updateOption('textColor')")
-          +icon('palettes', 'is-large')
-      li(v-if="type == 'text'")
-        button.styler-button(@click="updateOption('align')")
-          +icon('align', 'is-large')
-      li(v-if="type == 'text'")
+      template(v-if="type === 'text'")
+        li
+          button.styler-button(@click="updateOption('textColor')")
+            +icon('palettes', 'is-large')
+        li
+          button.styler-button(@click="updateOption('align')")
+            +icon('align', 'is-large')
+        li
           button.styler-button(@click="updateOption('textStyle')")
             +icon('textStyle', 'is-large')
 
-
     ul.styler-list
-      li(v-if="currentOption  == 'colorer'")
+      li(v-if="currentOption === 'colorer'")
         ul.colorer
           li(v-for="color in colors")
             input(
@@ -35,7 +34,7 @@
               :value="color"
               v-model="colorerColor"
               )
-      li(v-if="currentOption  == 'textColor'")
+      li(v-if="currentOption === 'textColor'")
           ul.colorer
             li(v-for="(color, index) in colors")
               input(
@@ -44,30 +43,30 @@
                 name="colorer"
                 :value="textColors[index]"
                 v-model="textColor"
-                @click="excute('forecolor', textColor)"
+                @click="execute('forecolor', textColor)"
                 )
-      li(v-if="currentOption  == 'link'")
+      li(v-if="currentOption === 'link'")
         .input.is-rounded.is-button
           input(type="text" placeholder="type your link" ref="linkInput")
           button.button.is-green(@click="addLink")
             +icon('link', 'is-large')
 
-      li(v-if="currentOption == 'align'")
+      li(v-if="currentOption === 'align'")
         ul.align
-          li: button.styler-button(@click="excute('justifyleft')")
+          li: button.styler-button(@click="execute('justifyleft')")
             +icon('left', 'is-large')
-          li: button.styler-button(@click="excute('justifycenter')")
+          li: button.styler-button(@click="execute('justifycenter')")
             +icon('center', 'is-large')
-          li: button.styler-button(@click="excute('justifyright')")
+          li: button.styler-button(@click="execute('justifyright')")
             +icon('right', 'is-large')
 
-      li(v-if="currentOption == 'textStyle'")
+      li(v-if="currentOption === 'textStyle'")
         ul.align
-          li: button.styler-button(@click="excute('bold')")
+          li: button.styler-button(@click="execute('bold')")
             +icon('bold', 'is-large')
-          li: button.styler-button(@click="excute('italic')")
+          li: button.styler-button(@click="execute('italic')")
             +icon('italic', 'is-large')
-          li: button.styler-button(@click="excute('underline')")
+          li: button.styler-button(@click="execute('underline')")
             +icon('underline', 'is-large')
 
 </template>
@@ -78,75 +77,77 @@ import { isParentTo } from '../util';
 
 export default {
   name: 'styler',
-
-  props: ['el', 'type', 'name', 'editable'],
-
-  data() {
-    return {
-      colors: ['blue', 'green', 'red', 'black', 'white'],
-      textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#000000', '#FFFFFF'],
-      textColor: '',
-      oldColorerColor: '',
-      colorerColor: '',
-      mouseTarget: '',
-      currentOption: ''
-    }
-  },
-
+  props: ['el', 'type', 'name'],
+  data: () => ({
+    colors: ['blue', 'green', 'red', 'dark', 'white'],
+    textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#323C47', '#FFFFFF'],
+    textColor: '',
+    oldColorerColor: '',
+    colorerColor: '',
+    mouseTarget: '',
+    currentOption: ''
+  }),
   watch: {
-    colorerColor: function () { 
+    colorerColor () {
       this.changeColor();
     }
   },
-
   methods: {
-    updateOption(option) {
+    updateOption (option) {
       this.currentOption = option;
       this.popper.update();
     },
-    addLink() {
-      this.$bus.$emit('updateHref', this.$refs.linkInput.value);
+    addLink () {
+      this.$section.data.button.href = this.$refs.linkInput.value;
     },
-    changeColor() {
-      this.removeClass([`is-${this.oldColorerColor}`]);
+    changeColor () {
+      this.removeClass(`is-${this.oldColorerColor}`);
       this.oldColorerColor = this.colorerColor;
       this.addClass(`is-${this.colorerColor}`);
     },
-    addClass(className) {
-      this.$bus.$emit('addClass', this.id, this.name, className);
+    addClass (className) {
+      this.$section.data[this.name].class.push(className);
     },
-    removeClass(className) {
-      this.$bus.$emit('removeClass', this.id, this.name, className);
+    removeClass (className) {
+      if (Array.isArray(className)) {
+        return className.forEach(c => {
+          this.removeClass(c);
+        });
+      }
+
+      const idx = this.$section.data[this.name].class.indexOf(className);
+      this.$section.data[this.name].class.splice(idx, 1);
     },
-    removeSection() {
+    removeSection () {
       document.removeEventListener('click', this.hideStyler);
       // TODO: destroy all popperjs instances
       this.popper.destroy();
       this.styler.remove();
-      setTimeout(() => this.$bus.$emit('removeSection', this.id), 100);
+      this.$builder.remove(this.id);
     },
-    excute(command, value = null) {
+    execute (command, value = null) {
       document.execCommand(command, false, value);
     },
-    showStyler() {
+    showStyler () {
       this.styler.classList.add('is-visible');
       this.currentOption = '';
       this.popper.update();
     },
-    hideStyler(evnt) {
+    hideStyler (evnt) {
       const mouseTarget = evnt.target;
       if (!isParentTo(mouseTarget, this.styler) && !isParentTo(mouseTarget, this.el)) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
-        if(this.el.dataset.vProp) {
-          this.$bus.$emit('updateText', this.id, this.el.dataset.vProp, this.el.innerHTML);
+        if (this.el.dataset.vProp) {
+          this.$section.update('text', this.el.innerHTML);
         }
       }
     }
   },
 
-  mounted() {
-    if(!this.$props.editable) return;
+  mounted () {
+    if (!this.$builder.isEditing) return;
+
     // get nessesry data
     this.el = this.$props.el;
     this.styler = this.$refs.styler;
@@ -154,7 +155,7 @@ export default {
     this.id = Number(this.el.closest('[data-v-id]').dataset.vId);
 
     // exute popper element
-    const position = this.$props.type === 'section'? 'left-start' : 'top';
+    const position = this.$props.type === 'section' ? 'left-start' : 'top';
     this.popper = new Popper(this.el, this.styler, {
       placement: position
     });
@@ -248,4 +249,3 @@ export default {
 .is-hidden
   display: none
 </style>
-

@@ -1,20 +1,20 @@
 <template lang="pug">
   section.section(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
-    :class="[{'is-editable': editable}, section.class]"
+    :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .container
       .grid.is-center
         .column.is-screen-4(v-for="(column, index) in columns")
           h2.section-title(
-            :class="{'is-editable': editable}"
+            :class="{'is-editable': $builder.isEditing}"
             :data-v-prop="`title-${index}`"
             v-html="column.title"
             v-styler:text="title"
             )
           p.section-paragraph(
-            :class="{'is-editable': editable}"
+            :class="{'is-editable': $builder.isEditing}"
             :data-v-prop="`content-${index}`"
             v-html="column.content"
             v-styler:text="content"
@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import { exciteEditable } from '../../util';
-
 export default {
   name: 'section2',
   props: {
@@ -33,9 +31,6 @@ export default {
     editable: Boolean,
     section: Object,
     columns: Array
-  },
-  mounted() {
-    exciteEditable(this.$el);
   }
 };
 </script>

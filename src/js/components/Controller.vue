@@ -1,5 +1,5 @@
 <template lang="pug">
-  include ../../pug/mixin/icon.pug
+  include ../../pug/mixin/icon
   .controller
     .controller-intro(v-if="showIntro")
       h1 Hello, start your project
@@ -8,16 +8,16 @@
           .input.is-rounded
             input(placeholder="project name" v-model="title")
 
-    ul.controller-list.is-hidden(ref="list")
-      li(v-for="el in elements")
-        a.controller-element(@click="addElement(el)")
-          |{{ el }}
+    ul.controller-list(:class="{ 'is-hidden': !listShown }")
+      li(v-for="section in sections")
+        a.controller-element(@click="addElement(section)")
+          |{{ section }}
 
     .container
       .controller-buttons.grid.is-center
         .column.is-screen-3
           a.controller-add.button.is-blue.is-block(
-            @click="toggleListVisiabilty"
+            @click="listShown = true"
             ref="addButton"
             :disabled="!title.length"
           )
@@ -28,111 +28,43 @@
 </template>
 
 <script>
-  import JSZip from 'JSZip';
-  import saveAs from 'save-as'
-  import { getElementProps, getImageBlob } from '../util';
+import elementProps from '../elementsProps';
 
-  export default {
-    name: 'Controller',
-    props: {
-      showIntro: Boolean,
-      editable: Boolean
-    },
-    data() {
-      return {
-        elements: [
-          'header1',
-          'header2',
-          'section1',
-          'section2',
-          'social1',
-          'social2'
-        ],
-      title: "",
-      id: 0,
-      }
-    },
-    watch: {
-      title: function () {
-        document.title = this.title;
-      }
-    },
-    methods: {
-      addElement(el) {
-        const elementProps = getElementProps(el, this.id++, this.$props.editable);
-        this.$bus.$emit('addElement', elementProps);
-        this.toggleListVisiabilty();
-      },
-      toggleListVisiabilty() {
-        this.$refs.list.classList.toggle('is-hidden');
-      },
-      toogleEditableState() {
-        this.$bus.$emit('editable');
-      },
-      submit() {
-        const printPreview = window.open('about:blank', 'print_preview');
-        const printDocument = printPreview.document;
-        printDocument.open();
-        printDocument.write(
-          `<!DOCTYPE html>
-          <html>
-            ${document.documentElement.innerHTML}
-          </html>`);
-        const editable = Array.from(printDocument.querySelectorAll('.is-editable'));
-        const uploder = Array.from(printDocument.querySelectorAll('.is-uploader'));
-        const stylers = Array.from(printDocument.querySelectorAll('.styler'));
-        const images =  Array.from(printDocument.querySelectorAll('img'));
-        const artboadrd = printDocument.querySelector('#artboard');
-        const head = printDocument.querySelector('head');
-        const imagePromises = [];
-        const zip = new JSZip();
-        const output = zip.folder('project');
-        const imgFolder = output.folder('assets/img');
-
-        images.forEach((image) => {
-          const imageLoader = getImageBlob(image.src);
-          imagePromises.push(imageLoader);
-          imageLoader.then((img) => {
-            imgFolder.file(img.name, img.blob, { base64: true });
-            image.setAttribute('src',  `assets/img/${img.name}`);
-          })
-        });
-
-
-        Promise.all(imagePromises).then(() => {
-          editable.forEach((el) => {
-            el.contentEditable = 'false';
-            el.classList.remove('is-editable');
-          });
-          uploder.forEach((el) => {
-            const input = el.querySelector(':scope > input');
-            input.remove();
-            el.classList.remove('is-uploader');
-          });
-          stylers.forEach((styler) => {
-            styler.remove();
-          });
-
-          output.file("index.html",
-            `<html>
-            <head>
-              ${head.innerHTML}
-            </head>
-            <body>
-              ${artboadrd.innerHTML}
-            </body>
-          </html>`);
-
-          zip.generateAsync({ type: "blob" })
-            .then((blob) => {
-              saveAs(blob, "project.zip");
-              printPreview.close();
-            });
-        });
-        
-      }
+export default {
+  name: 'Controller',
+  inject: ['$builder'],
+  props: {
+    showIntro: Boolean
+  },
+  data () {
+    return {
+      title: '',
+      listShown: false,
+      sections: Object.keys(this.$builder.components)
     }
-  };
+  },
+  watch: {
+    title (value) {
+      document.title = value;
+      this.$builder.title = value;
+    }
+  },
+  methods: {
+    addElement (name) {
+      this.$builder.add({
+        name: name,
+        data: elementProps()[name]
+      });
+      this.listShown = false;
+    },
+    toogleEditableState () {
+      this.$builder.isEditing = !this.$builder.isEditing;
+    },
+    submit () {
+      this.$builder.export('zip');
+    }
+  }
+};
 </script>
 
 <style lang="stylus">
@@ -182,4 +114,3 @@ $floatHover
 .is-hidden
   display: none
 </style>
-

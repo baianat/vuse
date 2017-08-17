@@ -1,15 +1,15 @@
 <template lang="pug">
   section.social(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
-    :class="[{'is-editable': editable}, section.class]"
+    :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .container
       .grid
         .row.is-center
           .column.is-screen-6
             p.social-quote(
-              :class="{'is-editable': editable}"
+              :class="{'is-editable': $builder.isEditing}"
               data-v-prop="content"
               v-html="content.text"
               v-styler:text="content"
@@ -26,29 +26,14 @@
 </template>
 
 <script>
-  import uploader from '../Uploader.vue';
-  import { exciteEditable } from '../../util';
-
-  export default {
-    name: 'social2',
-    props: {
-      id: Number,
-      editable: Boolean,
-      content: Object,
-      section: Object,
-      images: Array
-    },
-    methods: {
-      updateImage() {
-        const file = this.$refs.uploader.files[0];
-        this.$refs.image.src = URL.createObjectURL(file);
-      }
-    },
-    components: {
-      uploader: uploader
-    },
-    mounted() {
-      exciteEditable(this.$el);
-    }
-  };
+export default {
+  name: 'social2',
+  props: {
+    id: Number,
+    editable: Boolean,
+    content: Object,
+    section: Object,
+    images: Array
+  }
+};
 </script>

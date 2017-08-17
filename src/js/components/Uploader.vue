@@ -1,33 +1,38 @@
 <template lang="pug">
-  div(
-    :class="[{'is-editable': editable}, 'uploader']"
-  )
-    img(:src="imgURL" :data-v-id="imageId" ref="image")
+  div(:class="[{ 'is-editable': $builder.isEditing }, 'uploader']")
+    img(:src="src")
     input.uploader-input(
       type="file"
       ref="uploader"
       @change="updateImage"
-      v-if="editable"
+      v-if="$builder.isEditing"
     )
 </template>
 
-
 <script>
 export default {
-  name: 'ploader',
+  name: 'uploader',
+  inject: ['$builder', '$section'],
   props: {
     imgURL: String,
-    editable: Boolean,
-    parentId: Number,
     imageId: Number
   },
+  data: () => ({
+    src: ''
+  }),
   methods: {
-    updateImage() {
+    updateImage () {
       const file = this.$refs.uploader.files[0];
+      if (!file) {
+        return;
+      }
       const imageURL = URL.createObjectURL(file);
-      this.$refs.image.src = imageURL;
-      this.$bus.$emit('updateImage', this.$props.parentId, this.$refs.image.dataset.vId, imageURL);
+      this.src = imageURL;
+      this.$section.data.images[this.imageId] = imageURL;
     }
+  },
+  created () {
+    this.src = this.imgURL;
   }
 }
 </script>

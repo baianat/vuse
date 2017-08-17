@@ -1,26 +1,26 @@
 <template lang="pug">
   header.header(
-    v-styler:section="section" 
+    v-styler:section="section"
     :data-v-id="id"
-    :class="[{'is-editable': editable}, section.class]"
+    :class="[{'is-editable': $builder.isEditing}, section.class]"
     )
     .container
       .grid
         .column.is-screen-6.is-offset-screen-3.add-center-horizontal.add-padding.add-text-center
           h3.header-title(
-            :class="{'is-editable': editable}"
+            :class="{'is-editable': $builder.isEditing}"
             data-v-prop="title"
             v-html="title.text"
             v-styler:text="title"
             )
           p.header-content(
-            :class="{'is-editable': editable}"
+            :class="{'is-editable': $builder.isEditing}"
             data-v-prop="content"
             v-html="content.text"
             v-styler:text="content"
             )
           a.button(
-            :class="[{'is-editable': editable}, button.class]"
+            :class="[{'is-editable': $builder.isEditing}, button.class]"
             :href="button.href"
             data-v-prop="button"
             v-styler:button="button"
@@ -37,25 +37,16 @@
 </template>
 
 <script>
-  import uploader from '../Uploader.vue';
-  import { exciteEditable } from '../../util';
-
-  export default {
-    name: 'header2',
-    props: {
-      id: Number,
-      editable: Boolean,
-      title: Object,
-      content: Object,
-      button: Object,
-      section: Object,
-      images: Array
-    },
-    components: {
-      uploader: uploader
-    },
-    mounted() {
-      exciteEditable(this.$el);
-    }
-  };
+export default {
+  name: 'header2',
+  props: {
+    id: Number,
+    editable: Boolean,
+    title: Object,
+    content: Object,
+    button: Object,
+    section: Object,
+    images: Array
+  }
+};
 </script>
