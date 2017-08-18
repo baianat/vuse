@@ -40,7 +40,6 @@ export default {
 <style lang="stylus">
   .uploader
     position: relative
-    padding: 0 10px
     &-input
       position: absolute
       top: 0

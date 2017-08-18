@@ -1,0 +1,29 @@
+.user
+  display: flex
+  align-items: center
+  margin: 10px 0
+  &.is-alt
+    justify-content: center
+    flex-direction: column
+  &-avatar
+    border-radius: 50%
+    width: 60px
+    height: 60px
+    margin-right: 20px
+    flex-shrink: 0
+    overflow: hidden
+    .is-alt &
+      margin: 0 0 20px
+  &-data
+    text-align: left
+    white-space: nowrap
+    .is-alt &
+      text-align: center
+  &-name
+    font-size: 16px
+    color: $black
+    margin: 5px 0
+  &-caption
+    font-size: 16px
+    color: $gray
+    margin: 0 0 5px

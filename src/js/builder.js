@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import saveAs from 'save-as'
-import { getImageBlob } from './util';
+import { getImageBlob, getTypeFromTagName } from './util';
 import Section from './section';
 import BuilderComponent from './components/Builder';
 import Styler from './components/Styler';
@@ -80,7 +80,7 @@ export default class Builder {
         const styler = new StylerInstance({
           propsData: {
             el: el,
-            type: binding.arg,
+            type: binding.arg || getTypeFromTagName(el.tagName),
             name: binding.expression,
             editable: el.classList.contains('is-editable')
           }

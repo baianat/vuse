@@ -34,3 +34,37 @@ export function getImageBlob (URL) {
     xhr.send(null);
   });
 }
+
+export function getTypeFromTagName (tagName) {
+  tagName = tagName.toUpperCase();
+  switch (tagName) {
+    case 'H1':
+      return 'text';
+    case 'H2':
+      return 'text';
+    case 'H3':
+      return 'text';
+    case 'H4':
+      return 'text';
+    case 'H5':
+      return 'text';
+    case 'H6':
+      return 'text';
+    case 'P':
+      return 'text';
+    case 'B':
+      return 'text';
+    case 'SPAN':
+      return 'text';
+    case 'BUTTON':
+      return 'button';
+    case 'A':
+      return 'button';
+    case 'SECTION':
+      return 'section';
+    case 'HEADER':
+      return 'section';
+    default:
+      break;
+  }
+}

@@ -15,14 +15,19 @@
               v-styler:text="content"
             )
         .row.is-center
-          .column.is-screen-2(v-for="(logo, index) in images")
-            uploader(
-              classes="social-logo"
-              :imgURL="logo"
-              :parentId="id"
-              :imageId="index"
-              :editable="editable"
-            )
+          .column.is-screen-2
+            .user.is-alt
+              uploader(
+                class="user-avatar"
+                :imgURL="images[0]"
+                :parentId="id"
+                :imageId="0"
+                :editable="editable"
+              )
+              .user-data
+                h4.user-name Ahmed
+                span.user-caption SEO at Baianat
+
 </template>
 
 <script>

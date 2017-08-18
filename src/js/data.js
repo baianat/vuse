@@ -11,7 +11,8 @@ const data = {
     'static/img/facebook.svg'
   ],
   caption: 'Client',
-  number: '12,920'
+  number: '12,920',
+  avatar: 'static/img/avatar.png'
 };
 
 export default data;

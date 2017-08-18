@@ -2,7 +2,7 @@ import data from './data';
 
 export default () => {
   return {
-    header1: {
+    hero1: {
       title: {
         text: data.title
       },
@@ -20,7 +20,7 @@ export default () => {
       images: [data.images[0]]
     },
 
-    header2: {
+    hero2: {
       title: {
         text: data.title
       },
@@ -96,7 +96,39 @@ export default () => {
       content: {
         text: data.content
       },
+      images: [data.avatar]
+    },
+
+    social3: {
+      section: {
+        class: []
+      },
+      title: {
+        text: data.title
+      },
+      content: {
+        text: data.content
+      },
       images: data.logos
+    },
+
+    social4: {
+      section: {
+        class: []
+      },
+      title: {
+        text: data.title
+      },
+      columns: [
+        {
+          content: data.content
+        }, {
+          content: data.content
+        }, {
+          content: data.content
+        }
+      ],
+      images: [data.avatar]
     }
   };
 };

@@ -1,6 +1,6 @@
 <template lang="pug">
-  header.header(
-    v-styler:section="section"
+  section.header(
+    v-styler="section"
     :data-v-id="id"
     :class="[{'is-editable': $builder.isEditing}, section.class]"
     )
@@ -11,21 +11,21 @@
             :class="{'is-editable': $builder.isEditing}"
             data-v-prop="title"
             v-html="title.text"
-            v-styler:text="title"
-            )
+            v-styler="title"
+          )
           p.header-content(
             :class="{'is-editable': $builder.isEditing}"
             data-v-prop="content"
             v-html="content.text"
-            v-styler:text="content"
-            )
+            v-styler="content"
+          )
           a.button(
             :class="[{'is-editable': $builder.isEditing}, button.class]"
             :href="button.href"
             data-v-prop="button"
-            v-styler:button="button"
+            v-styler="button"
             v-html="button.text "
-            )
+          )
         .column.is-screen-6
           uploader(
             class="header-image"
@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: 'header1',
+  name: 'hero1',
   props: {
     id: Number,
     editable: Boolean,
