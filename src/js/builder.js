@@ -17,13 +17,14 @@ let _Vue = null;
 
 // Singleton objects.
 let _builder = null;
-let mixin = null;
-let styler = null;
+let _components = {};
+let _mixin = null;
+let _styler = null;
 
-export default class Builder {
+class Builder {
   constructor (options) {
     options = Object.assign({}, BUILDER_OPTIONS, options);
-    this.title = options.docTitle;
+    this.title = options.title;
     this.isEditing = true;
     this.sections = options.sections || [];
     this.components = {};
@@ -49,9 +50,9 @@ export default class Builder {
     }
 
     this.components[name] = definition.extend({
-      directives: { styler },
+      directives: { styler: _styler },
       components: { Uploader },
-      ...mixin
+      ..._mixin
     });
   }
 
@@ -72,7 +73,7 @@ export default class Builder {
         this.$builder = _builder;
       }
     });
-    styler = {
+    _styler = {
       inserted (el, binding, vnode) {
         const newNode = document.createElement('div');
         newNode.id = 'newNode'
@@ -89,7 +90,7 @@ export default class Builder {
       }
     };
 
-    mixin = {
+    _mixin = {
       provide: function providesBuilder () {
         const provides = {};
         if (this.$builder) {
@@ -115,7 +116,11 @@ export default class Builder {
       }
     };
 
-    installComponents(_builder);
+    // install registered components.
+    Object.keys(_components).forEach(component => {
+      _builder.component(component, _components[component]);
+    });
+
     const BuilderInstance = Vue.extend(BuilderComponent);
     Vue.component('builder', BuilderInstance.extend({
       components: _builder.components,
@@ -128,6 +133,10 @@ export default class Builder {
         this.$builder = _builder;
       }
     }));
+  }
+
+  static component (name, definition) {
+    _components[name] = definition;
   }
 
   download () {
@@ -221,3 +230,7 @@ export default class Builder {
     }
   }
 };
+
+installComponents(Builder);
+
+export default Builder;
