@@ -19166,7 +19166,6 @@ var Builder = function () {
           var newNode = document.createElement('div');
           newNode.id = 'newNode';
           el.parentNode.appendChild(newNode);
-          console.log(binding);
           new StylerInstance({
             propsData: {
               section: vnode.context.$section,
@@ -34799,7 +34798,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     },
     domProps: {
-      "innerHTML": _vm._s(_vm.column.content)
+      "innerHTML": _vm._s(_vm.columns[0].content)
     }
   }), _c('b', {
     directives: [{
@@ -34813,7 +34812,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     },
     domProps: {
-      "innerHTML": _vm._s(_vm.column.title)
+      "innerHTML": _vm._s(_vm.columns[0].title)
     }
   })]), _c('div', {
     staticClass: "column is-screen-2 social-item"
@@ -34829,7 +34828,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     },
     domProps: {
-      "innerHTML": _vm._s(_vm.column.content)
+      "innerHTML": _vm._s(_vm.columns[1].content)
     }
   }), _c('b', {
     directives: [{
@@ -34843,7 +34842,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     },
     domProps: {
-      "innerHTML": _vm._s(_vm.column.title)
+      "innerHTML": _vm._s(_vm.columns[1].title)
     }
   })]), _c('div', {
     staticClass: "column is-screen-2 social-item"
@@ -34859,7 +34858,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     },
     domProps: {
-      "innerHTML": _vm._s(_vm.column.content)
+      "innerHTML": _vm._s(_vm.columns[2].content)
     }
   }), _c('b', {
     directives: [{
@@ -34873,7 +34872,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     },
     domProps: {
-      "innerHTML": _vm._s(_vm.column.title)
+      "innerHTML": _vm._s(_vm.columns[2].title)
     }
   })])])])
 }

@@ -77,7 +77,6 @@ export default class Builder {
         const newNode = document.createElement('div');
         newNode.id = 'newNode'
         el.parentNode.appendChild(newNode);
-        console.log(binding);
         new StylerInstance({
           propsData: {
             section: vnode.context.$section,

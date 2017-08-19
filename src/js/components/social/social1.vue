@@ -7,34 +7,34 @@
       .column.is-screen-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
-          v-html="column.content"
+          v-html="columns[0].content"
           v-styler="columns[0].content"
         )
         b.social-keyword(
           :class="{'is-editable': $builder.isEditing}"
-          v-html="column.title"
+          v-html="columns[0].title"
           v-styler="columns[0].title"
         )
       .column.is-screen-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
-          v-html="column.content"
+          v-html="columns[1].content"
           v-styler="columns[1].content"
         )
         b.social-keyword(
           :class="{'is-editable': $builder.isEditing}"
-          v-html="column.title"
+          v-html="columns[1].title"
           v-styler="columns[1].title"
         )
       .column.is-screen-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
-          v-html="column.content"
+          v-html="columns[2].content"
           v-styler="columns[2].content"
         )
         b.social-keyword(
           :class="{'is-editable': $builder.isEditing}"
-          v-html="column.title"
+          v-html="columns[2].title"
           v-styler="columns[2].title"
         )
 </template>
