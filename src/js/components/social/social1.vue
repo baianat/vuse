@@ -4,18 +4,38 @@
     :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .grid.is-center
-      .column.is-screen-2.social-item(v-for="(column, index) in columns")
+      .column.is-screen-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
-          :data-v-prop="`content-${index}`"
           v-html="column.content"
-          v-styler:text="content"
+          v-styler="columns[0].content"
         )
         b.social-keyword(
           :class="{'is-editable': $builder.isEditing}"
-          :data-v-prop="`title-${index}`"
           v-html="column.title"
-          v-styler:text="title"
+          v-styler="columns[0].title"
+        )
+      .column.is-screen-2.social-item
+        h6.social-number(
+          :class="{'is-editable': $builder.isEditing}"
+          v-html="column.content"
+          v-styler="columns[1].content"
+        )
+        b.social-keyword(
+          :class="{'is-editable': $builder.isEditing}"
+          v-html="column.title"
+          v-styler="columns[1].title"
+        )
+      .column.is-screen-2.social-item
+        h6.social-number(
+          :class="{'is-editable': $builder.isEditing}"
+          v-html="column.content"
+          v-styler="columns[2].content"
+        )
+        b.social-keyword(
+          :class="{'is-editable': $builder.isEditing}"
+          v-html="column.title"
+          v-styler="columns[2].title"
         )
 </template>
 

@@ -28,6 +28,12 @@ export default class Section {
   }
 
   update (name, value) {
-    this.data[name] = value;
+    if (this.data[name] === undefined) {
+      const splited = name.split('.');
+      const matched = splited[0].match(/^(.+)\[([0-9]+)\]/);
+      this.data[matched[1]][Number(matched[2])][splited[1]] = value;
+      return;
+    }
+    this.data[name].text = value;
   }
 };

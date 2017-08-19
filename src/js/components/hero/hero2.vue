@@ -8,22 +8,19 @@
         .column.is-screen-6.is-offset-screen-3.add-center-horizontal.add-padding.add-text-center
           h3.header-title(
             :class="{'is-editable': $builder.isEditing}"
-            data-v-prop="title"
             v-html="title.text"
             v-styler="title"
             )
           p.header-content(
             :class="{'is-editable': $builder.isEditing}"
-            data-v-prop="content"
             v-html="content.text"
             v-styler="content"
             )
           a.button(
             :class="[{'is-editable': $builder.isEditing}, button.class]"
             :href="button.href"
-            data-v-prop="button"
+            v-html="button.text"
             v-styler="button"
-            v-html="button.text "
             )
         .column.is-screen-8.is-offset-screen-2
           uploader(

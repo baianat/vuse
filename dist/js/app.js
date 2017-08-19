@@ -19166,6 +19166,7 @@ var Builder = function () {
           var newNode = document.createElement('div');
           newNode.id = 'newNode';
           el.parentNode.appendChild(newNode);
+          console.log(binding);
           new StylerInstance({
             propsData: {
               section: vnode.context.$section,
@@ -30087,7 +30088,13 @@ var Section = function () {
   _createClass(Section, [{
     key: 'update',
     value: function update(name, value) {
-      this.data[name] = value;
+      if (this.data[name] === undefined) {
+        var splited = name.split('.');
+        var matched = splited[0].match(/^(.+)\[([0-9]+)\]/);
+        this.data[matched[1]][Number(matched[2])][splited[1]] = value;
+        return;
+      }
+      this.data[name].text = value;
     }
   }]);
 
@@ -30863,16 +30870,14 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
       if (!Object(__WEBPACK_IMPORTED_MODULE_1__util__["c" /* isParentTo */])(mouseTarget, this.styler) && !Object(__WEBPACK_IMPORTED_MODULE_1__util__["c" /* isParentTo */])(mouseTarget, this.el)) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
-        if (this.el.dataset.vProp) {
-          this.section.update('text', this.el.innerHTML);
-        }
+        if (this.type === 'section') return;
+        this.section.update(this.name, this.el.innerHTML);
       }
     }
   },
 
   mounted() {
     if (!this.$builder.isEditing) return;
-
     // get nessesry data
     this.styler = this.$refs.styler;
     this.id = Number(this.section.id);
@@ -33917,9 +33922,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'hero1',
@@ -33968,9 +33970,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     class: {
       'is-editable': _vm.$builder.isEditing
     },
-    attrs: {
-      "data-v-prop": "title"
-    },
     domProps: {
       "innerHTML": _vm._s(_vm.title.text)
     }
@@ -33984,9 +33983,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "header-content",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.content.text)
@@ -34003,8 +33999,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     }, _vm.button.class],
     attrs: {
-      "href": _vm.button.href,
-      "data-v-prop": "button"
+      "href": _vm.button.href
     },
     domProps: {
       "innerHTML": _vm._s(_vm.button.text)
@@ -34118,9 +34113,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'hero2',
@@ -34169,9 +34161,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     class: {
       'is-editable': _vm.$builder.isEditing
     },
-    attrs: {
-      "data-v-prop": "title"
-    },
     domProps: {
       "innerHTML": _vm._s(_vm.title.text)
     }
@@ -34185,9 +34174,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "header-content",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.content.text)
@@ -34204,8 +34190,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       'is-editable': _vm.$builder.isEditing
     }, _vm.button.class],
     attrs: {
-      "href": _vm.button.href,
-      "data-v-prop": "button"
+      "href": _vm.button.href
     },
     domProps: {
       "innerHTML": _vm._s(_vm.button.text)
@@ -34318,10 +34303,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'section1',
@@ -34362,17 +34343,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('h2', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
-      value: (_vm.title - 0),
-      expression: "title-0",
-      arg: "text"
+      rawName: "v-styler",
+      value: (_vm.columns[0].title),
+      expression: "columns[0].title"
     }],
     staticClass: "section-title",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "title-0"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[0].title)
@@ -34380,17 +34357,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _c('p', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
-      value: (_vm.content - 0),
-      expression: "content-0",
-      arg: "text"
+      rawName: "v-styler",
+      value: (_vm.columns[0].content),
+      expression: "columns[0].content"
     }],
     staticClass: "section-paragraph",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content-0"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[0].content)
@@ -34400,17 +34373,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('h2', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
-      value: (_vm.title - 1),
-      expression: "title-1",
-      arg: "text"
+      rawName: "v-styler",
+      value: (_vm.columns[1].title),
+      expression: "columns[1].title"
     }],
     staticClass: "section-title",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "title-1"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[1].title)
@@ -34418,17 +34387,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _c('p', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
-      value: (_vm.content - 1),
-      expression: "content-1",
-      arg: "text"
+      rawName: "v-styler",
+      value: (_vm.columns[1].content),
+      expression: "columns[1].content"
     }],
     staticClass: "section-paragraph",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content-1"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[1].content)
@@ -34522,6 +34487,26 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'section2',
@@ -34557,47 +34542,97 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "container"
   }, [_c('div', {
     staticClass: "grid is-center"
-  }, _vm._l((_vm.columns), function(column, index) {
-    return _c('div', {
-      staticClass: "column is-screen-4"
-    }, [_c('h2', {
-      directives: [{
-        name: "styler",
-        rawName: "v-styler:text",
-        value: (_vm.title),
-        expression: "title",
-        arg: "text"
-      }],
-      staticClass: "section-title",
-      class: {
-        'is-editable': _vm.$builder.isEditing
-      },
-      attrs: {
-        "data-v-prop": ("title-" + index)
-      },
-      domProps: {
-        "innerHTML": _vm._s(column.title)
-      }
-    }), _c('p', {
-      directives: [{
-        name: "styler",
-        rawName: "v-styler:text",
-        value: (_vm.content),
-        expression: "content",
-        arg: "text"
-      }],
-      staticClass: "section-paragraph",
-      class: {
-        'is-editable': _vm.$builder.isEditing
-      },
-      attrs: {
-        "data-v-prop": ("content-" + index)
-      },
-      domProps: {
-        "innerHTML": _vm._s(column.content)
-      }
-    })])
-  }))])])
+  }, [_c('div', {
+    staticClass: "column is-screen-4"
+  }, [_c('h2', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[0].title),
+      expression: "columns[0].title"
+    }],
+    staticClass: "section-title",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.columns[0].title)
+    }
+  }), _c('p', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[0].content),
+      expression: "columns[0].content"
+    }],
+    staticClass: "section-paragraph",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.columns[0].content)
+    }
+  })]), _c('div', {
+    staticClass: "column is-screen-4"
+  }, [_c('h2', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[1].title),
+      expression: "columns[1].title"
+    }],
+    staticClass: "section-title",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.columns[1].title)
+    }
+  }), _c('p', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[1].content),
+      expression: "columns[1].content"
+    }],
+    staticClass: "section-paragraph",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.columns[1].content)
+    }
+  })]), _c('div', {
+    staticClass: "column is-screen-4"
+  }, [_c('h2', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[2].title),
+      expression: "columns[2].title"
+    }],
+    staticClass: "section-title",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.columns[2].title)
+    }
+  }), _c('p', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[2].content),
+      expression: "columns[2].content"
+    }],
+    staticClass: "section-paragraph",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.columns[2].content)
+    }
+  })])])])])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -34686,6 +34721,26 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34730,47 +34785,97 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, _vm.section.class]
   }, [_c('div', {
     staticClass: "grid is-center"
-  }, _vm._l((_vm.columns), function(column, index) {
-    return _c('div', {
-      staticClass: "column is-screen-2 social-item"
-    }, [_c('h6', {
-      directives: [{
-        name: "styler",
-        rawName: "v-styler:text",
-        value: (_vm.content),
-        expression: "content",
-        arg: "text"
-      }],
-      staticClass: "social-number",
-      class: {
-        'is-editable': _vm.$builder.isEditing
-      },
-      attrs: {
-        "data-v-prop": ("content-" + index)
-      },
-      domProps: {
-        "innerHTML": _vm._s(column.content)
-      }
-    }), _c('b', {
-      directives: [{
-        name: "styler",
-        rawName: "v-styler:text",
-        value: (_vm.title),
-        expression: "title",
-        arg: "text"
-      }],
-      staticClass: "social-keyword",
-      class: {
-        'is-editable': _vm.$builder.isEditing
-      },
-      attrs: {
-        "data-v-prop": ("title-" + index)
-      },
-      domProps: {
-        "innerHTML": _vm._s(column.title)
-      }
-    })])
-  }))])
+  }, [_c('div', {
+    staticClass: "column is-screen-2 social-item"
+  }, [_c('h6', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[0].content),
+      expression: "columns[0].content"
+    }],
+    staticClass: "social-number",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.column.content)
+    }
+  }), _c('b', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[0].title),
+      expression: "columns[0].title"
+    }],
+    staticClass: "social-keyword",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.column.title)
+    }
+  })]), _c('div', {
+    staticClass: "column is-screen-2 social-item"
+  }, [_c('h6', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[1].content),
+      expression: "columns[1].content"
+    }],
+    staticClass: "social-number",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.column.content)
+    }
+  }), _c('b', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[1].title),
+      expression: "columns[1].title"
+    }],
+    staticClass: "social-keyword",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.column.title)
+    }
+  })]), _c('div', {
+    staticClass: "column is-screen-2 social-item"
+  }, [_c('h6', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[2].content),
+      expression: "columns[2].content"
+    }],
+    staticClass: "social-number",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.column.content)
+    }
+  }), _c('b', {
+    directives: [{
+      name: "styler",
+      rawName: "v-styler",
+      value: (_vm.columns[2].title),
+      expression: "columns[2].title"
+    }],
+    staticClass: "social-keyword",
+    class: {
+      'is-editable': _vm.$builder.isEditing
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.column.title)
+    }
+  })])])])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -34867,7 +34972,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'social2',
@@ -34909,17 +35013,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('p', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
+      rawName: "v-styler",
       value: (_vm.content),
-      expression: "content",
-      arg: "text"
+      expression: "content"
     }],
     staticClass: "social-quote",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.content.text)
@@ -35044,8 +35144,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'social3',
@@ -35088,17 +35186,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('h3', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
+      rawName: "v-styler",
       value: (_vm.title),
-      expression: "title",
-      arg: "text"
+      expression: "title"
     }],
     staticClass: "social-title",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "title"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.title.text)
@@ -35108,17 +35202,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('p', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
+      rawName: "v-styler",
       value: (_vm.content),
-      expression: "content",
-      arg: "text"
+      expression: "content"
     }],
     staticClass: "social-content",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.content.text)
@@ -35274,10 +35364,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'social4',
@@ -35321,17 +35407,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('h3', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
+      rawName: "v-styler",
       value: (_vm.title),
-      expression: "title",
-      arg: "text"
+      expression: "title"
     }],
     staticClass: "social-title",
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "title"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.title.text)
@@ -35343,16 +35425,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('p', {
     directives: [{
       name: "styler",
-      rawName: "v-styler:text",
-      value: (_vm.content - 0),
-      expression: "content-0",
-      arg: "text"
+      rawName: "v-styler",
+      value: (_vm.columns[0].content),
+      expression: "columns[0].content"
     }],
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content-0"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[0].content)
@@ -35373,15 +35451,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "styler",
       rawName: "v-styler:text",
-      value: (_vm.content - 1),
-      expression: "content-1",
+      value: (_vm.columns[1].content),
+      expression: "columns[1].content",
       arg: "text"
     }],
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content-1"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[1].content)
@@ -35402,15 +35477,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "styler",
       rawName: "v-styler:text",
-      value: (_vm.content - 2),
-      expression: "content-2",
+      value: (_vm.columns[2].content),
+      expression: "columns[2].content",
       arg: "text"
     }],
     class: {
       'is-editable': _vm.$builder.isEditing
-    },
-    attrs: {
-      "data-v-prop": "content-2"
     },
     domProps: {
       "innerHTML": _vm._s(_vm.columns[2].content)

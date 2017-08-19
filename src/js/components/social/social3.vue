@@ -9,16 +9,14 @@
           .column.is-12.is-screen-7
             h3.social-title(
               :class="{'is-editable': $builder.isEditing}"
-              data-v-prop="title"
               v-html="title.text"
-              v-styler:text="title"
+              v-styler="title"
             )
           .column.is-12.is-screen-7
             p.social-content(
               :class="{'is-editable': $builder.isEditing}"
-              data-v-prop="content"
               v-html="content.text"
-              v-styler:text="content"
+              v-styler="content"
             )
         .row.is-center
           .column.is-screen-2(v-for="(logo, index) in images")

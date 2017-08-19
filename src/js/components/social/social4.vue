@@ -9,17 +9,15 @@
           .column.is-12
             h3.social-title(
               :class="{'is-editable': $builder.isEditing}"
-              data-v-prop="title"
               v-html="title.text"
-              v-styler:text="title"
+              v-styler="title"
             )
         .row.is-center
           .column.is-12.is-screen-4
             p(
               :class="{'is-editable': $builder.isEditing}"
-              data-v-prop="content-0"
               v-html="columns[0].content"
-              v-styler:text="content-0"
+              v-styler="columns[0].content"
             )
             .user
               uploader(
@@ -36,9 +34,8 @@
           .column.is-12.is-screen-4
               p(
                 :class="{'is-editable': $builder.isEditing}"
-                data-v-prop="content-1"
                 v-html="columns[1].content"
-                v-styler:text="content-1"
+                v-styler:text="columns[1].content"
               )
               .user
                 uploader(
@@ -55,9 +52,8 @@
           .column.is-12.is-screen-4
             p(
               :class="{'is-editable': $builder.isEditing}"
-              data-v-prop="content-2"
               v-html="columns[2].content"
-              v-styler:text="content-2"
+              v-styler:text="columns[2].content"
             )
             .user
               uploader(

@@ -138,16 +138,14 @@ export default {
       if (!isParentTo(mouseTarget, this.styler) && !isParentTo(mouseTarget, this.el)) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
-        if (this.el.dataset.vProp) {
-          this.section.update('text', this.el.innerHTML);
-        }
+        if (this.type === 'section') return;
+        this.section.update(this.name, this.el.innerHTML);
       }
     }
   },
 
   mounted () {
     if (!this.$builder.isEditing) return;
-
     // get nessesry data
     this.styler = this.$refs.styler;
     this.id = Number(this.section.id);

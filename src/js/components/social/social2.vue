@@ -9,9 +9,8 @@
           .column.is-screen-6
             p.social-quote(
               :class="{'is-editable': $builder.isEditing}"
-              data-v-prop="content"
               v-html="content.text"
-              v-styler:text="content"
+              v-styler="content"
             )
         .row.is-center
           .column.is-screen-2

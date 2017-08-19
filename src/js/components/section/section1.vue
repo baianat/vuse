@@ -8,29 +8,25 @@
         .column.is-screen-5
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
-            data-v-prop="title-0"
             v-html="columns[0].title"
-            v-styler:text="title-0"
-            )
+            v-styler="columns[0].title"
+          )
           p.section-paragraph(
             :class="{'is-editable': $builder.isEditing}"
-            data-v-prop="content-0"
             v-html="columns[0].content"
-            v-styler:text="content-0"
-            )
+            v-styler="columns[0].content"
+          )
         .column.is-screen-5.is-offset-screen-1
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
-            data-v-prop="title-1"
             v-html="columns[1].title"
-            v-styler:text="title-1"
-            )
+            v-styler="columns[1].title"
+          )
           p.section-paragraph(
             :class="{'is-editable': $builder.isEditing}"
-            data-v-prop="content-1"
             v-html="columns[1].content"
-            v-styler:text="content-1"
-            )
+            v-styler="columns[1].content"
+          )
 </template>
 
 <script>
