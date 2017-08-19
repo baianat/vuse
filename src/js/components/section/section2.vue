@@ -1,7 +1,6 @@
 <template lang="pug">
   section.section(
     v-styler:section="section"
-    :data-v-id="id"
     :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .container

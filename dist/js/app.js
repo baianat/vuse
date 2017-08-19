@@ -19166,15 +19166,15 @@ var Builder = function () {
           var newNode = document.createElement('div');
           newNode.id = 'newNode';
           el.parentNode.appendChild(newNode);
-          var styler = new StylerInstance({
+          new StylerInstance({
             propsData: {
+              section: vnode.context.$section,
               el: el,
               type: binding.arg || Object(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* getTypeFromTagName */])(el.tagName),
               name: binding.expression,
               editable: el.classList.contains('is-editable')
             }
           }).$mount('#newNode');
-          styler.$section = vnode.context.$section;
         }
       };
 
@@ -30802,7 +30802,7 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'styler',
-  props: ['el', 'type', 'name'],
+  props: ['el', 'type', 'name', 'section'],
   data: () => ({
     colors: ['blue', 'green', 'red', 'black', 'white'],
     textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#000000', '#FFFFFF'],
@@ -30823,7 +30823,7 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
       this.popper.update();
     },
     addLink() {
-      this.$section.data.button.href = this.$refs.linkInput.value;
+      this.section.data.button.href = this.$refs.linkInput.value;
     },
     changeColor() {
       this.removeClass(`is-${this.oldColorerColor}`);
@@ -30831,7 +30831,7 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
       this.addClass(`is-${this.colorerColor}`);
     },
     addClass(className) {
-      this.$section.data[this.name].class.push(className);
+      this.section.data[this.name].class.push(className);
     },
     removeClass(className) {
       if (Array.isArray(className)) {
@@ -30840,8 +30840,8 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
         });
       }
 
-      const idx = this.$section.data[this.name].class.indexOf(className);
-      this.$section.data[this.name].class.splice(idx, 1);
+      const idx = this.section.data[this.name].class.indexOf(className);
+      this.section.data[this.name].class.splice(idx, 1);
     },
     removeSection() {
       document.removeEventListener('click', this.hideStyler);
@@ -30864,7 +30864,7 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
         if (this.el.dataset.vProp) {
-          this.$section.update('text', this.el.innerHTML);
+          this.section.update('text', this.el.innerHTML);
         }
       }
     }
@@ -30874,10 +30874,8 @@ exports.push([module.i, "\n.styler {\n  position: relative;\n  z-index: 9999;\n 
     if (!this.$builder.isEditing) return;
 
     // get nessesry data
-    this.el = this.$props.el;
     this.styler = this.$refs.styler;
-    this.name = this.$props.name;
-    this.id = Number(this.el.closest('[data-v-id]').dataset.vId);
+    this.id = Number(this.section.id);
 
     // exute popper element
     const position = this.$props.type === 'section' ? 'left-start' : 'top';
@@ -33922,7 +33920,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'hero1',
@@ -33953,10 +33950,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "header",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -34127,7 +34121,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'hero2',
@@ -34158,10 +34151,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "header",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -34332,7 +34322,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'section1',
@@ -34363,10 +34352,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "section",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -34536,7 +34522,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'section2',
@@ -34567,10 +34552,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "section",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -34704,7 +34686,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 
 
@@ -34746,10 +34727,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "social",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "grid is-center"
   }, _vm._l((_vm.columns), function(column, index) {
@@ -34890,7 +34868,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'social2',
@@ -34920,10 +34897,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "social",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -35072,7 +35046,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'social3',
@@ -35103,10 +35076,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "social",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -35308,7 +35278,6 @@ if (false) {(function () {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'social4',
@@ -35340,10 +35309,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "social",
     class: [{
       'is-editable': _vm.$builder.isEditing
-    }, _vm.section.class],
-    attrs: {
-      "data-v-id": _vm.id
-    }
+    }, _vm.section.class]
   }, [_c('div', {
     staticClass: "container"
   }, [_c('div', {

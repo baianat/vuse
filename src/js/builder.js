@@ -77,15 +77,15 @@ export default class Builder {
         const newNode = document.createElement('div');
         newNode.id = 'newNode'
         el.parentNode.appendChild(newNode);
-        const styler = new StylerInstance({
+        new StylerInstance({
           propsData: {
+            section: vnode.context.$section,
             el: el,
             type: binding.arg || getTypeFromTagName(el.tagName),
             name: binding.expression,
             editable: el.classList.contains('is-editable')
           }
         }).$mount('#newNode');
-        styler.$section = vnode.context.$section;
       }
     };
 

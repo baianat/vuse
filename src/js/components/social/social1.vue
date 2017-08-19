@@ -1,7 +1,6 @@
 <template lang="pug">
   section.social(
     v-styler:section="section"
-    :data-v-id="id"
     :class="[{'is-editable': $builder.isEditing}, section.class]"
   )
     .grid.is-center

@@ -77,7 +77,7 @@ import { isParentTo } from '../util';
 
 export default {
   name: 'styler',
-  props: ['el', 'type', 'name'],
+  props: ['el', 'type', 'name', 'section'],
   data: () => ({
     colors: ['blue', 'green', 'red', 'black', 'white'],
     textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#000000', '#FFFFFF'],
@@ -98,7 +98,7 @@ export default {
       this.popper.update();
     },
     addLink () {
-      this.$section.data.button.href = this.$refs.linkInput.value;
+      this.section.data.button.href = this.$refs.linkInput.value;
     },
     changeColor () {
       this.removeClass(`is-${this.oldColorerColor}`);
@@ -106,7 +106,7 @@ export default {
       this.addClass(`is-${this.colorerColor}`);
     },
     addClass (className) {
-      this.$section.data[this.name].class.push(className);
+      this.section.data[this.name].class.push(className);
     },
     removeClass (className) {
       if (Array.isArray(className)) {
@@ -115,8 +115,8 @@ export default {
         });
       }
 
-      const idx = this.$section.data[this.name].class.indexOf(className);
-      this.$section.data[this.name].class.splice(idx, 1);
+      const idx = this.section.data[this.name].class.indexOf(className);
+      this.section.data[this.name].class.splice(idx, 1);
     },
     removeSection () {
       document.removeEventListener('click', this.hideStyler);
@@ -139,7 +139,7 @@ export default {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
         if (this.el.dataset.vProp) {
-          this.$section.update('text', this.el.innerHTML);
+          this.section.update('text', this.el.innerHTML);
         }
       }
     }
@@ -149,10 +149,8 @@ export default {
     if (!this.$builder.isEditing) return;
 
     // get nessesry data
-    this.el = this.$props.el;
     this.styler = this.$refs.styler;
-    this.name = this.$props.name;
-    this.id = Number(this.el.closest('[data-v-id]').dataset.vId);
+    this.id = Number(this.section.id);
 
     // exute popper element
     const position = this.$props.type === 'section' ? 'left-start' : 'top';
