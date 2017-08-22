@@ -12,22 +12,20 @@ const page = (name) => {
   return new HtmlWebpackPlugin({
     inject: true,
     template: `./src/pug/${name}.pug`,
-    filename: `../${name}.html`
+    filename: `../docs/${name}.html`
   });
 };
 
 const config = {
   devtool: production ? 'source-map' : 'cheap-source-map',
   entry: {
-    app: './src/js/index.js'
+    app: path.join(__dirname, 'src/js/app.js')
   },
-
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(__dirname, 'docs/dist'),
     filename: 'js/[name].js',
     publicPath: 'dist/'
   },
-
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'

@@ -57,7 +57,7 @@ export default class Builder {
     this.components[name] = definition.extend({
       directives: { styler },
       components: { Uploader },
-      ...mixin
+      mixins: [mixin]
     });
   }
 
