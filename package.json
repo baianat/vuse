@@ -2,6 +2,7 @@
   "name": "docs",
   "version": "0.0.0",
   "description": "Dolober Builder",
+  "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline --hot",
@@ -48,6 +49,5 @@
     "popper.js": "^1.11.1",
     "save-as": "^0.1.8",
     "vue": "^2.4.2"
-  },
-  "author": "Baianat"
+  }
 }
