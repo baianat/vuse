@@ -39,9 +39,7 @@ export default {
     content: types.Text,
     images: [types.Image],
     button: types.Button,
-    section: {
-      classes: types.ClassList
-    }
+    classes: types.ClassList
   },
   props: {
     id: Number
