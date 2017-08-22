@@ -17,8 +17,7 @@
             .user.is-alt
               uploader(
                 class="user-avatar"
-                :imgURL="$sectionData.images[0]"
-                :imageId="0"
+                path="$sectionData.images[0]"
               )
               .user-data
                 h4.user-name Ahmed

@@ -14,8 +14,10 @@ export default {
   name: 'uploader',
   inject: ['$builder', '$section'],
   props: {
-    imgURL: String,
-    imageId: Number
+    path: {
+      type: String,
+      required: true
+    }
   },
   data: () => ({
     src: ''
@@ -28,11 +30,11 @@ export default {
       }
       const imageURL = URL.createObjectURL(file);
       this.src = imageURL;
-      this.$section.data.images[this.imageId] = imageURL;
+      this.$section.set(this.path, imageURL);
     }
   },
   created () {
-    this.src = this.imgURL;
+    this.src = this.$section.get(this.path);
   }
 }
 </script>

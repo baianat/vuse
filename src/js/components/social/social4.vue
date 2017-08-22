@@ -22,8 +22,7 @@
             .user
               uploader(
                 class="user-avatar"
-                :imgURL="$sectionData.images[0]"
-                :imageId="0"
+                path="$sectionData.images[0]"
               )
               .user-data
                 h4.user-name Ahmed
@@ -38,9 +37,8 @@
               .user
                 uploader(
                   class="user-avatar"
-                  :imgURL="$sectionData.images[1]"
-                    :imageId="1"
-                  )
+                  path="$sectionData.images[1]"
+                )
                 .user-data
                   h4.user-name Ahmed
                   span.user-caption SEO at Baianat
@@ -54,8 +52,7 @@
             .user
               uploader(
                 class="user-avatar"
-                :imgURL="$sectionData.images[2]"
-                :imageId="2"
+                path="$sectionData.images[2]"
               )
               .user-data
                 h4.user-name Ahmed

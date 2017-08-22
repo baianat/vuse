@@ -25,8 +25,7 @@
         .column.is-screen-6
           uploader(
             class="header-image"
-            :imgURL="$sectionData.images[0]"
-            :imageId="0"
+            path="$sectionData.images[0]"
           )
 </template>
 

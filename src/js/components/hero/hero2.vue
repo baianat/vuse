@@ -25,8 +25,7 @@
         .column.is-screen-8.is-offset-screen-2
           uploader(
             class="header-image"
-            :imgURL="$sectionData.images[0]"
-            :imageId="0"
+            path="$sectionData.images[0]"
           )
 </template>
 

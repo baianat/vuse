@@ -22,8 +22,7 @@
           .column.is-screen-2(v-for="(logo, index) in $sectionData.images")
             uploader(
               class="social-logo"
-              :imgURL="logo"
-              :imageId="index"
+              :path="`$sectionData.images[${index}]`"
             )
 </template>
 

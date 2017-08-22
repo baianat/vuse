@@ -116,7 +116,6 @@ export default class Builder {
         }
       },
       mounted () {
-        console.log(this.$section.data);
         Array.from(this.$el.querySelectorAll('.is-editable')).forEach((el) => {
           el.contentEditable = 'true';
         });
