@@ -1,13 +1,6 @@
-export function getSectionById (elements, id) {
-  const getId = (el) => el.id === id;
-  const section = elements.find(getId);
-  return section;
-}
-
-export function removeFromArray (array, value) {
-  const index = array.indexOf(value);
-  if (index > -1) array.splice(index, 1);
-}
+export function isObject (obj) {
+  return obj && typeof obj === 'object' && obj !== null && !Array.isArray(obj);
+};
 
 export function isParentTo (target, parent) {
   let currentNode = target;
