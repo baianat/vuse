@@ -61,8 +61,6 @@ export default class Builder {
     });
   }
 
-  outputFragment ()
-
   static install (Vue, options = {}) {
     // already installed
     if (_Vue) {
@@ -155,7 +153,7 @@ export default class Builder {
 
   toJSON () {
     return {
-      title: this.docTitle,
+      title: this.title,
       sections: this.sections
     }
   }

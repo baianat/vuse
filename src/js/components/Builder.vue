@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    #artboard.artboard
+    #artboard.artboard(ref="artboard")
       component(v-for='section in $builder.sections'
         :is='section.name'
         :key='section.id'
@@ -15,6 +15,9 @@ import Controller from './Controller';
 
 export default {
   name: 'builder',
-  components: { Controller }
+  components: { Controller },
+  mounted () {
+    this.$builder.rootEl = this.$refs.artboard;
+  }
 };
 </script>
