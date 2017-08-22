@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     addElement (name) {
-      this.$builder.add({
+      this.$builder.create({
         name: name,
         schema: this.$builder.components[name].options.$schema
       });
