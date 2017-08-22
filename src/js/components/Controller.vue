@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import elementProps from '../elementsProps';
-
 export default {
   name: 'Controller',
   inject: ['$builder'],
@@ -53,7 +51,7 @@ export default {
     addElement (name) {
       this.$builder.add({
         name: name,
-        data: elementProps()[name]
+        schema: this.$builder.components[name].options.$schema
       });
       this.listShown = false;
     },
