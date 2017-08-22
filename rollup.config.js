@@ -1,8 +1,8 @@
 const buble = require('rollup-plugin-buble');
-const vue = require('rollup-plugin-vue');
-const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
+const vue = require('rollup-plugin-vue');
 const version = require('./package.json').version;
 
 module.exports = {
