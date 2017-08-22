@@ -1,48 +1,51 @@
 <template lang="pug">
   section.header(
-    v-styler="section"
-    :class="[{'is-editable': $builder.isEditing}, section.class]"
+    v-styler="$sectionData.classes"
+    :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
     )
     .container
       .grid
         .column.is-screen-6.is-offset-screen-3.add-center-horizontal.add-padding.add-text-center
           h3.header-title(
             :class="{'is-editable': $builder.isEditing}"
-            v-html="title.text"
-            v-styler="title"
+            v-html="$sectionData.title"
+            v-styler="$sectionData.title"
             )
           p.header-content(
             :class="{'is-editable': $builder.isEditing}"
-            v-html="content.text"
-            v-styler="content"
+            v-html="$sectionData.content"
+            v-styler="$sectionData.content"
             )
           a.button(
-            :class="[{'is-editable': $builder.isEditing}, button.class]"
-            :href="button.href"
-            v-html="button.text"
-            v-styler="button"
+            :class="[{'is-editable': $builder.isEditing}, $sectionData.button.classes]"
+            :href="$sectionData.button.href"
+            v-html="$sectionData.button.text"
+            v-styler="$sectionData.button"
             )
         .column.is-screen-8.is-offset-screen-2
           uploader(
             class="header-image"
-            :editable="editable"
-            :imgURL="images[0]"
-            :parentId="id"
+            :imgURL="$sectionData.images[0]"
             :imageId="0"
           )
 </template>
 
 <script>
+import * as types from '../../types';
+
 export default {
   name: 'hero2',
+  $schema: {
+    title: types.Title,
+    content: types.Text,
+    images: [types.Image],
+    button: types.Button,
+    section: {
+      classes: types.ClassList
+    }
+  },
   props: {
-    id: Number,
-    editable: Boolean,
-    title: Object,
-    content: Object,
-    button: Object,
-    section: Object,
-    images: Array
+    id: Number
   }
 };
 </script>

@@ -108,7 +108,11 @@ export default {
     },
     addClass (className) {
       this.section.set(this.name, value => {
-        value.classes.push(className);
+        if (value && value.classes && Array.isArray(value.classes)) {
+          value = value.classes;
+        }
+
+        value.push(className);
       });
     },
     removeClass (className) {
@@ -118,8 +122,11 @@ export default {
         });
       }
       this.section.set(this.name, value => {
-        const idx = value.classes.indexOf(className);
-        value.classes.splice(idx, 1);
+        if (value && value.classes && Array.isArray(value.classes)) {
+          value = value.classes;
+        }
+        const idx = value.indexOf(className);
+        value.splice(idx, 1);
       });
     },
     removeSection () {
