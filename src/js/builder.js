@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import saveAs from 'save-as'
-import { getImageBlob, getTypeFromTagName } from './util';
+import { getImageBlob, getTypeFromTagName, getTypeFromSchema } from './util';
 import Section from './section';
 import BuilderComponent from './components/Builder';
 import Styler from './components/Styler';
@@ -79,9 +79,9 @@ export default class Builder {
         el.parentNode.appendChild(newNode);
         new StylerInstance({
           propsData: {
+            el,
             section: vnode.context.$section,
-            el: el,
-            type: binding.arg || getTypeFromTagName(el.tagName),
+            type: binding.arg || getTypeFromSchema(binding.expression, vnode.context.$section.schema) || getTypeFromTagName(el.tagName),
             name: binding.expression,
             editable: el.classList.contains('is-editable')
           }

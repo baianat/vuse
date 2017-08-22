@@ -1,3 +1,6 @@
+import getPath from 'lodash/get';
+import * as types from './types';
+
 export function isObject (obj) {
   return obj && typeof obj === 'object' && obj !== null && !Array.isArray(obj);
 };
@@ -9,6 +12,23 @@ export function isParentTo (target, parent) {
     currentNode = currentNode.parentNode;
   }
   return false;
+}
+
+/**
+ *
+ * @param {String} target 
+ * @param {Object} schema 
+ */
+export function getTypeFromSchema (target, schema) {
+  const value = getPath(schema, target);
+
+  if (value === types.Title) return 'text';
+  if (value === types.Text) return 'text';
+  if (value === types.Button) return 'button';
+  if (value === String) return 'text';
+  if (value === Number) return 'text';
+
+  return null;
 }
 
 export function getImageBlob (URL) {

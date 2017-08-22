@@ -1,4 +1,6 @@
 import Seeder from './seeder';
+import getPath from 'lodash/get';
+import toPath from 'lodash/toPath';
 
 const SECTION_OPTIONS = {
   name: null,
@@ -16,13 +18,25 @@ export default class Section {
     this.data = Seeder.seed(options.schema);
   }
 
-  update (name, value) {
-    if (this.data[name] === undefined) {
-      const splited = name.split('.');
-      const matched = splited[0].match(/^(.+)\[([0-9]+)\]/);
-      this.data[matched[1]][Number(matched[2])][splited[1]] = value;
+  set (name, value) {
+    const path = toPath(name);
+    const prop = path.pop();
+    path.shift();
+    const obj = path.length === 0 ? this.data : getPath(this.data, path);
+    if (typeof value === 'function') {
+      value(obj[prop]);
       return;
     }
-    this.data[name].text = value;
+
+    obj[prop] = value;
+  }
+
+  get (name) {
+    const path = toPath(name);
+    const prop = path.pop();
+    path.shift();
+    const obj = path.length === 0 ? this.data : getPath(this.data, path);
+
+    return obj[prop];
   }
 };

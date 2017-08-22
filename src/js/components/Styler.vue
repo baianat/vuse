@@ -47,7 +47,7 @@
                 )
       li(v-if="currentOption === 'link'")
         .input.is-rounded.is-button
-          input(type="text" placeholder="type your link" ref="linkInput")
+          input(type="text" placeholder="type your link" v-model="url")
           button.button.is-green(@click="addLink")
             +icon('link', 'is-large')
 
@@ -85,7 +85,8 @@ export default {
     oldColorerColor: '',
     colorerColor: '',
     mouseTarget: '',
-    currentOption: ''
+    currentOption: '',
+    url: ''
   }),
   watch: {
     colorerColor () {
@@ -98,7 +99,7 @@ export default {
       this.popper.update();
     },
     addLink () {
-      this.section.data.button.href = this.$refs.linkInput.value;
+      this.section.set(`${this.name}.href`, this.url);
     },
     changeColor () {
       this.removeClass(`is-${this.oldColorerColor}`);
@@ -106,7 +107,9 @@ export default {
       this.addClass(`is-${this.colorerColor}`);
     },
     addClass (className) {
-      this.section.data[this.name].class.push(className);
+      this.section.set(this.name, value => {
+        value.classes.push(className);
+      });
     },
     removeClass (className) {
       if (Array.isArray(className)) {
@@ -114,9 +117,10 @@ export default {
           this.removeClass(c);
         });
       }
-
-      const idx = this.section.data[this.name].class.indexOf(className);
-      this.section.data[this.name].class.splice(idx, 1);
+      this.section.set(this.name, value => {
+        const idx = value.classes.indexOf(className);
+        value.classes.splice(idx, 1);
+      });
     },
     removeSection () {
       document.removeEventListener('click', this.hideStyler);
@@ -139,11 +143,20 @@ export default {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
         if (this.type === 'section') return;
-        this.section.update(this.name, this.el.innerHTML);
+        if (this.type === 'button') {
+          this.section.set(`${this.name}.text`, this.el.innerHTML);
+          return;
+        }
+
+        this.section.set(this.name, this.el.innerHTML);
       }
     }
   },
-
+  created () {
+    if (this.type === 'button') {
+      this.url = this.section.get(`${this.name}.href`);
+    }
+  },
   mounted () {
     if (!this.$builder.isEditing) return;
     // get nessesry data
