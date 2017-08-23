@@ -11,25 +11,23 @@ const production = env === 'production';
 const page = (name) => {
   return new HtmlWebpackPlugin({
     inject: true,
-    template: `./src/pug/${name}.pug`,
-    filename: `../docs/${name}.html`
+    template: path.join(__dirname, '/../', `src/pug/${name}.pug`),
+    filename: path.join(__dirname, '/../', `docs/${name}.html`)
   });
 };
 
 const config = {
   devtool: production ? 'source-map' : 'cheap-source-map',
   entry: {
-    app: path.join(__dirname, 'src/js/app.js')
+    app: path.join(__dirname, '/../', '/src/js/app.js')
   },
   output: {
-    path: path.join(__dirname, 'docs/dist'),
+    path: path.join(__dirname, '/../', 'docs/dist'),
     filename: 'js/[name].js',
     publicPath: 'dist/'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
     page('index'),
     new FriendlyErrorsWebpackPlugin(),
     new ProgressBarPlugin()

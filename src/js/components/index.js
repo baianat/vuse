@@ -7,7 +7,7 @@ import social2 from './social/social2';
 import social3 from './social/social3';
 import social4 from './social/social4';
 
-const install = (Builder) => {
+const install = ({ Builder }) => {
   Builder.component(hero1.name, hero1);
   Builder.component(hero2.name, hero2);
   Builder.component(section1.name, section1);

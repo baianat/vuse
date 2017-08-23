@@ -3,7 +3,6 @@ import Section from './section';
 import BuilderComponent from './components/Builder';
 import Styler from './components/Styler';
 import Uploader from './components/Uploader'
-import installComponents from './components';
 
 const BUILDER_OPTIONS = {
   docTitle: '',
@@ -128,7 +127,6 @@ export default class Builder {
       }
     };
 
-    installComponents(_builder);
     const BuilderInstance = Vue.extend(BuilderComponent);
     Vue.component('builder', BuilderInstance.extend({
       components: _builder.components,

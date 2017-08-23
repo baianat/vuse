@@ -1,8 +1,8 @@
 /**
- * Builder v0.0.0
- * (c) 2017 Abdelrahman Ismail
- * @license MIT
- */
+* Builder v0.0.0
+* (c) 2017 Abdelrahman Ismail
+* @license MIT
+*/
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -4021,157 +4021,6 @@ var Uploader = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
-var hero1 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.classes),expression:"$sectionData.classes"}],staticClass:"header",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid"},[_c('div',{staticClass:"column is-screen-6 add-center-vertical"},[_c('h3',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.title),expression:"$sectionData.title"}],staticClass:"header-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.content),expression:"$sectionData.content"}],staticClass:"header-content",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.content)}}),_c('a',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.button),expression:"$sectionData.button"}],staticClass:"button",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.button.classes],attrs:{"href":_vm.$sectionData.button.href},domProps:{"innerHTML":_vm._s(_vm.$sectionData.button.text)}})]),_c('div',{staticClass:"column is-screen-6"},[_c('uploader',{staticClass:"header-image",attrs:{"path":"$sectionData.images[0]"}})],1)])])])},staticRenderFns: [],
-  name: 'hero1',
-  $schema: {
-    title: Title,
-    content: Text,
-    images: [Image],
-    button: Button,
-    classes: ClassList
-  },
-  props: {
-    id: Number
-  }
-};
-
-var hero2 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.classes),expression:"$sectionData.classes"}],staticClass:"header",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid"},[_c('div',{staticClass:"column is-screen-6 is-offset-screen-3 add-center-horizontal add-padding add-text-center"},[_c('h3',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.title),expression:"$sectionData.title"}],staticClass:"header-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.content),expression:"$sectionData.content"}],staticClass:"header-content",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.content)}}),_c('a',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.button),expression:"$sectionData.button"}],staticClass:"button",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.button.classes],attrs:{"href":_vm.$sectionData.button.href},domProps:{"innerHTML":_vm._s(_vm.$sectionData.button.text)}})]),_c('div',{staticClass:"column is-screen-8 is-offset-screen-2"},[_c('uploader',{staticClass:"header-image",attrs:{"path":"$sectionData.images[0]"}})],1)])])])},staticRenderFns: [],
-  name: 'hero2',
-  $schema: {
-    title: Title,
-    content: Text,
-    images: [Image],
-    button: Button,
-    classes: ClassList
-  },
-  props: {
-    id: Number
-  }
-};
-
-var section1 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.classes),expression:"$sectionData.classes"}],staticClass:"section",class:[{ 'is-editable': _vm.$builder.isEditing }, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-5"},[_c('h2',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].title),expression:"$sectionData.columns[0].title"}],staticClass:"section-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].content),expression:"$sectionData.columns[0].content"}],staticClass:"section-paragraph",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].content)}})]),_c('div',{staticClass:"column is-screen-5 is-offset-screen-1"},[_c('h2',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[1].title),expression:"$sectionData.columns[1].title"}],staticClass:"section-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[1].content),expression:"$sectionData.columns[1].content"}],staticClass:"section-paragraph",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].content)}})])])])])},staticRenderFns: [],
-  name: 'section1',
-  props: { id: Number },
-  $schema: {
-    classes: ClassList,
-    columns: [
-      {
-        title: Title,
-        content: Text
-      },
-      {
-        title: Title,
-        content: Text
-      }
-    ]
-  }
-};
-
-var section2 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler:section",value:(_vm.$sectionData.classes),expression:"$sectionData.classes",arg:"section"}],staticClass:"section",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-4"},[_c('h2',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].title),expression:"$sectionData.columns[0].title"}],staticClass:"section-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].content),expression:"$sectionData.columns[0].content"}],staticClass:"section-paragraph",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].content)}})]),_c('div',{staticClass:"column is-screen-4"},[_c('h2',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[1].title),expression:"$sectionData.columns[1].title"}],staticClass:"section-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[1].content),expression:"$sectionData.columns[1].content"}],staticClass:"section-paragraph",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].content)}})]),_c('div',{staticClass:"column is-screen-4"},[_c('h2',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[2].title),expression:"$sectionData.columns[2].title"}],staticClass:"section-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[2].title)}}),_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[2].content),expression:"$sectionData.columns[2].content"}],staticClass:"section-paragraph",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[2].content)}})])])])])},staticRenderFns: [],
-  name: 'section2',
-  $schema: {
-    classes: ClassList,
-    columns: [
-      {
-        title: Title,
-        content: Text
-      }, {
-        title: Title,
-        content: Text
-      }, {
-        title: Title,
-        content: Text
-      }
-    ]
-  },
-  props: {
-    id: Number
-  }
-};
-
-var social1 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler:section",value:(_vm.$sectionData.classes),expression:"$sectionData.classes",arg:"section"}],staticClass:"social",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-2 social-item"},[_c('h6',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].content),expression:"$sectionData.columns[0].content"}],staticClass:"social-number",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].content)}}),_c('b',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].title),expression:"$sectionData.columns[0].title"}],staticClass:"social-keyword",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].title)}})]),_c('div',{staticClass:"column is-screen-2 social-item"},[_c('h6',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[1].content),expression:"$sectionData.columns[1].content"}],staticClass:"social-number",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].content)}}),_c('b',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[1].title),expression:"$sectionData.columns[1].title"}],staticClass:"social-keyword",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].title)}})]),_c('div',{staticClass:"column is-screen-2 social-item"},[_c('h6',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[2].content),expression:"$sectionData.columns[2].content"}],staticClass:"social-number",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[2].content)}}),_c('b',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[2].title),expression:"$sectionData.columns[2].title"}],staticClass:"social-keyword",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[2].title)}})])])])},staticRenderFns: [],
-  name: 'social1',
-  $schema: {
-    classes: ClassList,
-    columns: [
-      {
-        title: Title,
-        content: Number
-      }, {
-        title: Title,
-        content: Number
-      }, {
-        title: Title,
-        content: Number
-      }
-    ]
-  },
-  props: {
-    id: Number
-  }
-};
-
-var social2 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler:section",value:(_vm.$sectionData.classes),expression:"$sectionData.classes",arg:"section"}],staticClass:"social",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid"},[_c('div',{staticClass:"row is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.content),expression:"$sectionData.content"}],staticClass:"social-quote",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.content)}})])]),_c('div',{staticClass:"row is-center"},[_c('div',{staticClass:"column is-screen-2"},[_c('div',{staticClass:"user is-alt"},[_c('uploader',{staticClass:"user-avatar",attrs:{"path":"$sectionData.images[0]"}}),_vm._m(0)],1)])])])])])},staticRenderFns: [function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"user-data"},[_c('h4',{staticClass:"user-name"},[_vm._v("Ahmed")]),_c('span',{staticClass:"user-caption"},[_vm._v("SEO at Baianat")])])}],
-  name: 'social2',
-  $schema: {
-    classes: ClassList,
-    content: Text,
-    images: [Avatar]
-  },
-  props: {
-    id: Number
-  }
-};
-
-var social3 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler:section",value:(_vm.$sectionData.classes),expression:"$sectionData.classes",arg:"section"}],staticClass:"social",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid"},[_c('div',{staticClass:"row is-center"},[_c('div',{staticClass:"column is-12 is-screen-7"},[_c('h3',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.title),expression:"$sectionData.title"}],staticClass:"social-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.title)}})]),_c('div',{staticClass:"column is-12 is-screen-7"},[_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.content),expression:"$sectionData.content"}],staticClass:"social-content",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.content)}})])]),_c('div',{staticClass:"row is-center"},_vm._l((_vm.$sectionData.images),function(logo,index){return _c('div',{staticClass:"column is-screen-2"},[_c('uploader',{staticClass:"social-logo",attrs:{"path":("$sectionData.images[" + index + "]")}})],1)}))])])])},staticRenderFns: [],
-  name: 'social3',
-  $schema: {
-    classes: ClassList,
-    title: Title,
-    content: Text,
-    images: [
-      Logo,
-      Logo,
-      Logo
-    ]
-  },
-  props: {
-    id: Number
-  }
-};
-
-var social4 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{directives:[{name:"styler",rawName:"v-styler:section",value:(_vm.$sectionData.classes),expression:"$sectionData.classes",arg:"section"}],staticClass:"social",class:[{'is-editable': _vm.$builder.isEditing}, _vm.$sectionData.classes]},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid"},[_c('div',{staticClass:"row is-center"},[_c('div',{staticClass:"column is-12"},[_c('h3',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.title),expression:"$sectionData.title"}],staticClass:"social-title",class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.title)}})])]),_c('div',{staticClass:"row is-center"},[_c('div',{staticClass:"column is-12 is-screen-4"},[_c('p',{directives:[{name:"styler",rawName:"v-styler",value:(_vm.$sectionData.columns[0].content),expression:"$sectionData.columns[0].content"}],class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[0].content)}}),_c('div',{staticClass:"user"},[_c('uploader',{staticClass:"user-avatar",attrs:{"path":"$sectionData.images[0]"}}),_vm._m(0)],1)]),_c('div',{staticClass:"column is-12 is-screen-4"},[_c('p',{directives:[{name:"styler",rawName:"v-styler:text",value:(_vm.$sectionData.columns[1].content),expression:"$sectionData.columns[1].content",arg:"text"}],class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[1].content)}}),_c('div',{staticClass:"user"},[_c('uploader',{staticClass:"user-avatar",attrs:{"path":"$sectionData.images[1]"}}),_vm._m(1)],1)]),_c('div',{staticClass:"column is-12 is-screen-4"},[_c('p',{directives:[{name:"styler",rawName:"v-styler:text",value:(_vm.$sectionData.columns[2].content),expression:"$sectionData.columns[2].content",arg:"text"}],class:{'is-editable': _vm.$builder.isEditing},domProps:{"innerHTML":_vm._s(_vm.$sectionData.columns[2].content)}}),_c('div',{staticClass:"user"},[_c('uploader',{staticClass:"user-avatar",attrs:{"path":"$sectionData.images[2]"}}),_vm._m(2)],1)])])])])])},staticRenderFns: [function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"user-data"},[_c('h4',{staticClass:"user-name"},[_vm._v("Ahmed")]),_c('span',{staticClass:"user-caption"},[_vm._v("SEO at Baianat")])])},function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"user-data"},[_c('h4',{staticClass:"user-name"},[_vm._v("Ahmed")]),_c('span',{staticClass:"user-caption"},[_vm._v("SEO at Baianat")])])},function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"user-data"},[_c('h4',{staticClass:"user-name"},[_vm._v("Ahmed")]),_c('span',{staticClass:"user-caption"},[_vm._v("SEO at Baianat")])])}],
-  name: 'social4',
-  $schema: {
-    classes: [ClassList],
-    title: Title,
-    columns: [
-      { content: Text },
-      { content: Text },
-      { content: Text }
-    ],
-    images: [
-      Avatar,
-      Avatar,
-      Avatar
-    ]
-  },
-  props: {
-    id: Number
-  }
-};
-
-var install = function (Builder) {
-  Builder.component(hero1.name, hero1);
-  Builder.component(hero2.name, hero2);
-  Builder.component(section1.name, section1);
-  Builder.component(section2.name, section2);
-  Builder.component(social1.name, social1);
-  Builder.component(social2.name, social2);
-  Builder.component(social3.name, social3);
-  Builder.component(social4.name, social4);
-};
-
 var BUILDER_OPTIONS = {
   docTitle: '',
   sections: []
@@ -4227,7 +4076,7 @@ Builder.prototype.component = function component (name, definition) {
   });
 };
 
-Builder.install = function install$$1 (Vue, options) {
+Builder.install = function install (Vue, options) {
     if ( options === void 0 ) options = {};
 
   // already installed
@@ -4296,7 +4145,6 @@ Builder.install = function install$$1 (Vue, options) {
     }
   };
 
-  install(_builder);
   var BuilderInstance = Vue.extend(BuilderComponent);
   Vue.component('builder', BuilderInstance.extend({
     components: _builder.components,
