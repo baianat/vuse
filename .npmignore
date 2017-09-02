@@ -1,0 +1,7 @@
+/build
+/docs
+/src
+/static
+.eslintrc.json
+.gitignore
+yarn.lock
