@@ -4,7 +4,7 @@ import BuilderComponent from './components/Builder';
 import Styler from './components/Styler';
 import Uploader from './components/Uploader'
 
-const COMPONENTS = {};
+let PLUGINS = [];
 
 const BUILDER_OPTIONS = {
   docTitle: '',
@@ -25,7 +25,7 @@ export default class Builder {
     this.title = options.docTitle;
     this.isEditing = true;
     this.sections = options.sections || [];
-    this.components = COMPONENTS;
+    this.components = {};
   }
 
   create (options) {
@@ -49,16 +49,15 @@ export default class Builder {
     this.sections.splice(idx, 1);
   }
 
+  /**
+   * Static helper for components registration pre-installation.
+   * 
+   * @param {String} name 
+   * @param {Object} definition 
+   */
   static component (name, definition) {
-    // if passed a plain object.
-    if (!definition.extend) {
-      definition = _Vue.extend(definition);
-    }
-
-    COMPONENTS[name] = definition.extend({
-      directives: { styler },
-      components: { Uploader },
-      mixins: [mixin]
+    Builder.use(ctx => {
+      ctx.Builder.component(name, definition);
     });
   }
 
@@ -84,6 +83,12 @@ export default class Builder {
     _Vue = Vue;
 
     _builder = new Builder(options);
+    // Install plugins.
+    PLUGINS.forEach(ctx => {
+      ctx.plugin({ Builder: _builder }, ctx.options);
+    });
+    // reset to prevent duplications.
+    PLUGINS = [];
     Vue.util.defineReactive(_builder, 'sections', _builder.sections);
     Vue.util.defineReactive(_builder, 'isEditing', _builder.isEditing);
 
@@ -161,7 +166,8 @@ export default class Builder {
       return console.warn('Plugins must be a function');
     }
 
-    plugin({ Builder }, options);
+    // prepare plugins
+    PLUGINS.push({ plugin, options });
   }
 
   toJSON () {

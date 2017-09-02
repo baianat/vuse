@@ -4029,7 +4029,7 @@ var Uploader = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
-var COMPONENTS = {};
+var PLUGINS = [];
 
 var BUILDER_OPTIONS = {
   docTitle: '',
@@ -4049,7 +4049,7 @@ var Builder = function Builder (options) {
   this.title = options.docTitle;
   this.isEditing = true;
   this.sections = options.sections || [];
-  this.components = COMPONENTS;
+  this.components = {};
 };
 
 Builder.prototype.create = function create (options) {
@@ -4073,16 +4073,15 @@ Builder.prototype.remove = function remove (id) {
   this.sections.splice(idx, 1);
 };
 
+/**
+ * Static helper for components registration pre-installation.
+ * 
+ * @param {String} name 
+ * @param {Object} definition 
+ */
 Builder.component = function component (name, definition) {
-  // if passed a plain object.
-  if (!definition.extend) {
-    definition = _Vue.extend(definition);
-  }
-
-  COMPONENTS[name] = definition.extend({
-    directives: { styler: styler },
-    components: { Uploader: Uploader },
-    mixins: [mixin]
+  Builder.use(function (ctx) {
+    ctx.Builder.component(name, definition);
   });
 };
 
@@ -4110,6 +4109,12 @@ Builder.install = function install (Vue, options) {
   _Vue = Vue;
 
   _builder = new Builder(options);
+  // Install plugins.
+  PLUGINS.forEach(function (ctx) {
+    ctx.plugin({ Builder: _builder }, ctx.options);
+  });
+  // reset to prevent duplications.
+  PLUGINS = [];
   Vue.util.defineReactive(_builder, 'sections', _builder.sections);
   Vue.util.defineReactive(_builder, 'isEditing', _builder.isEditing);
 
@@ -4189,7 +4194,8 @@ Builder.use = function use (plugin, options) {
     return console.warn('Plugins must be a function');
   }
 
-  plugin({ Builder: Builder }, options);
+  // prepare plugins
+  PLUGINS.push({ plugin: plugin, options: options });
 };
 
 Builder.prototype.toJSON = function toJSON () {
