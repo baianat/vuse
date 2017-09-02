@@ -4,6 +4,8 @@ import BuilderComponent from './components/Builder';
 import Styler from './components/Styler';
 import Uploader from './components/Uploader'
 
+const COMPONENTS = {};
+
 const BUILDER_OPTIONS = {
   docTitle: '',
   sections: []
@@ -23,7 +25,7 @@ export default class Builder {
     this.title = options.docTitle;
     this.isEditing = true;
     this.sections = options.sections || [];
-    this.components = {};
+    this.components = COMPONENTS;
   }
 
   create (options) {
@@ -45,6 +47,19 @@ export default class Builder {
   remove (id) {
     const idx = this.sections.findIndex(s => s.id === id);
     this.sections.splice(idx, 1);
+  }
+
+  static component (name, definition) {
+    // if passed a plain object.
+    if (!definition.extend) {
+      definition = _Vue.extend(definition);
+    }
+
+    COMPONENTS[name] = definition.extend({
+      directives: { styler },
+      components: { Uploader },
+      mixins: [mixin]
+    });
   }
 
   component (name, definition) {

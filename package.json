@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "Dolober Builder",
   "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
-  "main": "index.js",
+  "unpkg": "dist/builder.min.js",
+  "main": "dist/builder.js",
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.config.js --inline --hot",
     "build": "npm run lint && npm run build:demo && npm run build:bundle",
