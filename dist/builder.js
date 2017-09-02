@@ -1404,7 +1404,7 @@ Section.prototype.get = function get (name) {
   return obj[prop];
 };
 
-var Controller = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"controller"},[(_vm.showIntro)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])]):_vm._e(),_c('ul',{staticClass:"controller-list",class:{ 'is-hidden': !_vm.listShown }},_vm._l((_vm.sections),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addElement(section);}}},[_vm._v(_vm._s(section))])])})),_c('div',{staticClass:"container"},[_c('div',{staticClass:"controller-buttons grid is-center"},[_c('div',{staticClass:"column is-screen-3"},[_c('a',{ref:"addButton",staticClass:"controller-add button is-blue is-block",attrs:{"disabled":!_vm.title.length},on:{"click":function($event){_vm.listShown = true;}}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('use',{attrs:{"xlink:href":"dist/img/icons.svg#icon-plus"}})])])]),_c('div',{staticClass:"column is-screen-3"},[_c('a',{staticClass:"controller-submit button is-green is-block",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('use',{attrs:{"xlink:href":"dist/img/icons.svg#icon-tic"}})])])])])])])},staticRenderFns: [],
+var Controller = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"controller"},[(_vm.showIntro)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])]):_vm._e(),_c('ul',{staticClass:"controller-list",class:{ 'is-hidden': !_vm.listShown }},_vm._l((_vm.sections),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addElement(section);}}},[_vm._v(_vm._s(section))])])})),_c('div',{staticClass:"container"},[_c('div',{staticClass:"controller-buttons grid is-center"},[_c('div',{staticClass:"column is-screen-3"},[_c('a',{ref:"addButton",staticClass:"controller-add button is-blue is-block",attrs:{"disabled":!_vm.title.length},on:{"click":function($event){_vm.addSection();}}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('use',{attrs:{"xlink:href":"dist/img/icons.svg#icon-plus"}})])])]),_c('div',{staticClass:"column is-screen-3"},[_c('a',{staticClass:"controller-submit button is-green is-block",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('use',{attrs:{"xlink:href":"dist/img/icons.svg#icon-tic"}})])])])])])])},staticRenderFns: [],
   name: 'Controller',
   inject: ['$builder'],
   props: {
@@ -1424,6 +1424,14 @@ var Controller = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     }
   },
   methods: {
+    addSection: function addSection () {
+      // add the section immediatly if none are present.
+      if (this.sections.length === 1) {
+        this.addElement(this.sections[0]);
+        return;
+      }
+      this.listShown = true;
+    },
     addElement: function addElement (name) {
       this.$builder.create({
         name: name,

@@ -17,7 +17,7 @@
       .controller-buttons.grid.is-center
         .column.is-screen-3
           a.controller-add.button.is-blue.is-block(
-            @click="listShown = true"
+            @click="addSection()"
             ref="addButton"
             :disabled="!title.length"
           )
@@ -48,6 +48,14 @@ export default {
     }
   },
   methods: {
+    addSection () {
+      // add the section immediatly if none are present.
+      if (this.sections.length === 1) {
+        this.addElement(this.sections[0]);
+        return;
+      }
+      this.listShown = true;
+    },
     addElement (name) {
       this.$builder.create({
         name: name,
