@@ -1,5 +1,5 @@
 /**
-* Builder v0.0.0
+* Builder v0.0.1
 * (c) 2017 Abdelrahman Ismail
 * @license MIT
 */
@@ -4029,6 +4029,8 @@ var Uploader = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
+var COMPONENTS = {};
+
 var BUILDER_OPTIONS = {
   docTitle: '',
   sections: []
@@ -4047,7 +4049,7 @@ var Builder = function Builder (options) {
   this.title = options.docTitle;
   this.isEditing = true;
   this.sections = options.sections || [];
-  this.components = {};
+  this.components = COMPONENTS;
 };
 
 Builder.prototype.create = function create (options) {
@@ -4069,6 +4071,19 @@ Builder.prototype.find = function find (id) {
 Builder.prototype.remove = function remove (id) {
   var idx = this.sections.findIndex(function (s) { return s.id === id; });
   this.sections.splice(idx, 1);
+};
+
+Builder.component = function component (name, definition) {
+  // if passed a plain object.
+  if (!definition.extend) {
+    definition = _Vue.extend(definition);
+  }
+
+  COMPONENTS[name] = definition.extend({
+    directives: { styler: styler },
+    components: { Uploader: Uploader },
+    mixins: [mixin]
+  });
 };
 
 Builder.prototype.component = function component (name, definition) {
