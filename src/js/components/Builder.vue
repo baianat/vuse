@@ -7,14 +7,14 @@
         :id='section.id'
       )
 
-    controller(:show-intro='!$builder.sections.length')
+    controller(:show-intro='$builder.intro && !$builder.sections.length')
 </template>
 
 <script>
 import Controller from './Controller';
 
 export default {
-  name: 'builder',
+  name: 'b-builder',
   components: { Controller },
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;

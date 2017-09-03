@@ -1,6 +1,6 @@
+import getPath from 'lodash-es/get';
+import toPath from 'lodash-es/toPath';
 import Seeder from './seeder';
-import getPath from 'lodash/get';
-import toPath from 'lodash/toPath';
 
 const SECTION_OPTIONS = {
   name: null,

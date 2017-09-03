@@ -42,7 +42,8 @@ const config = {
     inline: true,
     stats: 'errors-only',
     host: '0.0.0.0',
-    port: 8080
+    port: 8080,
+    contentBase: path.join(__dirname, '../docs')
   },
 
   module: {

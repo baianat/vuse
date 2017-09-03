@@ -54,6 +54,6 @@ function download () {
   });
 }
 
-export default function install ({ Builder }) {
-  Builder.prototype.download = download;
+export default function install ({ builder }) {
+  builder.download = download;
 };

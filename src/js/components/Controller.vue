@@ -43,7 +43,6 @@ export default {
   },
   watch: {
     title (value) {
-      document.title = value;
       this.$builder.title = value;
     }
   },

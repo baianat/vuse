@@ -1,37 +1,42 @@
-import { getTypeFromTagName, getTypeFromSchema } from './util';
+import merge from 'lodash-es/merge';
 import Section from './section';
 import BuilderComponent from './components/Builder';
-import Styler from './components/Styler';
-import Uploader from './components/Uploader'
+import styler from './styler';
+import mixin from './mixin';
 
 let PLUGINS = [];
-
+let mixier = {};
 const BUILDER_OPTIONS = {
-  docTitle: '',
-  sections: []
+  title: '',
+  intro: true,
+  sections: [],
+  plugins: []
 };
 
 // To tell if it is installed or not
 let _Vue = null;
 
-// Singleton objects.
-let _builder = null;
-let mixin = null;
-let styler = null;
-
-export default class Builder {
+class Builder {
   constructor (options) {
-    options = Object.assign({}, BUILDER_OPTIONS, options);
-    this.title = options.docTitle;
+    this.title = options.title;
     this.isEditing = true;
-    this.sections = options.sections || [];
+    this.intro = options.intro;
+    this.sections = options.sections;
     this.components = {};
+    this.installPlugins();
   }
 
+  /**
+   * Creates and adds a new section to the list of sections.
+   * @param {*} options
+   */
   create (options) {
     this.sections.push(new Section(options));
   }
 
+  /**
+   * Constructs a document fragment.
+   */
   outputFragment () {
     const frag = document.createDocumentFragment();
     frag.appendChild(document.head.cloneNode(true));
@@ -40,10 +45,19 @@ export default class Builder {
     return frag;
   }
 
+  /**
+   * Finds a section with the specified id.
+   *
+   * @param {String|Number} id 
+   */
   find (id) {
     return this.sections.find(s => s.id === id);
   }
 
+  /**
+   * Removes a section with the specified id.
+   * @param {String|Number} id 
+   */
   remove (id) {
     const idx = this.sections.findIndex(s => s.id === id);
     this.sections.splice(idx, 1);
@@ -56,22 +70,53 @@ export default class Builder {
    * @param {Object} definition 
    */
   static component (name, definition) {
+    // Just make a plugin that installs a component.
     Builder.use(ctx => {
-      ctx.Builder.component(name, definition);
+      ctx.builder.component(name, definition);
     });
   }
 
+  /**
+   * Acts as a mixin for subcomponents.
+   * @param {Object} mixinObj 
+   */
+  static mix (mixinObj) {
+    mixier = merge(mixier, mixinObj);
+  }
+
+  /**
+   * Adds a component section to the builder and augments it with the styler.
+   * @param {*} name 
+   * @param {*} definition 
+   */
   component (name, definition) {
+    // reoslve the component name automatically.
+    if (typeof name === 'object') {
+      definition = name;
+      name = definition.name;
+    }
+
     // if passed a plain object.
     if (!definition.extend) {
       definition = _Vue.extend(definition);
     }
 
     this.components[name] = definition.extend({
-      directives: { styler },
-      components: { Uploader },
-      mixins: [mixin]
+      directives: { styler: this.styler },
+      mixins: [this.mixin],
+      components: mixier.components
     });
+  }
+
+  /**
+   * Installs added plugins.
+   */
+  installPlugins () {
+    PLUGINS.forEach(ctx => {
+      ctx.plugin({ builder: this, Vue: _Vue }, ctx.options);
+    });
+    // reset to prevent duplications.
+    PLUGINS = [];
   }
 
   static install (Vue, options = {}) {
@@ -81,102 +126,56 @@ export default class Builder {
     }
 
     _Vue = Vue;
-
-    _builder = new Builder(options);
-    // Install plugins.
-    PLUGINS.forEach(ctx => {
-      ctx.plugin({ Builder: _builder }, ctx.options);
-    });
-    // reset to prevent duplications.
-    PLUGINS = [];
-    Vue.util.defineReactive(_builder, 'sections', _builder.sections);
-    Vue.util.defineReactive(_builder, 'isEditing', _builder.isEditing);
-
-    const StylerInstance = Vue.extend(Styler).extend({
-      beforeCreate () {
-        this.$builder = _builder;
-      }
-    });
-    styler = {
-      inserted (el, binding, vnode) {
-        const newNode = document.createElement('div');
-        newNode.id = 'newNode'
-        el.parentNode.appendChild(newNode);
-        new StylerInstance({
-          propsData: {
-            el,
-            section: vnode.context.$section,
-            type: binding.arg || getTypeFromSchema(binding.expression, vnode.context.$section.schema) || getTypeFromTagName(el.tagName),
-            name: binding.expression,
-            editable: el.classList.contains('is-editable')
-          }
-        }).$mount('#newNode');
-      }
-    };
-
-    mixin = {
-      provide: function providesBuilder () {
-        const provides = {};
-        if (this.$builder) {
-          provides.$builder = this.$builder;
-        }
-
-        if (this.$section) {
-          provides.$section = this.$section;
-        }
-
-        return provides;
-      },
-      beforeCreate () {
-        this.$builder = _builder;
-        if (this.$options.propsData && this.$options.propsData.id !== undefined) {
-          this.$section = this.$builder.find(this.$options.propsData.id);
-          if (!this.$options.computed) {
-            this.$options.computed = {};
-          }
-
-          this.$options.computed.$sectionData = function getSectionData () {
-            return this.$section.data;
-          };
-        }
-      },
-      mounted () {
-        Array.from(this.$el.querySelectorAll('.is-editable')).forEach((el) => {
-          el.contentEditable = 'true';
-        });
-      }
-    };
+    const builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
+    Vue.util.defineReactive(builder, 'sections', builder.sections);
+    Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
 
     const BuilderInstance = Vue.extend(BuilderComponent);
     Vue.component('builder', BuilderInstance.extend({
-      components: _builder.components,
+      components: builder.components,
       provide () {
         return {
           $builder: this.$builder
         }
       },
       beforeCreate () {
-        this.$builder = _builder;
+        this.$builder = builder;
       }
     }));
   }
 
+  /**
+   * The plugin to be installed with the builder. The function recieves the installation context which
+   * contains the builder instance and the Vue prototype.
+   *
+   * @param {Function} plugin 
+   * @param {Object} options 
+   */
   static use (plugin, options = {}) {
     if (typeof plugin !== 'function') {
       return console.warn('Plugins must be a function');
     }
 
-    // prepare plugins
+    // append to the list of to-be installed plugins.
     PLUGINS.push({ plugin, options });
   }
 
+  /**
+   * Outputs a JSON representation of the builder that can be used for rendering with the renderer component.
+   */
   toJSON () {
     return {
       title: this.title,
-      sections: this.sections
-    }
+      sections: this.sections.map(s => ({
+        name: s.name,
+        data: s.data
+      }))
+    };
   }
 
+  /**
+   * Previews the created page in a seperate tap/window.
+   */
   preview () {
     const printPreview = window.open('about:blank', 'print_preview');
     const printDocument = printPreview.document;
@@ -189,13 +188,36 @@ export default class Builder {
     );
   }
 
-  export (method = 'zip') {
+  /**
+   * Exports the builder instance to a specified output. default is json.
+   *
+   * @param {String} method 
+   */
+  export (method = 'json') {
     if (method === 'zip') {
-      return this.download();
+      if (typeof this.download === 'function') {
+        return this.download();
+      }
+
+      return console.warn('You do not have the zip plugin installed.');
     }
 
-    if (method === 'json') {
-      return this.toJSON();
+    if (method === 'preview') {
+      return this.preview();
     }
+
+    return this.toJSON();
   }
 };
+
+// use the plugin API to add the styler and mixin functionalities.
+Builder.use(styler);
+Builder.use(mixin);
+
+// Auto install if Vue is defined globally.
+if (typeof Vue !== 'undefined') {
+  // eslint-disable-next-line
+  Vue.use(Builder);
+}
+
+export default Builder;
