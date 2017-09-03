@@ -3,6 +3,7 @@ import Section from './section';
 import BuilderComponent from './components/Builder';
 import styler from './styler';
 import mixin from './mixin';
+import * as types from './types';
 
 let PLUGINS = [];
 let mixier = {};
@@ -219,5 +220,8 @@ if (typeof Vue !== 'undefined') {
   // eslint-disable-next-line
   Vue.use(Builder);
 }
+
+Builder.version = '__VERSION__';
+Builder.types = types;
 
 export default Builder;
