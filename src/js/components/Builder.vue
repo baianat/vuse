@@ -73,7 +73,7 @@ export default {
       this.$builder.isEditing = !this.$builder.isEditing;
     },
     submit () {
-      this.$builder.export('zip');
+      this.$emit('saved', this.$builder);
     }
   },
   mounted () {

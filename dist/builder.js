@@ -1,5 +1,5 @@
 /**
-* Builder v0.0.4
+* Builder v0.0.5
 * (c) 2017 Abdelrahman Ismail
 * @license MIT
 */
@@ -3837,7 +3837,7 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
       this.$builder.isEditing = !this.$builder.isEditing;
     },
     submit: function submit () {
-      this.$builder.export('zip');
+      this.$emit('saved', this.$builder);
     }
   },
   mounted: function mounted () {
@@ -6674,7 +6674,7 @@ if (typeof Vue !== 'undefined') {
   Vue.use(Builder);
 }
 
-Builder.version = '0.0.4';
+Builder.version = '0.0.5';
 Builder.types = types;
 
 return Builder;
