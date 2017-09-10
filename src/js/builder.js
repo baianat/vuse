@@ -132,7 +132,7 @@ class Builder {
     Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
 
     const BuilderInstance = Vue.extend(BuilderComponent);
-    Vue.component('builder', BuilderInstance.extend({
+    Vue.component('b-builder', BuilderInstance.extend({
       components: builder.components,
       provide () {
         return {
@@ -159,6 +159,18 @@ class Builder {
 
     // append to the list of to-be installed plugins.
     PLUGINS.push({ plugin, options });
+  }
+
+  set (data) {
+    this.title = data.title !== undefined ? data.title : this.title;
+    if (data.sections && Array.isArray(data.sections)) {
+      data.sections.forEach(section => {
+        if (!section.schema) {
+          section.schema = this.components[section.name].options.$schema
+        }
+        this.create(section);
+      });
+    }
   }
 
   /**

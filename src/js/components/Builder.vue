@@ -8,7 +8,7 @@
       )
 
     .controller
-      .controller-intro(v-if="showIntro")
+      .controller-intro(v-if="showIntro && !this.$builder.sections.length")
         h1 Hello, start your project
         .grid.is-center
           .column.is-screen-6
@@ -39,11 +39,18 @@ export default {
     showIntro: {
       type: Boolean,
       default: true
+    },
+    data: {
+      type: Object,
+      default: () => ({
+        title: '',
+        sections: []
+      })
     }
   },
   data () {
     return {
-      title: '',
+      title: null,
       listShown: false,
       sections: Object.keys(this.$builder.components)
     }
@@ -75,6 +82,11 @@ export default {
     submit () {
       this.$emit('saved', this.$builder);
     }
+  },
+  created () {
+    // sets the initial data.
+    this.$builder.set(this.data);
+    this.title = this.$builder.title;
   },
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
