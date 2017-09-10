@@ -29,6 +29,7 @@ const config = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
     page('index'),
+    page('render'),
     new FriendlyErrorsWebpackPlugin(),
     new ProgressBarPlugin()
   ],

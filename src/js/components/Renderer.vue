@@ -11,17 +11,17 @@
 export default {
   name: 'b-renderer',
   props: {
-    renderData: {
+    data: {
       type: Object,
-      required: true
+      default: () => ({
+        title: '',
+        sections: []
+      })
     }
   },
-  beforeCreate () {
-    this.$builder = {
-      isEditable: false,
-      title: this.$options.propsData.renderData.title,
-      sections: this.$options.propsData.renderData.sections
-    };
+  created () {
+    this.$builder.set(this.data);
+    this.$builder.isEditing = false;
   }
 };
 </script>

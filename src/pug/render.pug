@@ -1,0 +1,6 @@
+extends layout.pug
+
+append content
+  b-renderer(
+    :data="{ title: 'My title', sections: [{ name: 'social2', data: { classes: ['is-dark'], content: 'This is my content yo!', images: ['static/img/avatar.png'] } },{ name: 'social2', data: { classes: ['is-red'], content: 'This is my content yo boi!', images: ['static/img/avatar.png'] } }] }"
+  )

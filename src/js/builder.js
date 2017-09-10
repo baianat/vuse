@@ -1,6 +1,7 @@
 import merge from 'lodash-es/merge';
 import Section from './section';
 import BuilderComponent from './components/Builder';
+import Renderer from './components/Renderer';
 import styler from './styler';
 import mixin from './mixin';
 import * as types from './types';
@@ -130,19 +131,15 @@ class Builder {
     const builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
     Vue.util.defineReactive(builder, 'sections', builder.sections);
     Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
-
-    const BuilderInstance = Vue.extend(BuilderComponent);
-    Vue.component('b-builder', BuilderInstance.extend({
+    const extension = {
       components: builder.components,
-      provide () {
-        return {
-          $builder: this.$builder
-        }
-      },
       beforeCreate () {
         this.$builder = builder;
       }
-    }));
+    };
+    // register the main components.
+    Vue.component('b-builder', Vue.extend(BuilderComponent).extend(extension));
+    Vue.component('b-renderer', Vue.extend(Renderer).extend(extension));
   }
 
   /**

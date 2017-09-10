@@ -1,5 +1,5 @@
 /**
-* Builder v0.0.5
+* Builder v0.0.6
 * (c) 2017 Abdelrahman Ismail
 * @license MIT
 */
@@ -3772,7 +3772,7 @@ var Section = function Section (options) {
   options = Object.assign({}, SECTION_OPTIONS, options);
   this.name = options.name;
   this.schema = options.schema;
-  this.data = Seeder.seed(options.schema);
+  this.data = options.data || Seeder.seed(options.schema);
 };
 
 Section.prototype.set = function set (name, value) {
@@ -3797,17 +3797,24 @@ Section.prototype.get = function get$$1 (name) {
   return obj[prop];
 };
 
-var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"artboard",staticClass:"artboard",attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])]):_vm._e(),_c('ul',{staticClass:"controller-list",class:{ 'is-hidden': !_vm.listShown }},_vm._l((_vm.sections),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addElement(section);}}},[_vm._v(_vm._s(section))])])})),_c('div',{staticClass:"container"},[_c('div',{staticClass:"controller-buttons grid is-center"},[_c('div',{staticClass:"column is-screen-3"},[_c('button',{ref:"addButton",staticClass:"controller-add button is-blue is-block",attrs:{"disabled":_vm.showIntro && !_vm.title.length},on:{"click":function($event){_vm.addSection();}}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])]),_c('div',{staticClass:"column is-screen-3"},[_c('button',{staticClass:"controller-submit button is-green is-block",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('path',{attrs:{"d":"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"}})])])])])])])])},staticRenderFns: [],
+var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"artboard",staticClass:"artboard",attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro && !this.$builder.sections.length)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])]):_vm._e(),_c('ul',{staticClass:"controller-list",class:{ 'is-hidden': !_vm.listShown }},_vm._l((_vm.sections),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addElement(section);}}},[_vm._v(_vm._s(section))])])})),_c('div',{staticClass:"container"},[_c('div',{staticClass:"controller-buttons grid is-center"},[_c('div',{staticClass:"column is-screen-3"},[_c('button',{ref:"addButton",staticClass:"controller-add button is-blue is-block",attrs:{"disabled":_vm.showIntro && !_vm.title.length},on:{"click":function($event){_vm.addSection();}}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])]),_c('div',{staticClass:"column is-screen-3"},[_c('button',{staticClass:"controller-submit button is-green is-block",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24"}},[_c('path',{attrs:{"d":"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"}})])])])])])])])},staticRenderFns: [],
   name: 'b-builder',
   props: {
     showIntro: {
       type: Boolean,
       default: true
+    },
+    data: {
+      type: Object,
+      default: function () { return ({
+        title: '',
+        sections: []
+      }); }
     }
   },
   data: function data () {
     return {
-      title: '',
+      title: null,
       listShown: false,
       sections: Object.keys(this.$builder.components)
     }
@@ -3840,8 +3847,30 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
       this.$emit('saved', this.$builder);
     }
   },
+  created: function created () {
+    // sets the initial data.
+    this.$builder.set(this.data);
+    this.title = this.$builder.title;
+  },
   mounted: function mounted () {
     this.$builder.rootEl = this.$refs.artboard;
+  }
+};
+
+var Renderer = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"artboard",attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})}))},staticRenderFns: [],
+  name: 'b-renderer',
+  props: {
+    data: {
+      type: Object,
+      default: function () { return ({
+        title: '',
+        sections: []
+      }); }
+    }
+  },
+  created: function created () {
+    this.$builder.set(this.data);
+    this.$builder.isEditing = false;
   }
 };
 
@@ -6583,19 +6612,15 @@ Builder.install = function install (Vue, options) {
   var builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
   Vue.util.defineReactive(builder, 'sections', builder.sections);
   Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
-
-  var BuilderInstance = Vue.extend(BuilderComponent);
-  Vue.component('builder', BuilderInstance.extend({
+  var extension = {
     components: builder.components,
-    provide: function provide () {
-      return {
-        $builder: this.$builder
-      }
-    },
     beforeCreate: function beforeCreate () {
       this.$builder = builder;
     }
-  }));
+  };
+  // register the main components.
+  Vue.component('b-builder', Vue.extend(BuilderComponent).extend(extension));
+  Vue.component('b-renderer', Vue.extend(Renderer).extend(extension));
 };
 
 /**
@@ -6614,6 +6639,20 @@ Builder.use = function use (plugin, options) {
 
   // append to the list of to-be installed plugins.
   PLUGINS.push({ plugin: plugin, options: options });
+};
+
+Builder.prototype.set = function set (data) {
+    var this$1 = this;
+
+  this.title = data.title !== undefined ? data.title : this.title;
+  if (data.sections && Array.isArray(data.sections)) {
+    data.sections.forEach(function (section) {
+      if (!section.schema) {
+        section.schema = this$1.components[section.name].options.$schema;
+      }
+      this$1.create(section);
+    });
+  }
 };
 
 /**
@@ -6674,7 +6713,7 @@ if (typeof Vue !== 'undefined') {
   Vue.use(Builder);
 }
 
-Builder.version = '0.0.5';
+Builder.version = '0.0.6';
 Builder.types = types;
 
 return Builder;
