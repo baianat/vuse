@@ -150,7 +150,7 @@ class Builder {
   }
 
   /**
-   * The plugin to be installed with the builder. The function recieves the installation context which
+   * The plugin to be installed with the builder. The function receives the installation context which
    * contains the builder instance and the Vue prototype.
    *
    * @param {Function} plugin 
