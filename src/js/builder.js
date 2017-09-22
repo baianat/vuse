@@ -111,6 +111,13 @@ class Builder {
   }
 
   /**
+   * clears the builder sections.
+  */
+  clear () {
+    this.sections = [];
+  }
+
+  /**
    * Installs added plugins.
    */
   installPlugins () {
