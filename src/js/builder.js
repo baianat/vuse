@@ -168,11 +168,12 @@ class Builder {
   set (data) {
     this.title = data.title !== undefined ? data.title : this.title;
     if (data.sections && Array.isArray(data.sections)) {
-      data.sections.forEach(section => {
+      this.sections = data.sections.map(section => {
         if (!section.schema) {
           section.schema = this.components[section.name].options.$schema
         }
-        this.create(section);
+
+        return new Section(section);
       });
     }
   }
