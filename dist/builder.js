@@ -1,5 +1,5 @@
 /**
-* Builder v0.0.6
+* Builder v0.0.7
 * (c) 2017 Abdelrahman Ismail
 * @license MIT
 */
@@ -6588,6 +6588,13 @@ Builder.prototype.component = function component (name, definition) {
 };
 
 /**
+ * clears the builder sections.
+*/
+Builder.prototype.clear = function clear () {
+  this.sections = [];
+};
+
+/**
  * Installs added plugins.
  */
 Builder.prototype.installPlugins = function installPlugins () {
@@ -6624,7 +6631,7 @@ Builder.install = function install (Vue, options) {
 };
 
 /**
- * The plugin to be installed with the builder. The function recieves the installation context which
+ * The plugin to be installed with the builder. The function receives the installation context which
  * contains the builder instance and the Vue prototype.
  *
  * @param {Function} plugin 
@@ -6646,11 +6653,12 @@ Builder.prototype.set = function set (data) {
 
   this.title = data.title !== undefined ? data.title : this.title;
   if (data.sections && Array.isArray(data.sections)) {
-    data.sections.forEach(function (section) {
+    this.sections = data.sections.map(function (section) {
       if (!section.schema) {
         section.schema = this$1.components[section.name].options.$schema;
       }
-      this$1.create(section);
+
+      return new Section(section);
     });
   }
 };
@@ -6713,7 +6721,7 @@ if (typeof Vue !== 'undefined') {
   Vue.use(Builder);
 }
 
-Builder.version = '0.0.6';
+Builder.version = '0.0.7';
 Builder.types = types;
 
 return Builder;
