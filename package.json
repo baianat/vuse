@@ -1,7 +1,7 @@
 {
   "name": "@baianat/builder",
   "version": "0.0.6",
-  "description": "Dolober Builder",
+  "description": "Page Builder",
   "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
   "unpkg": "dist/builder.min.js",
   "main": "dist/builder.js",
@@ -57,5 +57,17 @@
     "popper.js": "^1.11.1",
     "save-as": "^0.1.8",
     "vue": "^2.4.2"
-  }
+  },
+  "license": "MIT",
+  "keywords": ["page-builder", "vuejs", "ES6"],
+  "maintainers": [
+    {
+      "name": "Abdelrahman Awad",
+      "email": "logaretm1@gmail.com"
+    },
+    {
+      "name": "Abdelrahman Ismail",
+      "email": "abdelrahman3d@gmail.com"
+    }
+  ]
 }
