@@ -5,23 +5,23 @@
     ul.styler-list
       li(v-if="type === 'button' || type === 'section'")
         button.styler-button(@click="updateOption('colorer')")
-          +icon('palettes', 'is-large')
+          +icon('palettes')
       li(v-if="type === 'button'")
         button.styler-button(@click="updateOption('link')")
-          +icon('link', 'is-large')
+          +icon('link')
       li(v-if="type === 'header' || type === 'section'")
         button.styler-button(@click="removeSection")
-          +icon('trash', 'is-large')
+          +icon('trash')
       template(v-if="type === 'text'")
         li
           button.styler-button(@click="updateOption('textColor')")
-            +icon('palettes', 'is-large')
+            +icon('palettes')
         li
           button.styler-button(@click="updateOption('align')")
-            +icon('align', 'is-large')
+            +icon('align')
         li
           button.styler-button(@click="updateOption('textStyle')")
-            +icon('textStyle', 'is-large')
+            +icon('textStyle')
 
     ul.styler-list
       li(v-if="currentOption === 'colorer'")
@@ -49,25 +49,25 @@
         .input.is-rounded.is-button
           input(type="text" placeholder="type your link" v-model="url")
           button.button.is-green(@click="addLink")
-            +icon('link', 'is-large')
+            +icon('link')
 
       li(v-if="currentOption === 'align'")
         ul.align
           li: button.styler-button(@click="execute('justifyleft')")
-            +icon('left', 'is-large')
+            +icon('left')
           li: button.styler-button(@click="execute('justifycenter')")
-            +icon('center', 'is-large')
+            +icon('center')
           li: button.styler-button(@click="execute('justifyright')")
-            +icon('right', 'is-large')
+            +icon('right')
 
       li(v-if="currentOption === 'textStyle'")
         ul.align
           li: button.styler-button(@click="execute('bold')")
-            +icon('bold', 'is-large')
+            +icon('bold')
           li: button.styler-button(@click="execute('italic')")
-            +icon('italic', 'is-large')
+            +icon('italic')
           li: button.styler-button(@click="execute('underline')")
-            +icon('underline', 'is-large')
+            +icon('underline')
 
 </template>
 
