@@ -3737,8 +3737,8 @@ var data = new Map([
   [Logo, 'static/img/google.svg'],
   [Link, 'http://example.com'],
   [Image, 'static/img/baianat.png'],
-  [ClassList, []],
-  [Button, { text: 'Click Me!', classes: [], href: 'http://example.com' }],
+  [ClassList, function () { return []; }],
+  [Button, function () { return ({ text: 'Click Me!', classes: [], href: 'http://example.com' }); }],
   [Quote, 'When you were made a leader, you weren\'t given a crown; you were given the responsibility to bring out the best in others.'],
   [Number, 100],
   [String, 'This is pretty neat']
@@ -3757,7 +3757,8 @@ Seeder.seed = function seed (schema) {
     return schema.map(function (s) { return Seeder.seed(s); });
   }
 
-  return data.get(schema);
+  var value = data.get(schema);
+  return typeof value === 'function' ? value() : value;
 };
 
 var SECTION_OPTIONS = {
@@ -3772,6 +3773,7 @@ var Section = function Section (options) {
   options = Object.assign({}, SECTION_OPTIONS, options);
   this.name = options.name;
   this.schema = options.schema;
+  console.log(Seeder.seed(options.schema));
   this.data = options.data || Seeder.seed(options.schema);
 };
 

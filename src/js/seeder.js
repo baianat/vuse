@@ -8,8 +8,8 @@ const data = new Map([
   [types.Logo, 'static/img/google.svg'],
   [types.Link, 'http://example.com'],
   [types.Image, 'static/img/baianat.png'],
-  [types.ClassList, []],
-  [types.Button, { text: 'Click Me!', classes: [], href: 'http://example.com' }],
+  [types.ClassList, () => []],
+  [types.Button, () => ({ text: 'Click Me!', classes: [], href: 'http://example.com' })],
   [types.Quote, 'When you were made a leader, you weren\'t given a crown; you were given the responsibility to bring out the best in others.'],
   [Number, 100],
   [String, 'This is pretty neat']
@@ -28,6 +28,7 @@ export default class Seeder {
       return schema.map(s => Seeder.seed(s));
     }
 
-    return data.get(schema);
+    const value = data.get(schema);
+    return typeof value === 'function' ? value() : value;
   }
 };
