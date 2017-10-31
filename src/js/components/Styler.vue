@@ -186,34 +186,7 @@ export default {
 </script>
 
 <style lang="stylus">
-/**
- * colorful
- */
-$blue   := #4da1ff
-$green  := #38E4B7
-$red    := #EA4F52
-
-/**
- * grayscale
- */
-$white  := #FFFFFF
-$gray   := #CEDEE8
-$dark   := #323c47
-$black  := #000000
-
-/**
- * color variation
- */
-$shadow     := alpha($black, 5%)
-$darkBlue   := darken($blue, 30%)
-$darkGreen  := darken($green, 30%)
-$darkRed    := darken($red, 30%)
-$darkWhite  := darken($white, 30%)
-$lightDark  := lighten($dark, 40%)
-$transDark  := alpha($dark, 90%)
-$transBlack := alpha($black, 90%)
-$transWhite := alpha($white, 70%)
-$transGray  := alpha($gray, 70%)
+@import '~dolober/src/stylus/color'
 
 .styler
   position: relative
