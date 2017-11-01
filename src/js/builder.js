@@ -73,7 +73,7 @@ class Builder {
    */
   static component (name, definition) {
     // Just make a plugin that installs a component.
-    Builder.use(ctx => {
+    Builder.use((ctx) => {
       ctx.builder.component(name, definition);
     });
   }
@@ -121,7 +121,7 @@ class Builder {
    * Installs added plugins.
    */
   installPlugins () {
-    PLUGINS.forEach(ctx => {
+    PLUGINS.forEach((ctx) => {
       ctx.plugin({ builder: this, Vue: _Vue }, ctx.options);
     });
     // reset to prevent duplications.

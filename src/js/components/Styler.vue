@@ -190,7 +190,7 @@ export default {
 
 .styler
   position: relative
-  z-index: 9999
+  z-index: 100
   visibility: hidden
   opacity: 0
   margin: 10px 0

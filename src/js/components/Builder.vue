@@ -19,9 +19,10 @@
                 input(placeholder="project name" v-model="title")
 
       ul.controller-list(:class="{ 'is-visiable': listShown }")
-        li(v-for="section in sections")
+        li(v-for="(section, index) in sections")
           a.controller-element(@click="addSection(section)")
-            |{{ section }}
+            img(v-if="covers[index]" :src="covers[index]")
+            span(v-else) {{ section }}
 
       .controller-buttons
         button.controller-submit.button.is-green.is-rounded(@click="submit")
@@ -51,7 +52,12 @@ export default {
     return {
       title: null,
       listShown: false,
-      sections: Object.keys(this.$builder.components)
+      sections: Object.keys(this.$builder.components),
+      covers: (() => {
+        return Object.keys(this.$builder.components).map((key) => {
+          return this.$builder.components[key].options.cover;
+        })
+      })()
     }
   },
   watch: {
@@ -92,6 +98,7 @@ export default {
   },
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
+    console.log(this.covers)
   }
 };
 </script>
@@ -102,8 +109,6 @@ export default {
 $floatHover
   cursor: pointer
   box-shadow: 0 14px 28px alpha($dark, 0.125), 0 10px 10px alpha($dark, 0.11)
-  transform: translate(0, -1px)
-  z-index: 2
 
 button:focus
   outline: 0
@@ -111,16 +116,17 @@ button:focus
 .controller
   &-buttons
     position: fixed
+    z-index: 200
     bottom: 30px
     right: 30px
     button:not(:last-child)
       margin-right: 20px
   &-submit
-    transition: 0.5s
+    transition: 0.3s
     &:hover
       @extends $floatHover
   &-add
-    transition: 0.5s
+    transition: 0.3s
     &.is-red
       transform: rotate(45deg)
     &:hover
@@ -137,9 +143,9 @@ button:focus
     left: 0
     bottom: 0
     margin: 0
-    width: 300px
+    width: 250px
     margin-left: (- @width)
-    padding: 20px
+    padding: 20px 10px
     display: flex
     flex-direction: column
     overflow: auto
@@ -153,13 +159,16 @@ button:focus
     justify-content: center
     align-items: center
     width: 100%
-    height: 150px
+    min-height: 100px
     margin: 5px
-    border-radius: 10px
+    border-radius: 5px
     background: darken($gray, 10%)
-    transition: 0.5s
+    transition: 0.3s
     cursor: pointer
     color: $white
+    overflow: hidden
+    img
+      max-width: 100%
     &:hover
       @extends $floatHover
 
