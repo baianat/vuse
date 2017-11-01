@@ -57,6 +57,7 @@
     "jszip": "^3.1.4",
     "popper.js": "^1.12.5",
     "save-as": "^0.1.8",
+    "sortablejs": "^1.6.1",
     "vue": "^2.4.4"
   },
   "license": "MIT",

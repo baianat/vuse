@@ -4,6 +4,7 @@ import BuilderComponent from './components/Builder';
 import Renderer from './components/Renderer';
 import styler from './styler';
 import mixin from './mixin';
+import Sortable from 'sortablejs';
 import * as types from './types';
 
 let PLUGINS = [];
@@ -178,6 +179,21 @@ class Builder {
     }
   }
 
+  /**
+   * Controll arrange sections state
+   * @param {String} state
+   */
+  sort (state) {
+    if (state === 'off' && this.sortable) {
+      this.sortable.destroy();
+      return;
+    }
+    this.sortable = Sortable.create(this.rootEl, {
+      animation: 150,
+      scroll: true,
+      scrollSpeed: 10
+    });
+  }
   /**
    * Outputs a JSON representation of the builder that can be used for rendering with the renderer component.
    */

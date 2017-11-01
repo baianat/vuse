@@ -15,7 +15,6 @@ export default class Section {
     options = Object.assign({}, SECTION_OPTIONS, options);
     this.name = options.name;
     this.schema = options.schema;
-    console.log(Seeder.seed(options.schema));
     this.data = options.data || Seeder.seed(options.schema);
   }
 

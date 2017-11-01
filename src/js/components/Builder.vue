@@ -2,7 +2,7 @@
   include ../../pug/mixin/icon
 
   div
-    #artboard.artboard(ref="artboard")
+    main.artboard(ref="artboard" :class="{ 'is-arranging': mode == 'arrange'}")
       component(v-for='section in $builder.sections'
         :is='section.name'
         :key='section.id'
@@ -27,7 +27,9 @@
       .controller-buttons
         button.controller-submit.button.is-green.is-rounded(@click="submit")
           +icon('tic')
-        button.controller-add.button.is-blue.is-rounded(:class="{ 'is-red': listShown }" @click="newSection" ref="addButton")
+        button.controller-sort.button.is-blue.is-rounded(:class="{ 'is-red': mode == 'sort' }" @click="toogleSortState")
+          +icon('sort')
+        button.controller-add.button.is-blue.is-rounded(:class="{ 'is-red': listShown }" @click="newSection")
           +icon('plus')
 
 </template>
@@ -51,6 +53,7 @@ export default {
   data () {
     return {
       title: null,
+      mode: null,
       listShown: false,
       sections: Object.keys(this.$builder.components),
       covers: (() => {
@@ -84,6 +87,17 @@ export default {
     toogleEditableState () {
       this.$builder.isEditing = !this.$builder.isEditing;
     },
+    toogleSortState () {
+      if (this.mode !== 'sort') {
+        this.toogleEditableState();
+        this.mode = 'sort';
+        this.$builder.sort('on');
+        return;
+      }
+      this.toogleEditableState();
+      this.mode = 'edit';
+      this.$builder.sort('off');
+    },
     toogleListVisiableity () {
       this.listShown = !this.listShown;
     },
@@ -112,7 +126,8 @@ $floatHover
 
 button:focus
   outline: 0
-
+.artboard
+  transform-origin: top center
 .controller
   &-buttons
     position: fixed
@@ -174,4 +189,8 @@ button:focus
 
 .is-hidden
   display: none
+.sortable-ghost
+  border: 2px solid $blue
+  opacity: 0.3
+
 </style>
