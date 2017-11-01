@@ -29,6 +29,11 @@ function installMixin ({ builder }) {
       Array.from(this.$el.querySelectorAll('.is-editable')).forEach((el) => {
         el.contentEditable = 'true';
       });
+    },
+    updated () {
+      Array.from(this.$el.querySelectorAll('[contentEditable]')).forEach((el) => {
+        el.contentEditable = this.$builder.isEditing;
+      });
     }
   };
 };

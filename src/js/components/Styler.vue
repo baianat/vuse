@@ -181,6 +181,16 @@ export default {
       this.showStyler();
       document.addEventListener('click', this.hideStyler, false);
     }, false);
+  },
+  updated () {
+    if (!this.$builder.isEditing) return;
+
+    // update styler and popper
+    this.styler = this.$refs.styler;
+    const position = this.$props.type === 'section' ? 'left-start' : 'top';
+    this.popper = new Popper(this.el, this.styler, {
+      placement: position
+    });
   }
 };
 </script>

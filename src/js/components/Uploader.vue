@@ -50,7 +50,7 @@ export default {
       left: 0
       width: 100%
       opacity: 0
-      z-index: 999
+      z-index: 100
     >img
       width: 100%
 </style>
