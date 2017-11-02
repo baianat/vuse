@@ -2,7 +2,7 @@
   include ../../pug/mixin/icon
 
   div
-    main.artboard(ref="artboard" :class="{ 'is-arranging': mode == 'arrange'}")
+    main.artboard(ref="artboard" :class="{ 'is-sorting': $builder.isSorting }")
       component(v-for='section in $builder.sections'
         :is='section.name'
         :key='section.id'
@@ -27,9 +27,16 @@
       .controller-buttons
         button.controller-submit.button.is-green.is-rounded(@click="submit")
           +icon('tic')
-        button.controller-sort.button.is-blue.is-rounded(:class="{ 'is-red': mode == 'sort' }" @click="toogleSortState")
+        button.controller-sort.button.is-blue.is-rounded(
+          :class="{ 'is-red': $builder.isSorting }"
+          @click="toogleState"
+        )
           +icon('sort')
-        button.controller-add.button.is-blue.is-rounded(:class="{ 'is-red': listShown }" @click="newSection")
+        button.controller-add.button.is-blue.is-rounded(
+          :class="{ 'is-red': listShown }"
+          :disabled="$builder.isSorting"
+          @click="newSection"
+        )
           +icon('plus')
 
 </template>
@@ -53,7 +60,6 @@ export default {
   data () {
     return {
       title: null,
-      mode: null,
       listShown: false,
       sections: Object.keys(this.$builder.components),
       covers: (() => {
@@ -84,19 +90,10 @@ export default {
       });
       this.listShown = false;
     },
-    toogleEditableState () {
+    toogleState () {
       this.$builder.isEditing = !this.$builder.isEditing;
-    },
-    toogleSortState () {
-      if (this.mode !== 'sort') {
-        this.toogleEditableState();
-        this.mode = 'sort';
-        this.$builder.sort('on');
-        return;
-      }
-      this.toogleEditableState();
-      this.mode = 'edit';
-      this.$builder.sort('off');
+      this.$builder.isSorting = !this.$builder.isSorting;
+      this.$builder.sort();
     },
     toogleListVisiableity () {
       this.listShown = !this.listShown;

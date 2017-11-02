@@ -23,6 +23,7 @@ class Builder {
   constructor (options) {
     this.title = options.title;
     this.isEditing = true;
+    this.isSorting = false;
     this.intro = options.intro;
     this.sections = options.sections;
     this.components = {};
@@ -139,6 +140,7 @@ class Builder {
     const builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
     Vue.util.defineReactive(builder, 'sections', builder.sections);
     Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
+    Vue.util.defineReactive(builder, 'isSorting', builder.isSorting);
     const extension = {
       components: builder.components,
       beforeCreate () {
@@ -181,10 +183,9 @@ class Builder {
 
   /**
    * Controll arrange sections state
-   * @param {String} state
    */
   sort (state) {
-    if (state === 'off' && this.sortable) {
+    if (!this.isSorting && this.sortable) {
       this.sortable.destroy();
       return;
     }
