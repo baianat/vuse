@@ -196,7 +196,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~dolober/src/stylus/color'
+@import '../../../node_modules/dolober/src/stylus/color'
 
 .styler
   position: relative

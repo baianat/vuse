@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~dolober/src/stylus/color'
+@import '../../../node_modules/dolober/src/stylus/color'
 
 $floatHover
   cursor: pointer

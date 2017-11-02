@@ -1,26 +1,32 @@
-/**
- * colorful
- */
-/**
- * grayscale
- */
-/**
- * color variation
- */
 .controller-submit:hover,
 .controller-add:hover,
 .controller-element:hover {
   cursor: pointer;
   box-shadow: 0 14px 28px rgba(50,60,71,0.125), 0 10px 10px rgba(50,60,71,0.11);
-  transform: translate(0, -1px);
-  z-index: 2;
+}
+button:focus {
+  outline: 0;
+}
+.artboard {
+  transform-origin: top center;
 }
 .controller-buttons {
-  padding: 50px;
+  position: fixed;
+  z-index: 200;
+  bottom: 30px;
+  right: 30px;
 }
-.controller-submit,
+.controller-buttons button:not(:last-child) {
+  margin-right: 20px;
+}
+.controller-submit {
+  transition: 0.3s;
+}
 .controller-add {
-  transition: 0.5s;
+  transition: 0.3s;
+}
+.controller-add.is-red {
+  transform: rotate(45deg);
 }
 .controller-intro {
   text-align: center;
@@ -29,43 +35,52 @@
   font-weight: normal;
 }
 .controller-list {
-  background: #cedee8;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   margin: 0;
-  padding: 20px;
+  width: 250px;
+  margin-left: -250px;
+  padding: 20px 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  overflow: auto;
   list-style: none;
+  transition: 0.4s;
+}
+.controller-list.is-visiable {
+  margin-left: 0;
 }
 .controller-element {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  min-height: 100px;
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 5px;
   background: #b0cada;
-  transition: 0.5s;
+  transition: 0.3s;
   cursor: pointer;
   color: #fff;
+  overflow: hidden;
+}
+.controller-element img {
+  max-width: 100%;
 }
 .is-hidden {
   display: none;
 }
+.sortable-ghost {
+  border: 2px solid #4da1ff;
+  opacity: 0.3;
+}
 
-/**
- * colorful
- */
-/**
- * grayscale
- */
-/**
- * color variation
- */
 .styler {
   position: relative;
-  z-index: 9999;
+  z-index: 100;
   visibility: hidden;
   opacity: 0;
   margin: 10px 0;
