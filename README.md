@@ -116,10 +116,11 @@ complete example for working section
 Each section has several elements that can be edit
 we store elements data in `$sectionData` object to be able to track them and update Vue data
 So, how to make any element editable
-1- You have to give it `is-editable` class. because editable state can be toggled off/on it always good to bind is-editable class to change when editing mode changes `:class="{'is-editable': $builder.isEditing}"`
-2- Add `v-styler` to the element it's the responsable for editing data and spicify which data to be edited `v-styler="$sectionData.button"`
-3- Updates the element’s innerHTML `v-html="$sectionData.button.text"`
-4- If you have any other data that `v-styler` changes you have to update it too e.g. `:href="$sectionData.button.href"`
+
+1. You have to give it `is-editable` class. because editable state can be toggled off/on it always good to bind is-editable class to change when editing mode changes `:class="{'is-editable': $builder.isEditing}"`
+1. Add `v-styler` to the element it's the responsable for editing data and spicify which data to be edited  `v-styler="$sectionData.button"`
+1. Updates the element’s innerHTML `v-html="$sectionData.button.text"`
+1. If you have any other data that `v-styler` changes you have to update it too e.g. `:href="$sectionData.button.href"`
 
 Put all toghter
 
