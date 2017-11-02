@@ -109,7 +109,6 @@ export default {
   },
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
-    console.log(this.covers)
   }
 };
 </script>

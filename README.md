@@ -56,8 +56,130 @@ But that does not accomplish much, you can't build sections without having any. 
 
 ## API
 
-TODO
+### Section
 
+complete example for working section
+> here we are using [NARX](https://github.com/baianat/NARX) patterns library for grid and UI elements.
+
+```pug
+<template lang="pug">
+  section.header(
+    v-styler="$sectionData.classes"
+    :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
+  )
+    .container
+      .grid
+        .column.is-screen-6.add-center-vertical
+          h3.header-title(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.title"
+            v-styler="$sectionData.title"
+          )
+          p.header-content(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.content"
+            v-styler="$sectionData.content"
+          )
+          a.button(
+            :class="[{'is-editable': $builder.isEditing}, $sectionData.button.classes]"
+            :href="$sectionData.button.href"
+            v-html="$sectionData.button.text"
+            v-styler="$sectionData.button"
+          )
+        .column.is-screen-6
+          uploader(
+            class="header-image"
+            path="$sectionData.images[0]"
+          )
+</template>
+
+<script>
+  import * as types from '../../types';
+
+  export default {
+    name: 'hero1',
+    cover: 'static/covers/hero1.png',
+    $schema: {
+      title: types.Title,
+      content: types.Text,
+      images: [types.Image],
+      button: types.Button,
+      classes: types.ClassList
+    },
+    props: {
+      id: Number
+    }
+  };
+</script>
+```
+
+Each section has several elements that can be edit
+we store elements data in `$sectionData` object to be able to track them and update Vue data
+So, how to make any element editable
+1- You have to give it `is-editable` class. because editable state can be toggled off/on it always good to bind is-editable class to change when editing mode changes `:class="{'is-editable': $builder.isEditing}"`
+2- Add `v-styler` to the element it's the responsable for editing data and spicify which data to be edited `v-styler="$sectionData.button"`
+3- Updates the element’s innerHTML `v-html="$sectionData.button.text"`
+4- If you have any other data that `v-styler` changes you have to update it too e.g. `:href="$sectionData.button.href"`
+
+Put all toghter
+
+```pug
+  a(
+    :class="[{'button', 'is-editable': $builder.isEditing}, $sectionData.button.classes]"
+    :href="$sectionData.button.href"
+    v-html="$sectionData.button.text"
+    v-styler="$sectionData.button"
+  )
+```
+
+After create HTML structure you have to config the section schema for instance
+
+```html
+<script>
+  import * as types from '../../types';
+
+  export default {
+    // section name
+    name: 'hero1',
+    // section cover image
+    cover: '../cover-hero1.png',
+    // section data schema
+    $schema: {
+      // main title
+      title: types.Text,
+      // main content
+      content: types.Text,
+      // section classese
+      classes: types.ClassList,
+      // array of section's images
+      images: [
+        types.Image,
+        types.Image
+      ],
+      // object holds button data, href etc..
+      button: types.Button,
+      // if section has many columns you can
+      // columns to sperate each column date
+      columns: [
+      {
+        title: types.Title,
+        content: types.Text
+      },
+      {
+        title: types.Title,
+        content: types.Text
+      }
+    ]
+    },
+    // you have to allow id prop in section
+    props: {
+      id: Number
+    }
+  };
+</script>
+```
+
+![hero section](https://baianat.github.io/builder/static/examples/hero1.png)
 ## License
 
 MIT

@@ -3875,7 +3875,6 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
   },
   mounted: function mounted () {
     this.$builder.rootEl = this.$refs.artboard;
-    console.log(this.covers);
   }
 };
 
