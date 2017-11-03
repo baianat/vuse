@@ -2,7 +2,7 @@
   include ../../pug/mixin/icon
 
   div
-    main.artboard(ref="artboard" :class="{ 'is-sorting': $builder.isSorting }")
+    div#artboard.artboard(ref="artboard" :class="{ 'is-sorting': $builder.isSorting }")
       component(v-for='section in $builder.sections'
         :is='section.name'
         :key='section.id'
@@ -72,6 +72,7 @@ export default {
   watch: {
     title (value) {
       this.$builder.title = value;
+      document.title = value;
     }
   },
   methods: {
@@ -93,13 +94,13 @@ export default {
     toogleState () {
       this.$builder.isEditing = !this.$builder.isEditing;
       this.$builder.isSorting = !this.$builder.isSorting;
-      this.$builder.sort();
+      this.$builder.toggleSort();
     },
     toogleListVisiableity () {
       this.listShown = !this.listShown;
     },
     submit () {
-      this.$emit('saved', this.$builder);
+      this.$parent.$emit('saved', this.$builder);
     }
   },
   created () {

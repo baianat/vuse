@@ -29,11 +29,11 @@ const config = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
-    page('index'),
-    page('render'),
     new FriendlyErrorsWebpackPlugin(),
     new ProgressBarPlugin(),
-    new ExtractTextPlugin({ filename: 'css/app.css' })
+    new ExtractTextPlugin({ filename: 'css/app.css' }),
+    page('index'),
+    page('render')
   ],
   watchOptions: {
     aggregateTimeout: 300,

@@ -36,5 +36,11 @@ Builder.use(zip);
 Vue.use(Builder);
 
 new Vue({
-  el: '#app'
+  el: '#app',
+  mounted () {
+    this.$on('saved', () => {
+      // the way to export the site
+      this.$builder.export('preview');
+    })
+  }
 });

@@ -3738,6 +3738,25 @@ function getTypeFromTagName (tagName) {
   }
 }
 
+function cleanDOM (artboard) {
+  var editables = Array.from(artboard.querySelectorAll('.is-editable'));
+  var uploaders = Array.from(artboard.querySelectorAll('.is-uploader'));
+  var stylers = Array.from(artboard.querySelectorAll('.styler'));
+
+  editables.forEach(function (el) {
+    el.contentEditable = 'false';
+    el.classList.remove('is-editable');
+  });
+  uploaders.forEach(function (el) {
+    var input = el.querySelector(':scope > input');
+    input.remove();
+    el.classList.remove('is-uploader');
+  });
+  stylers.forEach(function (styler) {
+    styler.remove();
+  });
+}
+
 var data = new Map([
   [Title, 'Awesome title'],
   [Text, 'We\'re creating the best place to go when starting a new business or company.With Baianat you can instantly search domain names, social media handles, and see your logo in beautiful logotypes.'],
@@ -3806,7 +3825,7 @@ Section.prototype.get = function get$$1 (name) {
   return obj[prop];
 };
 
-var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('main',{ref:"artboard",staticClass:"artboard",class:{ 'is-sorting': _vm.$builder.isSorting }},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro && !this.$builder.sections.length)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])])]):_vm._e(),_c('ul',{staticClass:"controller-list",class:{ 'is-visiable': _vm.listShown }},_vm._l((_vm.sections),function(section,index){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addSection(section);}}},[(_vm.covers[index])?_c('img',{attrs:{"src":_vm.covers[index]}}):_c('span',[_vm._v(_vm._s(section))])])])})),_c('div',{staticClass:"controller-buttons"},[_c('button',{staticClass:"controller-submit button is-green is-rounded",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-tic"}},[_c('path',{attrs:{"d":"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"}})])]),_c('button',{staticClass:"controller-sort button is-blue is-rounded",class:{ 'is-red': _vm.$builder.isSorting },on:{"click":_vm.toogleState}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-sort"}},[_c('path',{attrs:{"d":"M14 5h8v2h-8zm0 5.5h8v2h-8zm0 5.5h8v2h-8zM2 11.5C2 15.08 4.92 18 8.5 18H9v2l3-3-3-3v2h-.5C6.02 16 4 13.98 4 11.5S6.02 7 8.5 7H12V5H8.5C4.92 5 2 7.92 2 11.5z"}})])]),_c('button',{staticClass:"controller-add button is-blue is-rounded",class:{ 'is-red': _vm.listShown },attrs:{"disabled":_vm.$builder.isSorting},on:{"click":_vm.newSection}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-plus"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])])])])},staticRenderFns: [],
+var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"artboard",staticClass:"artboard",class:{ 'is-sorting': _vm.$builder.isSorting },attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro && !this.$builder.sections.length)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])])]):_vm._e(),_c('ul',{staticClass:"controller-list",class:{ 'is-visiable': _vm.listShown }},_vm._l((_vm.sections),function(section,index){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addSection(section);}}},[(_vm.covers[index])?_c('img',{attrs:{"src":_vm.covers[index]}}):_c('span',[_vm._v(_vm._s(section))])])])})),_c('div',{staticClass:"controller-buttons"},[_c('button',{staticClass:"controller-submit button is-green is-rounded",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-tic"}},[_c('path',{attrs:{"d":"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"}})])]),_c('button',{staticClass:"controller-sort button is-blue is-rounded",class:{ 'is-red': _vm.$builder.isSorting },on:{"click":_vm.toogleState}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-sort"}},[_c('path',{attrs:{"d":"M14 5h8v2h-8zm0 5.5h8v2h-8zm0 5.5h8v2h-8zM2 11.5C2 15.08 4.92 18 8.5 18H9v2l3-3-3-3v2h-.5C6.02 16 4 13.98 4 11.5S6.02 7 8.5 7H12V5H8.5C4.92 5 2 7.92 2 11.5z"}})])]),_c('button',{staticClass:"controller-add button is-blue is-rounded",class:{ 'is-red': _vm.listShown },attrs:{"disabled":_vm.$builder.isSorting},on:{"click":_vm.newSection}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-plus"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])])])])},staticRenderFns: [],
   name: 'b-builder',
   props: {
     showIntro: {
@@ -3838,6 +3857,7 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
   watch: {
     title: function title (value) {
       this.$builder.title = value;
+      document.title = value;
     }
   },
   methods: {
@@ -3859,13 +3879,13 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
     toogleState: function toogleState () {
       this.$builder.isEditing = !this.$builder.isEditing;
       this.$builder.isSorting = !this.$builder.isSorting;
-      this.$builder.sort();
+      this.$builder.toggleSort();
     },
     toogleListVisiableity: function toogleListVisiableity () {
       this.listShown = !this.listShown;
     },
     submit: function submit () {
-      this.$emit('saved', this.$builder);
+      this.$parent.$emit('saved', this.$builder);
     }
   },
   created: function created () {
@@ -8154,6 +8174,7 @@ Builder.install = function install (Vue, options) {
     components: builder.components,
     beforeCreate: function beforeCreate () {
       this.$builder = builder;
+      this.$parent.$builder = builder;
     }
   };
   // register the main components.
@@ -8195,9 +8216,9 @@ Builder.prototype.set = function set (data) {
 };
 
 /**
- * Controll arrange sections state
+ * Toggle arrange sections state
  */
-Builder.prototype.sort = function sort (state) {
+Builder.prototype.toggleSort = function toggleSort () {
   if (!this.isSorting && this.sortable) {
     this.sortable.destroy();
     return;
@@ -8225,11 +8246,16 @@ Builder.prototype.toJSON = function toJSON () {
  * Previews the created page in a seperate tap/window.
  */
 Builder.prototype.preview = function preview () {
+  var frag = this.outputFragment();
+  var artboard = frag.querySelector('#artboard');
+  var head = frag.querySelector('head');
   var printPreview = window.open('about:blank', 'print_preview');
   var printDocument = printPreview.document;
+
+  cleanDOM(frag);
   printDocument.open();
   printDocument.write(
-    ("<!DOCTYPE html>\n        <html>\n          " + (document.documentElement.innerHTML) + "\n        </html>")
+    ("<!DOCTYPE html>\n        <html>\n          <head>\n             " + (head.innerHTML) + "\n          </head>\n          <body>\n            " + (artboard.innerHTML) + "\n          <body>\n        </html>")
   );
 };
 

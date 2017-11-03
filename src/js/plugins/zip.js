@@ -1,12 +1,9 @@
 import JSZip from 'jszip';
 import saveAs from 'save-as';
-import { getImageBlob } from '../util';
+import { getImageBlob, cleanDOM } from '../util';
 
 function download () {
   const frag = this.outputFragment();
-  const editable = Array.from(frag.querySelectorAll('.is-editable'));
-  const uploaders = Array.from(frag.querySelectorAll('.is-uploader'));
-  const stylers = Array.from(frag.querySelectorAll('.styler'));
   const images = Array.from(frag.querySelectorAll('img'));
   const artboard = frag.querySelector('#artboard');
   const head = frag.querySelector('head');
@@ -25,18 +22,7 @@ function download () {
   });
 
   Promise.all(imagePromises).then(() => {
-    editable.forEach((el) => {
-      el.contentEditable = 'false';
-      el.classList.remove('is-editable');
-    });
-    uploaders.forEach((el) => {
-      const input = el.querySelector(':scope > input');
-      input.remove();
-      el.classList.remove('is-uploader');
-    });
-    stylers.forEach((styler) => {
-      styler.remove();
-    });
+    cleanDOM(frag);
 
     output.file('index.html',
       `<html>

@@ -6,6 +6,7 @@ import styler from './styler';
 import mixin from './mixin';
 import Sortable from 'sortablejs';
 import * as types from './types';
+import { cleanDOM } from './util';
 
 let PLUGINS = [];
 let mixier = {};
@@ -145,6 +146,7 @@ class Builder {
       components: builder.components,
       beforeCreate () {
         this.$builder = builder;
+        this.$parent.$builder = builder;
       }
     };
     // register the main components.
@@ -182,9 +184,9 @@ class Builder {
   }
 
   /**
-   * Controll arrange sections state
+   * Toggle arrange sections state
    */
-  sort (state) {
+  toggleSort () {
     if (!this.isSorting && this.sortable) {
       this.sortable.destroy();
       return;
@@ -212,13 +214,23 @@ class Builder {
    * Previews the created page in a seperate tap/window.
    */
   preview () {
+    const frag = this.outputFragment();
+    const artboard = frag.querySelector('#artboard');
+    const head = frag.querySelector('head');
     const printPreview = window.open('about:blank', 'print_preview');
     const printDocument = printPreview.document;
+
+    cleanDOM(frag);
     printDocument.open();
     printDocument.write(
       `<!DOCTYPE html>
         <html>
-          ${document.documentElement.innerHTML}
+          <head>
+             ${head.innerHTML}
+          </head>
+          <body>
+            ${artboard.innerHTML}
+          <body>
         </html>`
     );
   }

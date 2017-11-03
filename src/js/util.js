@@ -82,3 +82,22 @@ export function getTypeFromTagName (tagName) {
       break;
   }
 }
+
+export function cleanDOM (artboard) {
+  const editables = Array.from(artboard.querySelectorAll('.is-editable'));
+  const uploaders = Array.from(artboard.querySelectorAll('.is-uploader'));
+  const stylers = Array.from(artboard.querySelectorAll('.styler'));
+
+  editables.forEach((el) => {
+    el.contentEditable = 'false';
+    el.classList.remove('is-editable');
+  });
+  uploaders.forEach((el) => {
+    const input = el.querySelector(':scope > input');
+    input.remove();
+    el.classList.remove('is-uploader');
+  });
+  stylers.forEach((styler) => {
+    styler.remove();
+  });
+}
