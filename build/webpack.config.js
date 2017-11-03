@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const env = process.env.NODE_ENV;
 const production = env === 'production';
@@ -31,7 +32,8 @@ const config = {
     page('index'),
     page('render'),
     new FriendlyErrorsWebpackPlugin(),
-    new ProgressBarPlugin()
+    new ProgressBarPlugin(),
+    new ExtractTextPlugin({ filename: 'css/app.css' })
   ],
   watchOptions: {
     aggregateTimeout: 300,
@@ -78,11 +80,17 @@ const config = {
     },
     {
       test: /\.css$/,
-      loaders: ['style-loader', 'css-loader']
+      loader: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: 'css-loader'
+      })
     },
     {
       test: /.styl$/,
-      loader: 'style-loader!css-loader!stylus-loader?resolve url'
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'stylus-loader?resolve url']
+      })
     },
     {
       test: /\.(ttf|eot|svg)(\?.*)?$/,
