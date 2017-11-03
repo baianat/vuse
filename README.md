@@ -58,7 +58,8 @@ But that does not accomplish much, you can't build sections without having any. 
 ### Section
 
 complete example for working section
-> here we use [NARX](https://github.com/baianat/NARX) patterns library for grid and UI elements.
+> Here we use [NARX](https://github.com/baianat/NARX) patterns library for grid and UI elements.
+> We using [pug](https://pugjs.org) languge to focus more on the working code.
 
 ```pug
 <template lang="pug">
@@ -124,13 +125,13 @@ So, how you can make any element editable
 
 Put all toghter
 
-```pug
-  a(
+```html
+  <a
     :class="[{'button', 'is-editable': $builder.isEditing}, $sectionData.button.classes]"
     :href="$sectionData.button.href"
     v-html="$sectionData.button.text"
     v-styler="$sectionData.button"
-  )
+  ></a>
 ```
 
 After create HTML structure you have to config the section schema for instance
@@ -182,11 +183,44 @@ After create HTML structure you have to config the section schema for instance
 
 ### v-styler
 
-It's the responsable for editing elements you have to provide the data type and the variable which it will update.
+It's responsable for editing elements you have to provide the data type and the variable which it will update.
 
 To tell styler which variable to update you pass it as directive expression e.g. `v-styler="$sectionData.button"`
 
 The styler directive has three types text, button or section by default it can know the type from the element tag or from provided schema. but if you want to sepcify the type you can pass it as directive argument e.g. `v-styler.button="$sectionData.button"`.
+
+### uploader
+
+It's responsable for uploading section images.
+
+`uploader` is a Vue component, it renders a `img` wrraped by `div` tag. you have to provide the variable that uploader is going to update it's value using `path` prop.
+
+```html
+<uploader path="$sectionData.images[0]"></uploader>
+```
+
+### use section
+
+Untile now the builder doesn't know about our section. so, we have to config it.
+
+```js
+import Builder from '@baianat/builder';
+import section1 from './components/sections/section1';
+
+Builder.component(section1);
+Vue.use(Builder);
+
+new Vue({
+  el: '#app'
+});
+```
+
+```html
+<div id="app">
+  <b-builder></b-builder>
+</div>
+```
+
 
 ## License
 
