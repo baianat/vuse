@@ -1,6 +1,6 @@
 # builder
 
-**This is still a work-in-progress and not ready for production**
+> **This is still a work-in-progress and not ready for production**
 
 Advanced page builder based on [Vue.js](https://vuejs.org/).
 
@@ -19,6 +19,7 @@ All this functionality is exposed as a Vue.js plugin, which means you can integr
 ## Installation
 
 ### Package managers
+
 First step is to install it using `yarn` or `npm`:
 
 ```bash
@@ -41,7 +42,7 @@ Or add it as a script tag in your projects.
 
 ### Usage
 
-**If you added it using a script tag, you can skip this section. as it will be auto-installed for you**
+> **If you added it using a script tag, you can skip this section. as it will be auto-installed for you**
 
 ```js
 import Builder from '@baianat/builder';
@@ -94,11 +95,11 @@ complete example for working section
 </template>
 
 <script>
-  import * as types from '../../types';
+  import types from '@baianat/builder';
 
   export default {
     name: 'hero1',
-    cover: 'static/covers/hero1.png',
+    cover: '../covers/hero1.png',
     $schema: {
       title: types.Title,
       content: types.Text,
@@ -138,7 +139,7 @@ After create HTML structure you have to config the section schema for instance
 
 ```html
 <script>
-  import * as types from '../../types';
+  import types from '@baianat/builder';
 
   export default {
     // section name
@@ -220,7 +221,6 @@ new Vue({
   <b-builder></b-builder>
 </div>
 ```
-
 
 ## License
 
