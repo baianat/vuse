@@ -100,7 +100,7 @@ export default {
       this.listShown = !this.listShown;
     },
     submit () {
-      this.$parent.$emit('saved', this.$builder);
+      this.$emit('saved', this.$builder);
     }
   },
   created () {

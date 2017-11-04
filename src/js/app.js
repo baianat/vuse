@@ -37,10 +37,9 @@ Vue.use(Builder);
 
 new Vue({
   el: '#app',
-  mounted () {
-    this.$on('saved', () => {
-      // the way to export the site
-      this.$builder.export('preview');
-    })
+  methods: {
+    onSave (builder) {
+      builder.export('preview');
+    }
   }
 });

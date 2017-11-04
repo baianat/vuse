@@ -146,7 +146,6 @@ class Builder {
       components: builder.components,
       beforeCreate () {
         this.$builder = builder;
-        this.$parent.$builder = builder;
       }
     };
     // register the main components.

@@ -3885,7 +3885,7 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
       this.listShown = !this.listShown;
     },
     submit: function submit () {
-      this.$parent.$emit('saved', this.$builder);
+      this.$emit('saved', this.$builder);
     }
   },
   created: function created () {
@@ -8174,7 +8174,6 @@ Builder.install = function install (Vue, options) {
     components: builder.components,
     beforeCreate: function beforeCreate () {
       this.$builder = builder;
-      this.$parent.$builder = builder;
     }
   };
   // register the main components.
