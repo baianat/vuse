@@ -95,7 +95,7 @@ complete example for working section
 </template>
 
 <script>
-  import types from '@baianat/builder';
+  import { types } from '@baianat/builder';
 
   export default {
     name: 'hero1',
@@ -139,7 +139,7 @@ After create HTML structure you have to config the section schema for instance
 
 ```html
 <script>
-  import types from '@baianat/builder';
+  import { types } from '@baianat/builder';
 
   export default {
     // section name
@@ -161,7 +161,7 @@ After create HTML structure you have to config the section schema for instance
       ],
       // object holds button data, href etc..
       button: types.Button,
-      // if section has many columns you can
+      // if section has many columns you can use
       // columns to sperate each column date
       columns: [
       {
@@ -220,6 +220,30 @@ new Vue({
 <div id="app">
   <b-builder></b-builder>
 </div>
+```
+
+### export
+
+There is three ways to export the output page preview, zip or JSON. on click export button it emits `saved` event so in builder component you have to tell which export mode to listen.
+
+```html
+<div id="app">
+  <b-builder @saved="onSave"></b-builder>
+</div>
+
+<script>
+
+  new Vue({
+  el: '#app',
+  methods: {
+    onSave (builder) {
+      // you can use preview, zip or JSON srtings
+      // JSON is the default exproting mode
+      builder.export('preview');
+    }
+  }
+});
+</script>
 ```
 
 ## License
