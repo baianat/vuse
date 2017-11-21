@@ -6,11 +6,8 @@ import { getImageBlob, cleanDOM } from '../util';
  * Adds a service worker that caches the static assets.
  */
 function createSW (output, { images = [] } = {}) {
-  const scripts = output.folder('assets/js');
-
   output.file('sw.js', `
     const staticCacheName = 'bbuilder-static-v1';
-    const contentImgsCache = 'bbuilder-content-imgs';
 
     self.addEventListener('install', function(event) {
       event.waitUntil(
@@ -25,7 +22,7 @@ function createSW (output, { images = [] } = {}) {
     });
 
     function serveAsset(request) {
-      return caches.open(contentImgsCache).then(function(cache) {
+      return caches.open(staticCacheName).then(function(cache) {
         return cache.match(request).then(function(response) {
           if (response) return response;
     
@@ -59,6 +56,7 @@ function createSW (output, { images = [] } = {}) {
     });
   `);
 
+  const scripts = output.folder('assets/js');
   scripts.file('main.js', `
     function registerSW () {
       if (!navigator.serviceWorker) return;
