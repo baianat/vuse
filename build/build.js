@@ -45,7 +45,7 @@ async function main () {
 
 async function plugins () {
   const bundle = await Rollup.rollup({
-    input: 'src/js/plugins/zip.js',
+    input: 'src/js/plugins/pwa.js',
     plugins: [
       nodeResolve({ preferBuiltins: false }),
       commonjs(),
@@ -55,7 +55,7 @@ async function plugins () {
 
   const { code } = await bundle.generate({
     format: 'umd',
-    name: 'BuilderZipPlugin',
+    name: 'BuilderPWAPlugin',
     banner:
 `/**
  * Builder v${version}
@@ -64,7 +64,7 @@ async function plugins () {
  */`
   });
 
-  fs.writeFileSync(path.join(outputPath, 'plugins/zip.js'), Uglify.minify(code, {
+  fs.writeFileSync(path.join(outputPath, 'plugins/pwa.js'), Uglify.minify(code, {
     compress: true,
     mangle: true,
   }).code);

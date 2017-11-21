@@ -7,6 +7,7 @@
   "main": "dist/builder.js",
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.config.js --inline --hot",
+    "dev": "webpack-dev-server --config build/webpack.config.js --inline --hot",
     "build": "npm run lint && npm run build:demo && npm run build:bundle",
     "build:bundle": "cross-env NODE_ENV=production node build/build.js",
     "build:demo": "cross-env NODE_ENV=production webpack -p --config build/webpack.config.js --hide-modules --progress",

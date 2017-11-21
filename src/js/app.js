@@ -10,7 +10,7 @@ import social1 from './components/social/social1';
 import social2 from './components/social/social2';
 import social3 from './components/social/social3';
 import social4 from './components/social/social4';
-import zip from './plugins/zip';
+import pwa from './plugins/pwa';
 
 // add the uploader to the list of sub-components.
 Builder.mix({
@@ -29,8 +29,8 @@ Builder.component(social2);
 Builder.component(social3);
 Builder.component(social4);
 
-// install zip plugin.
-Builder.use(zip);
+// install pwa plugin.
+Builder.use(pwa);
 
 // install the builder
 Vue.use(Builder);
@@ -40,6 +40,7 @@ new Vue({
   methods: {
     onSave (builder) {
       builder.export('preview');
+      builder.download();
     }
   }
 });

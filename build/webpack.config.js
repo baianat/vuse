@@ -114,7 +114,6 @@ const config = {
       vue: 'vue/dist/vue.esm.js'
     }
   }
-
 };
 
 module.exports = config;
