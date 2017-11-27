@@ -64,6 +64,7 @@ import * as types from '../../types';
 
 export default {
   name: 'social4',
+  group: 'social',
   $schema: {
     classes: [types.ClassList],
     title: types.Title,

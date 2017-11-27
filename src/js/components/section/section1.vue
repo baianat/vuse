@@ -34,7 +34,7 @@ import * as types from '../../types';
 
 export default {
   name: 'section1',
-  props: { id: Number },
+  group: 'section',
   $schema: {
     classes: types.ClassList,
     columns: [
@@ -47,6 +47,9 @@ export default {
         content: types.Text
       }
     ]
+  },
+  props: {
+    id: Number
   }
 };
 </script>

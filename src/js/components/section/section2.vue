@@ -45,6 +45,7 @@ import * as types from '../../types';
 
 export default {
   name: 'section2',
+  group: 'section',
   $schema: {
     classes: types.ClassList,
     columns: [

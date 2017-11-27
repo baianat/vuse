@@ -18,18 +18,24 @@
               .input.is-rounded
                 input(placeholder="project name" v-model="title")
 
-      ul.controller-list(:class="{ 'is-visiable': listShown }")
-        li(v-for="(section, index) in sections")
-          a.controller-element(@click="addSection(section)")
-            img(v-if="covers[index]" :src="covers[index]")
-            span(v-else) {{ section }}
+      ul.controller-list(:class="{ 'is-visiable': listShown }" ref="controllerList")
+        li(v-for="(group, name) in sections"  v-if="group.length" :id="`group-${name}`")
+          .controller-header(@click="toggleGroupVisibility(`#group-${name}`)")
+            span.controller-title {{ name }}
+            span.controller-icon
+              +icon('arrowDown')
+          ul.controller-group
+            li(v-for="section in group")
+              a.controller-element(@click="addSection(section)")
+                img(v-if="section.cover" :src="section.cover")
+                span(v-else) {{ section.name }}
 
       .controller-buttons
         button.controller-submit.button.is-green.is-rounded(@click="submit")
           +icon('tic')
         button.controller-sort.button.is-blue.is-rounded(
           :class="{ 'is-red': $builder.isSorting }"
-          @click="toogleState"
+          @click="toggleState"
         )
           +icon('sort')
         button.controller-add.button.is-blue.is-rounded(
@@ -61,12 +67,7 @@ export default {
     return {
       title: null,
       listShown: false,
-      sections: Object.keys(this.$builder.components),
-      covers: (() => {
-        return Object.keys(this.$builder.components).map((key) => {
-          return this.$builder.components[key].options.cover;
-        })
-      })()
+      sections: this.getSections()
     }
   },
   watch: {
@@ -82,32 +83,65 @@ export default {
         this.addSection(this.sections[0]);
         return;
       }
-      this.toogleListVisiableity();
+      this.toggleListVisibility();
     },
     addSection (name) {
-      this.$builder.create({
-        name: name,
-        schema: this.$builder.components[name].options.$schema
-      });
+      this.$builder.create(name);
       this.listShown = false;
     },
-    toogleState () {
+    toggleState () {
       this.$builder.isEditing = !this.$builder.isEditing;
       this.$builder.isSorting = !this.$builder.isSorting;
       this.$builder.toggleSort();
     },
-    toogleListVisiableity () {
+    toggleListVisibility () {
       this.listShown = !this.listShown;
+    },
+    toggleGroupVisibility (group) {
+      group = this.$refs.controllerList.querySelector(group);
+      group.classList.toggle('is-visiable');
     },
     submit () {
       this.$emit('saved', this.$builder);
+    },
+    getSections () {
+      let sections = [];
+      let groups = { root: [] };
+
+      // get sections data
+      sections = Object.keys(this.$builder.components).map((sec) => {
+        return {
+          name: sec,
+          group: this.$builder.components[sec].options.group,
+          cover: this.$builder.components[sec].options.cover,
+          schema: this.$builder.components[sec].options.$schema
+        }
+      });
+
+      // group sections toghter
+      sections.forEach((section) => {
+        let sectionGroup = section.group;
+        if (!sectionGroup) {
+          groups.root.push(section);
+          return;
+        }
+        if (!groups[sectionGroup]) {
+          groups[sectionGroup] = [section];
+          return;
+        }
+        groups[sectionGroup].push(section);
+      })
+      console.log(groups);
+      return groups;
     }
   },
+
   created () {
     // sets the initial data.
     this.$builder.set(this.data);
     this.title = this.$builder.title;
   },
+
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
   }
@@ -126,6 +160,7 @@ button:focus
 .artboard
   transform-origin: top center
 .controller
+  box-sizing: border-box
   &-buttons
     position: fixed
     z-index: 200
@@ -156,15 +191,33 @@ button:focus
     bottom: 0
     margin: 0
     width: 250px
-    margin-left: (- @width)
+    margin-left: (- @width - 10)
     padding: 20px 10px
     display: flex
     flex-direction: column
     overflow: auto
     list-style: none
     transition: 0.4s
+    box-shadow: 1px 0 10px alpha($dark, 20%)
     &.is-visiable
       margin-left: 0
+  &-group
+    display: none
+    padding: 0
+    margin: 0
+    list-style: none
+    li
+      width: 90%
+      margin: 5px auto
+    li.is-visiable &
+      display: block
+  &-icon
+    width: 24px
+    height: 24px
+    fill: $gray
+    transition: 0.4s
+    li.is-visiable &
+     transform: rotate(180deg)
 
   &-element
     display: flex
@@ -172,7 +225,6 @@ button:focus
     align-items: center
     width: 100%
     min-height: 100px
-    margin: 5px
     border-radius: 5px
     background: darken($gray, 10%)
     transition: 0.3s
@@ -183,6 +235,13 @@ button:focus
       max-width: 100%
     &:hover
       @extends $floatHover
+
+  &-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 10px 5px
+    border-bottom: 1px solid alpha($black, 5%)
 
 .is-hidden
   display: none

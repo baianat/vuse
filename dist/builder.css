@@ -10,6 +10,9 @@ button:focus {
 .artboard {
   transform-origin: top center;
 }
+.controller {
+  box-sizing: border-box;
+}
 .controller-buttons {
   position: fixed;
   z-index: 200;
@@ -42,16 +45,39 @@ button:focus {
   bottom: 0;
   margin: 0;
   width: 250px;
-  margin-left: -250px;
+  margin-left: -260px;
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
   overflow: auto;
   list-style: none;
   transition: 0.4s;
+  box-shadow: 1px 0 10px rgba(50,60,71,0.2);
 }
 .controller-list.is-visiable {
   margin-left: 0;
+}
+.controller-group {
+  display: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.controller-group li {
+  width: 90%;
+  margin: 5px auto;
+}
+li.is-visiable .controller-group {
+  display: block;
+}
+.controller-icon {
+  width: 24px;
+  height: 24px;
+  fill: #cedee8;
+  transition: 0.4s;
+}
+li.is-visiable .controller-icon {
+  transform: rotate(180deg);
 }
 .controller-element {
   display: flex;
@@ -59,7 +85,6 @@ button:focus {
   align-items: center;
   width: 100%;
   min-height: 100px;
-  margin: 5px;
   border-radius: 5px;
   background: #b0cada;
   transition: 0.3s;
@@ -69,6 +94,13 @@ button:focus {
 }
 .controller-element img {
   max-width: 100%;
+}
+.controller-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .is-hidden {
   display: none;

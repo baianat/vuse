@@ -30,6 +30,7 @@ import * as types from '../../types';
 
 export default {
   name: 'social2',
+  group: 'social',
   $schema: {
     classes: types.ClassList,
     content: types.Text,
