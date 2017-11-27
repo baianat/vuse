@@ -146,6 +146,8 @@ After create HTML structure you have to config the section schema for instance
     name: 'hero1',
     // section cover image
     cover: '../cover-hero1.png',
+    // group mutiple sections
+    goup: 'heros',
     // section data schema
     $schema: {
       // main title
