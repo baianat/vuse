@@ -131,7 +131,6 @@ export default {
         }
         groups[sectionGroup].push(section);
       })
-      console.log(groups);
       return groups;
     }
   },

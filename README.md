@@ -184,6 +184,17 @@ After create HTML structure you have to config the section schema for instance
 </script>
 ```
 
+you can add the `schema` values directly without using types, but it's better to use types
+
+```js
+$schema: {
+  // main title
+  title: 'The section title',
+  // main content
+  content: 'The section content,
+}
+```
+
 ### v-styler
 
 It's responsable for editing elements you have to provide the data type and the variable which it will update.

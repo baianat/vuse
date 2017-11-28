@@ -5,8 +5,8 @@
   )
     .container
       .grid.is-center
-        .column.is-screen-5(
-          :class="{'is-editable': $builder.isEditing}"
+        .column(
+          :class="[{'is-editable': $builder.isEditing}, $sectionData.columns[0].grid]"
           v-styler:column="$sectionData.columns[0].grid"
         )
           h2.section-title(
@@ -19,7 +19,10 @@
             v-html="$sectionData.columns[0].content"
             v-styler="$sectionData.columns[0].content"
           )
-        .column.is-screen-5.is-offset-screen-1
+        .column.is-offset-screen-1(
+          :class="[{ 'is-editable': $builder.isEditing }, $sectionData.columns[1].grid]"
+          v-styler:column="$sectionData.columns[1].grid"
+        )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[1].title"
@@ -43,11 +46,13 @@ export default {
     columns: [
       {
         title: types.Title,
-        content: types.Text
+        content: types.Text,
+        grid: 'is-screen-5'
       },
       {
         title: types.Title,
-        content: types.Text
+        content: types.Text,
+        grid: 'is-screen-5'
       }
     ]
   },

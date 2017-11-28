@@ -11,6 +11,7 @@ let counter = 0;
 
 export default class Section {
   constructor (options) {
+    console.log(options);
     this.id = counter++;
     options = Object.assign({}, SECTION_OPTIONS, options);
     this.name = options.name;
@@ -21,6 +22,7 @@ export default class Section {
   set (name, value) {
     const path = toPath(name);
     const prop = path.pop();
+
     path.shift();
     const obj = path.length === 0 ? this.data : getPath(this.data, path);
     if (typeof value === 'function') {

@@ -21,7 +21,9 @@ export default class Seeder {
     if (isObject(schema)) {
       return Object.keys(schema).reduce((values, key) => {
         values[key] = Seeder.seed(schema[key]);
-
+        if (values[key] === undefined) {
+          values[key] = schema[key];
+        }
         return values;
       }, {});
     } else if (Array.isArray(schema)) {
