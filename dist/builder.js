@@ -6468,7 +6468,7 @@ var Styler = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     },
     hideStyler: function hideStyler (evnt) {
       var mouseTarget = evnt.target;
-      if (!isParentTo(mouseTarget, this.styler) && !isParentTo(mouseTarget, this.el)) {
+      if (!isParentTo(mouseTarget, this.styler) && mouseTarget !== this.el) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
         if (this.type === 'section' || this.type === 'column') { return; }
@@ -6501,9 +6501,11 @@ var Styler = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     });
 
     // add listeners to show/hide styler
-    this.el.addEventListener('click', function () {
-      this$1.showStyler();
-      document.addEventListener('click', this$1.hideStyler, false);
+    this.el.addEventListener('click', function (event) {
+      if (event.target === this$1.el) {
+        this$1.showStyler();
+      }
+      document.addEventListener('click', this$1.hideStyler);
     }, false);
   },
   updated: function updated () {
