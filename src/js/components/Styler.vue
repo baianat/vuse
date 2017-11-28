@@ -13,15 +13,21 @@
         button.styler-button(@click="removeSection")
           +icon('trash')
       template(v-if="type === 'text'")
-        li
-          button.styler-button(@click="updateOption('textColor')")
+        li: button.styler-button(@click="updateOption('textColor')")
             +icon('palettes')
-        li
-          button.styler-button(@click="updateOption('align')")
+        li: button.styler-button(@click="updateOption('align')")
             +icon('align')
-        li
-          button.styler-button(@click="updateOption('textStyle')")
+        li: button.styler-button(@click="updateOption('textStyle')")
             +icon('textStyle')
+      template(v-if="type === 'column'")
+        li: button.styler-button(@click="selectDevice('mobile')")
+            +icon('mobile')
+        li: button.styler-button(@click="selectDevice('tablet')")
+            +icon('tablet')
+        li: button.styler-button(@click="selectDevice('screen')")
+            +icon('laptop')
+        li: button.styler-button(@click="selectDevice('widescreen')")
+            +icon('monitor')
 
     ul.styler-list
       li(v-if="currentOption === 'colorer'")
@@ -69,6 +75,12 @@
           li: button.styler-button(@click="execute('underline')")
             +icon('underline')
 
+      li(v-if="currentOption === 'columnWidth'")
+        ul.align
+          li(v-for="$n in 12")
+            button.styler-button(@click="columnWidth($n)")
+              span {{ $n }}
+
 </template>
 
 <script>
@@ -114,6 +126,13 @@ export default {
 
         value.push(className);
       });
+    },
+    selectDevice (device) {
+      this.updateOption('columnWidth');
+      this.device = device;
+    },
+    columnWidth (width) {
+      console.log(this.device, width);
     },
     removeClass (className) {
       if (Array.isArray(className)) {
@@ -226,6 +245,7 @@ export default {
     background: $dark
     border: 0
     fill: $white
+    color: $white
     width: 42px
     height: 42px
     border-radius: 42px

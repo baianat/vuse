@@ -5,7 +5,10 @@
   )
     .container
       .grid.is-center
-        .column.is-screen-5
+        .column.is-screen-5(
+          :class="{'is-editable': $builder.isEditing}"
+          v-styler:column="$sectionData.columns[0].grid"
+        )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[0].title"
