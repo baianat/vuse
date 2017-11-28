@@ -201,7 +201,7 @@ It's responsable for editing elements you have to provide the data type and the 
 
 To tell styler which variable to update you pass it as directive expression e.g. `v-styler="$sectionData.button"`
 
-The styler directive has three types text, button or section by default it can know the type from the element tag or from provided schema. but if you want to sepcify the type you can pass it as directive argument e.g. `v-styler.button="$sectionData.button"`.
+The styler directive has four types text, button, column or section by default it can know the type from the element tag or from provided schema. but if you want to sepcify the type you can pass it as directive argument e.g. `v-styler:button="$sectionData.button"`.
 
 ### uploader
 
