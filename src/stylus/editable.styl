@@ -10,8 +10,21 @@
       right: 0
       bottom: 0
       left: 0
-      margin: -10px
       display: block
+      margin: -10px
+      border: 1px solid alpha($black, 10%)
       content: ''
-      border: 1px solid transparent
-      border: 1px solid $blue
+
+section.is-editable
+  position: relative
+  &:hover
+    &:before
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      display: block
+      margin: 1px
+      border: 1px solid alpha($black, 10%)
+      content: ''

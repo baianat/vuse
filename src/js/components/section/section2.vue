@@ -5,7 +5,10 @@
   )
     .container
       .grid.is-center
-        .column.is-screen-4
+        .column(
+          :class="[{'is-editable': $builder.isEditing}, $sectionData.columns[0].grid]"
+          v-styler:column="$sectionData.columns[0].grid"
+        )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[0].title"
@@ -16,7 +19,10 @@
             v-html="$sectionData.columns[0].content"
             v-styler="$sectionData.columns[0].content"
           )
-        .column.is-screen-4
+        .column(
+          :class="[{'is-editable': $builder.isEditing}, $sectionData.columns[1].grid]"
+          v-styler:column="$sectionData.columns[1].grid"
+        )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[1].title"
@@ -27,7 +33,10 @@
             v-html="$sectionData.columns[1].content"
             v-styler="$sectionData.columns[1].content"
           )
-        .column.is-screen-4
+        .column(
+          :class="[{'is-editable': $builder.isEditing}, $sectionData.columns[2].grid]"
+          v-styler:column="$sectionData.columns[2].grid"
+        )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[2].title"
@@ -51,13 +60,16 @@ export default {
     columns: [
       {
         title: types.Title,
-        content: types.Text
+        content: types.Text,
+        grid: ['is-screen-4']
       }, {
         title: types.Title,
-        content: types.Text
+        content: types.Text,
+        grid: ['is-screen-4']
       }, {
         title: types.Title,
-        content: types.Text
+        content: types.Text,
+        grid: ['is-screen-4']
       }
     ]
   },

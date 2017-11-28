@@ -47,12 +47,12 @@ export default {
       {
         title: types.Title,
         content: types.Text,
-        grid: 'is-screen-5'
+        grid: ['is-screen-5']
       },
       {
         title: types.Title,
         content: types.Text,
-        grid: 'is-screen-5'
+        grid: ['is-screen-5']
       }
     ]
   },

@@ -22,12 +22,12 @@
       template(v-if="type === 'column'")
         li: button.styler-button(@click="selectDevice('mobile')")
             +icon('mobile')
-        li: button.styler-button(@click="selectDevice('tablet')")
-            +icon('tablet')
+        //- li: button.styler-button(@click="selectDevice('tablet')")
+        //-     +icon('tablet')
         li: button.styler-button(@click="selectDevice('screen')")
             +icon('laptop')
-        li: button.styler-button(@click="selectDevice('widescreen')")
-            +icon('monitor')
+        //- li: button.styler-button(@click="selectDevice('widescreen')")
+        //-     +icon('monitor')
 
     ul.styler-list
       li(v-if="currentOption === 'colorer'")
@@ -119,7 +119,7 @@ export default {
       this.addClass(`is-${this.colorerColor}`);
     },
     addClass (className) {
-      this.section.set(this.name, value => {
+      this.section.set(this.name, (value) => {
         if (value && value.classes && Array.isArray(value.classes)) {
           value = value.classes;
         }
@@ -132,7 +132,14 @@ export default {
       this.device = device;
     },
     columnWidth (width) {
-      console.log(this.device, width);
+      this.section.set(this.name, (grid) => {
+        const currentWidth = grid.find((el) => el.includes(`is-${this.device}`));
+        const currentWidthIndex = grid.indexOf(currentWidth);
+        if (currentWidthIndex > -1) {
+          grid.splice(currentWidthIndex, 1);
+        }
+        grid.push(`is-${this.device}-${width}`);
+      });
     },
     removeClass (className) {
       if (Array.isArray(className)) {
@@ -165,7 +172,7 @@ export default {
     },
     hideStyler (evnt) {
       const mouseTarget = evnt.target;
-      if (!isParentTo(mouseTarget, this.styler) && !isParentTo(mouseTarget, this.el)) {
+      if (!isParentTo(mouseTarget, this.styler) && mouseTarget !== this.el) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
         if (this.type === 'section' || this.type === 'column') return;
@@ -196,9 +203,11 @@ export default {
     });
 
     // add listeners to show/hide styler
-    this.el.addEventListener('click', () => {
-      this.showStyler();
-      document.addEventListener('click', this.hideStyler, false);
+    this.el.addEventListener('click', (event) => {
+      if (event.target === this.el) {
+        this.showStyler();
+      }
+      document.addEventListener('click', this.hideStyler);
     }, false);
   },
   updated () {
