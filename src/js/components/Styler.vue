@@ -168,7 +168,7 @@ export default {
       if (!isParentTo(mouseTarget, this.styler) && !isParentTo(mouseTarget, this.el)) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
-        if (this.type === 'section') return;
+        if (this.type === 'section' || this.type === 'column') return;
         if (this.type === 'button') {
           this.section.set(`${this.name}.text`, this.el.innerHTML);
           return;
