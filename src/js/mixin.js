@@ -20,9 +20,16 @@ function installMixin ({ builder }) {
           this.$options.computed = {};
         }
 
-        this.$options.computed.$sectionData = function getSectionData () {
-          return this.$section.data;
-        };
+        this.$options.computed = {
+          $sectionData: function getSectionData () {
+            return this.$section.data;
+          },
+          gridClasses: function () {
+            return this.$sectionData.columns.map((column) => {
+              return Object.keys(column.grid).map((device) => column.grid[device]);
+            })
+          }
+        }
       }
     },
     mounted () {

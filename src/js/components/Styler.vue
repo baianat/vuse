@@ -133,12 +133,7 @@ export default {
     },
     columnWidth (width) {
       this.section.set(this.name, (grid) => {
-        const currentWidth = grid.find((el) => el.includes(`is-${this.device}`));
-        const currentWidthIndex = grid.indexOf(currentWidth);
-        if (currentWidthIndex > -1) {
-          grid.splice(currentWidthIndex, 1);
-        }
-        grid.push(`is-${this.device}-${width}`);
+        grid[this.device] = (`is-${this.device}-${width}`);
       });
     },
     removeClass (className) {

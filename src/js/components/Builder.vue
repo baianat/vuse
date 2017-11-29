@@ -183,13 +183,14 @@ button:focus
     color: $dark
     font-weight: normal
   &-list
-    background: $white
     position: fixed
+    z-index 9999
     top: 0
     left: 0
     bottom: 0
     margin: 0
     width: 250px
+    background: $white
     margin-left: (- @width - 10)
     padding: 20px 10px
     display: flex
