@@ -2,7 +2,7 @@
 
 Advanced page/email builder based on [Vue.js](https://vuejs.org/).
 
-## What is this
+## What is this?
 
 This builder (sections builder) reuses your Vue components as **editable sections** to produce an interactive page builder to the end user, you can use it as a prototyping tool as well as it is sort-of a block builder.
 
@@ -183,17 +183,11 @@ After creating the HTML structure you should configure the section schema to use
       {
         title: types.Title,
         content: types.Text,
-        // grid object use for responsive classes
-        grid: {
-          mobile: '',
-          tablet: '',
-          screen: 'is-screen-5',
-          widescreen: ''
-        }
+        group: types.group
       },
       {
         title: types.Title,
-        content: types.Text
+        group: types.group
       }
     ]
     },
@@ -204,28 +198,9 @@ After creating the HTML structure you should configure the section schema to use
 </script>
 ```
 
-you can add the `schema` values directly without using types, but it's better to use types
-
-```js
-$schema: {
-  // main title
-  title: 'The section title',
-  // main content
-  content: 'The section content,
-}
-```
-
 ### v-styler
 
-<<<<<<< HEAD
-It's responsable for editing elements you have to provide the data type and the variable which it will update.
-
-To tell styler which variable to update you pass it as directive expression e.g. `v-styler="$sectionData.button"`
-
-The styler directive has four types text, button, column or section by default it can know the type from the element tag or from provided schema. but if you want to sepcify the type you can pass it as directive argument e.g. `v-styler:button="$sectionData.button"`.
-=======
 This directive is automatically injected in your section components, and can be used to facilitate editing elements greatly since it has support for multiple elements types like `div`, `a`, `button` and `p` tags as well.
->>>>>>> 6c81efb8e421eefa2ac47e4f6dc740f10c8d71b1
 
 To tell styler which variable to update you pass it as directive expression e.g.: `v-styler="$sectionData.button"`
 
