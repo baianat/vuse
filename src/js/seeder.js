@@ -11,6 +11,7 @@ const data = new Map([
   [types.ClassList, () => []],
   [types.Button, () => ({ text: 'Click Me!', classes: [], href: 'http://example.com' })],
   [types.Quote, 'When you were made a leader, you weren\'t given a crown; you were given the responsibility to bring out the best in others.'],
+  [types.Grid, () => ({mobile: '', tablet: '', screen: '', widescreen: ''})],
   [Number, 100],
   [String, 'This is pretty neat']
 ]);

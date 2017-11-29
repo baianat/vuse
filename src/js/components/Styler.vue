@@ -19,7 +19,7 @@
             +icon('align')
         li: button.styler-button(@click="updateOption('textStyle')")
             +icon('textStyle')
-      template(v-if="type === 'column'")
+      template(v-if="type === 'grid'")
         li: button.styler-button(@click="selectDevice('mobile')")
             +icon('mobile')
         //- li: button.styler-button(@click="selectDevice('tablet')")
@@ -182,7 +182,7 @@ export default {
       if (!isParentTo(mouseTarget, this.styler) && mouseTarget !== this.el) {
         this.styler.classList.remove('is-visible');
         document.removeEventListener('click', this.hideStyler);
-        if (this.type === 'section' || this.type === 'column') return;
+        if (this.type === 'section' || this.type === 'grid') return;
         if (this.type === 'button') {
           this.section.set(`${this.name}.text`, this.el.innerHTML);
           return;

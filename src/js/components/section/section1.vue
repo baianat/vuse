@@ -7,7 +7,7 @@
       .grid.is-center
         .column(
           :class="[{'is-editable': $builder.isEditing}, gridClasses[0]]"
-          v-styler:column="$sectionData.columns[0].grid"
+          v-styler:grid="$sectionData.columns[0].grid"
         )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
@@ -21,7 +21,7 @@
           )
         .column.is-offset-screen-1(
           :class="[{ 'is-editable': $builder.isEditing }, gridClasses[1]]"
-          v-styler:column="$sectionData.columns[1].grid"
+          v-styler:grid="$sectionData.columns[1].grid"
         )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"

@@ -20,10 +20,13 @@ export function isParentTo (target, parent) {
  * @param {Object} schema 
  */
 export function getTypeFromSchema (target, schema) {
-  const value = getPath(schema, target);
-
-  if (value === types.Title) return 'text';
+  const tempTarget = target.split('.');
+  tempTarget.shift();
+  const value = getPath(schema, tempTarget.join('.'));
+  console.log(value)
+  if (value === types.Grid) return 'grid';
   if (value === types.Text) return 'text';
+  if (value === types.Title) return 'text';
   if (value === types.Button) return 'button';
   if (value === types.ClassList) return 'section';
   if (value === String) return 'text';

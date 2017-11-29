@@ -7,7 +7,7 @@
       .grid.is-center
         .column(
           :class="[{'is-editable': $builder.isEditing}, gridClasses[0]]"
-          v-styler:column="$sectionData.columns[0].grid"
+          v-styler="$sectionData.columns[0].grid"
         )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
@@ -21,7 +21,7 @@
           )
         .column(
           :class="[{'is-editable': $builder.isEditing}, gridClasses[1]]"
-          v-styler:column="$sectionData.columns[1].grid"
+          v-styler="$sectionData.columns[1].grid"
         )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
@@ -35,7 +35,7 @@
           )
         .column(
           :class="[{'is-editable': $builder.isEditing}, gridClasses[2]]"
-          v-styler:column="$sectionData.columns[2].grid"
+          v-styler="$sectionData.columns[2].grid"
         )
           h2.section-title(
             :class="{'is-editable': $builder.isEditing}"
@@ -61,24 +61,15 @@ export default {
       {
         title: types.Title,
         content: types.Text,
-        grid: {
-          mobile: '',
-          screen: 'is-screen-4'
-        }
+        grid: types.Grid
       }, {
         title: types.Title,
         content: types.Text,
-        grid: {
-          mobile: '',
-          screen: 'is-screen-4'
-        }
+        grid: types.Grid
       }, {
         title: types.Title,
         content: types.Text,
-        grid: {
-          mobile: '',
-          screen: 'is-screen-4'
-        }
+        grid: types.Grid
       }
     ]
   },
