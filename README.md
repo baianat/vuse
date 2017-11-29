@@ -4,15 +4,15 @@ Advanced page/email builder based on [Vue.js](https://vuejs.org/).
 
 ## What is this
 
-This builder (sections builder) reuses your Vue components which we will can **editable sections** to produce an interactive page builder to the end user, you can use it as a prototyping tool as well as it is sort-of a block builder.
+This builder (sections builder) reuses your Vue components as **editable sections** to produce an interactive page builder to the end user, you can use it as a prototyping tool as well as it is sort-of a block builder.
 
-The user/developer can then export the builder for usability in the following formats:
+The user/developer can then export the builder for usability in multiple formats, the following are the officially supported ones:
 
-- `zip` produces a zip file which contains all the page files and images neatly packed, this is probably what will your end users will use.
+- `json` A json object which can be later used to re-render a page, particualry useful if you plan to have dynamic pages or want to store them in a Database.
 - `preview` opens a new page without the editable logic in new tap to see the end result.
-- `json` A json object which can be later used to re-render built page, particualry useful if you plan to have dynamic pages or want to store them in a Database.
+- `pwa` produces a zip file which contains all the page files and images neatly packed, this is probably the format you will use for page/prototype landing page builder, The project is augmented by default with service workers to support offline viewing.
 
-All this functionality is exposed as a Vue.js plugin, which means you can integrate it in your own projects that may need this functionality.
+The builder is just a Vue plugin, so you can integrate this into your own projects without needing to create seperate bundles for it.
 
 ## Installation
 
@@ -48,17 +48,34 @@ import Builder from '@baianat/builder';
 Vue.use(Builder);
 ```
 
-And you are done, the builder is installed, you can start using the `b-builder` component to build things now.
+You can start using the `b-builder` component to build things now.
 
-But that does not accomplish much, you can't build sections without having any. This repository only contains the core package, **we will be adding a huge number of sections soon to be used with this one**. You can use the included examples after reading the API to build your own for now.
+This package does not include any sections. The builder is just a system of helpers for managing customizable sections, seeding fake data, exporting views and re-rendering them. The logic for your components/sections is written by you eventually. **we will be adding a huge number of sections soon to be used with this one**. You can use the included examples after reading the API to build your own for now.
 
 ## API
 
+<!-- > Examples use [NARX](https://github.com/baianat/NARX) patterns library for grid and UI elements. -->
+> Examples use [pug](https://pugjs.org) template language to make it easier to work with templates.
+
+### Injected Properties and Methods
+
+Your section components will have some properties injected to help you customize their behavior in building phase and production/render phase.
+
+#### $section
+
+An instance of the [section class](https://github.com/baianat/builder/blob/master/src/js/section.js) that represents this component.
+
+#### $builder
+
+An instance of the singleton [builder class](https://github.com/baianat/builder/blob/master/src/js/builder.js)
+
+#### $sectionData
+
+Is a computed property that mirriors `$section.data` which contains the current values (text, images, etc...) for the section.
+
 ### Section
 
-complete example for working section
-> Here we use [NARX](https://github.com/baianat/NARX) patterns library for grid and UI elements.
-> We using [pug](https://pugjs.org) languge to focus more on the working code.
+A section is the building block of the page, below is an example of a header section.
 
 ```pug
 <template lang="pug">
@@ -112,8 +129,7 @@ complete example for working section
 </script>
 ```
 
-Each section has several elements that can be edit
-we store elements data in `$sectionData` object to be able to track them and update Vue data
+Each section has several elements that can be edited. Elements data are stored in `$sectionData` object which is reactive.
 
 So, how you can make any element editable
 
@@ -133,7 +149,7 @@ Put all toghter
   ></a>
 ```
 
-After create HTML structure you have to config the section schema for instance
+After creating the HTML structure you should configure the section schema to use the built in seeder to provide you with initial/fake values when the component is instantiated in build/edit mode.
 
 ```html
 <script>
@@ -145,7 +161,7 @@ After create HTML structure you have to config the section schema for instance
     // section cover image
     cover: '../cover-hero1.png',
     // group mutiple sections
-    goup: 'heros',
+    group: 'heros',
     // section data schema
     $schema: {
       // main title
@@ -181,9 +197,8 @@ After create HTML structure you have to config the section schema for instance
       }
     ]
     },
-    // you have to allow id prop in section
     props: {
-      id: Number
+      id: Number // it is required to have an id prop.
     }
   };
 </script>
@@ -202,31 +217,32 @@ $schema: {
 
 ### v-styler
 
+<<<<<<< HEAD
 It's responsable for editing elements you have to provide the data type and the variable which it will update.
 
 To tell styler which variable to update you pass it as directive expression e.g. `v-styler="$sectionData.button"`
 
 The styler directive has four types text, button, column or section by default it can know the type from the element tag or from provided schema. but if you want to sepcify the type you can pass it as directive argument e.g. `v-styler:button="$sectionData.button"`.
+=======
+This directive is automatically injected in your section components, and can be used to facilitate editing elements greatly since it has support for multiple elements types like `div`, `a`, `button` and `p` tags as well.
+>>>>>>> 6c81efb8e421eefa2ac47e4f6dc740f10c8d71b1
 
-### uploader
+To tell styler which variable to update you pass it as directive expression e.g.: `v-styler="$sectionData.button"`
 
-It's responsable for uploading section images.
+The styler directive has three types `text`, `button`, or `section`. By default the directive can tell the type from the element tag or from provided schema. 
 
-`uploader` is a Vue component, it renders a `img` wrraped by `div` tag. you have to provide the variable that uploader is going to update it's value using `path` prop.
+If you want to sepcify the type you can pass it as a directive modifier e.g.: `v-styler.button="$sectionData.button"`.
 
-```html
-<uploader path="$sectionData.images[0]"></uploader>
-```
+### Using the section
 
-### use section
-
-Untile now the builder doesn't know about our section. so, we have to config it.
+Until now we have only been creating our section component, we now need to introduce it to our builder so it can use it:
 
 ```js
 import Builder from '@baianat/builder';
-import section1 from './components/sections/section1';
+import section from './components/sections/section';
 
-Builder.component(section1);
+// Builder has Vue-like API when registering components.
+Builder.component(section);
 Vue.use(Builder);
 
 new Vue({
@@ -240,9 +256,11 @@ new Vue({
 </div>
 ```
 
-### export
+You only have to register the component on the Builder plugin, which has a Vue-like API. This ensures your Vue global scope isn't polluted by the builder and keeps everything contained within the `b-builder` component.
 
-There is three ways to export the output page preview, zip or JSON. on click export button it emits `saved` event so in builder component you have to tell which export mode to listen.
+### Exporting
+
+There is three ways to export the built page: preview, pwa or json. When clicking the save button the `b-builder` component emits a saved event with the builder instance as its payload, which exposes a `export` method.
 
 ```html
 <div id="app">
@@ -255,8 +273,8 @@ There is three ways to export the output page preview, zip or JSON. on click exp
   el: '#app',
   methods: {
     onSave (builder) {
-      // you can use preview, zip or JSON srtings
-      // JSON is the default exproting mode
+      // you can use 'preview', 'pwa' or 'json' strings
+      // 'json' is the default exproting mode
       builder.export('preview');
     }
   }
