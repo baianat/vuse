@@ -1,10 +1,8 @@
 # builder
 
-> **This is still a work-in-progress and not ready for production**
+Advanced page/email builder based on [Vue.js](https://vuejs.org/).
 
-Advanced page builder based on [Vue.js](https://vuejs.org/).
-
-## What is this?
+## What is this
 
 This builder (sections builder) reuses your Vue components which we will can **editable sections** to produce an interactive page builder to the end user, you can use it as a prototyping tool as well as it is sort-of a block builder.
 
