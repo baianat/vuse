@@ -184,7 +184,7 @@ button:focus
     font-weight: normal
   &-list
     position: fixed
-    z-index 9999
+    z-index 300
     top: 0
     left: 0
     bottom: 0

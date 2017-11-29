@@ -23,7 +23,6 @@ export function getTypeFromSchema (target, schema) {
   const tempTarget = target.split('.');
   tempTarget.shift();
   const value = getPath(schema, tempTarget.join('.'));
-  console.log(value)
   if (value === types.Grid) return 'grid';
   if (value === types.Text) return 'text';
   if (value === types.Title) return 'text';

@@ -1,7 +1,13 @@
 <template lang="pug">
   include ../../pug/mixin/icon
 
-  .styler(ref="styler" v-if="$builder.isEditing")
+  .styler(
+    ref="styler"
+    id="styler"
+    v-if="$builder.isEditing"
+    :class="{ 'is-visible': isVisible }"
+    @click.prevent.stop=""
+  )
     ul.styler-list
       li(v-if="type === 'button' || type === 'section'")
         button.styler-button(@click="updateOption('colorer')")
@@ -87,7 +93,7 @@
 
 <script>
 import Popper from 'popper.js';
-import { isParentTo } from '../util';
+import { isParentTo } from './../util';
 
 export default {
   name: 'styler',
@@ -101,7 +107,8 @@ export default {
     mouseTarget: '',
     currentOption: '',
     url: '',
-    gridValue: 0
+    gridValue: 0,
+    isVisible: false
   }),
   watch: {
     colorerColor () {
@@ -122,7 +129,7 @@ export default {
   methods: {
     updateOption (option) {
       this.currentOption = option;
-      this.popper.update();
+      // this.popper.update();
     },
     addLink () {
       this.section.set(`${this.name}.href`, this.url);
@@ -166,22 +173,27 @@ export default {
       document.removeEventListener('click', this.hideStyler);
       // TODO: destroy all popperjs instances
       this.popper.destroy();
-      this.styler.remove();
-      this.$builder.remove(this.id);
+      this.$refs.styler.remove();
+      this.$builder.remove(Number(this.section.id));
     },
     execute (command, value = null) {
+      this.el.focus();
       document.execCommand(command, false, value);
     },
-    showStyler () {
-      this.styler.classList.add('is-visible');
-      this.currentOption = '';
-      this.popper.update();
+    showStyler (event) {
+      event.stopPropagation();
+
+      if (!this.isVisible) {
+        document.addEventListener('click', this.hideStyler, true);
+        this.isVisible = true;
+        this.currentOption = '';
+        this.popper.update();
+      }
     },
-    hideStyler (evnt) {
-      const mouseTarget = evnt.target;
-      if (!isParentTo(mouseTarget, this.styler) && mouseTarget !== this.el) {
-        this.styler.classList.remove('is-visible');
-        document.removeEventListener('click', this.hideStyler);
+    hideStyler (event) {
+      if (!event.target.closest('#styler') && !isParentTo(event.target, this.el)) {
+        this.isVisible = false;
+        document.removeEventListener('click', this.hideStyler, true);
         if (this.type === 'section' || this.type === 'grid') return;
         if (this.type === 'button') {
           this.section.set(`${this.name}.text`, this.el.innerHTML);
@@ -199,31 +211,22 @@ export default {
   },
   mounted () {
     if (!this.$builder.isEditing) return;
-    // get nessesry data
-    this.styler = this.$refs.styler;
-    this.id = Number(this.section.id);
 
     // exute popper element
     const position = this.$props.type === 'section' ? 'left-start' : 'top';
-    this.popper = new Popper(this.el, this.styler, {
+    this.popper = new Popper(this.el, this.$refs.styler, {
       placement: position
     });
 
     // add listeners to show/hide styler
-    this.el.addEventListener('click', (event) => {
-      if (event.target === this.el) {
-        this.showStyler();
-      }
-      document.addEventListener('click', this.hideStyler);
-    }, false);
+    this.el.addEventListener('click', this.showStyler);
   },
   updated () {
     if (!this.$builder.isEditing) return;
 
     // update styler and popper
-    this.styler = this.$refs.styler;
     const position = this.$props.type === 'section' ? 'left-start' : 'top';
-    this.popper = new Popper(this.el, this.styler, {
+    this.popper = new Popper(this.el, this.$refs.styler, {
       placement: position
     });
   }
@@ -235,7 +238,7 @@ export default {
 
 .styler
   position: relative
-  z-index: 100
+  z-index: 200
   visibility: hidden
   opacity: 0
   margin: 10px 0

@@ -26,7 +26,6 @@ function installMixin ({ builder }) {
           },
           gridClasses: function () {
             return this.$sectionData.columns.map((column) => {
-              console.log(column);
               return Object.keys(column.grid).map((device) => column.grid[device]);
             })
           }
