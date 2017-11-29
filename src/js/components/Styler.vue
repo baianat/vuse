@@ -77,9 +77,11 @@
 
       li(v-if="currentOption === 'columnWidth'")
         ul.align
-          li(v-for="$n in 12")
-            button.styler-button(@click="columnWidth($n)")
-              span {{ $n }}
+          li: button.styler-button(@click="gridValue--")
+            +icon('arrowLeft')
+          li: input(type="number" min="0" max="12" v-model="gridValue").styler-input
+          li: button.styler-button(@click="gridValue++")
+            +icon('arrowRight')
 
 </template>
 
@@ -98,11 +100,23 @@ export default {
     colorerColor: '',
     mouseTarget: '',
     currentOption: '',
-    url: ''
+    url: '',
+    gridValue: 0
   }),
   watch: {
     colorerColor () {
       this.changeColor();
+    },
+    gridValue () {
+      if (this.gridValue < 0) this.gridValue = 0;
+      if (this.gridValue > 12) this.gridValue = 12;
+      this.section.set(this.name, (grid) => {
+        if (this.gridValue === 0) {
+          grid[this.device] = '';
+          return;
+        }
+        grid[this.device] = (`is-${this.device}-${this.gridValue}`);
+      });
     }
   },
   methods: {
@@ -128,13 +142,11 @@ export default {
       });
     },
     selectDevice (device) {
+      const grid = this.section.get(this.name)[device];
+      const gridValue = grid.split('-').pop() || 0;
       this.updateOption('columnWidth');
       this.device = device;
-    },
-    columnWidth (width) {
-      this.section.set(this.name, (grid) => {
-        grid[this.device] = (`is-${this.device}-${width}`);
-      });
+      this.gridValue = gridValue;
     },
     removeClass (className) {
       if (Array.isArray(className)) {
@@ -241,6 +253,18 @@ export default {
     list-style: none
     margin: 0
     padding: 0
+  &-input
+    background: $white
+    color: $dark
+    border: 0
+    outline: 0
+    width: 40px
+    height: 40px
+    border-radius: 42px
+    margin: 0 5px 0 0
+    text-align: center
+    -webkit-appearance: none
+    appearance: none
   &-button
     display: flex
     justify-content: center
@@ -298,4 +322,9 @@ export default {
 
 .is-hidden
   display: none
+
+input[type=number]::-webkit-inner-spin-button
+input[type=number]::-webkit-outer-spin-button
+  -webkit-appearance: none
+  margin: 0
 </style>

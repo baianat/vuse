@@ -38,13 +38,14 @@ button:focus {
   font-weight: normal;
 }
 .controller-list {
-  background: #fff;
   position: fixed;
+  z-index: 9999;
   top: 0;
   left: 0;
   bottom: 0;
   margin: 0;
   width: 250px;
+  background: #fff;
   margin-left: -260px;
   padding: 20px 10px;
   display: flex;
@@ -134,6 +135,19 @@ li.is-visiable .controller-icon {
   margin: 0;
   padding: 0;
 }
+.styler-input {
+  background: #fff;
+  color: #323c47;
+  border: 0;
+  outline: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 42px;
+  margin: 0 5px 0 0;
+  text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
+}
 .styler-button {
   display: flex;
   justify-content: center;
@@ -202,5 +216,10 @@ li.is-visiable .controller-icon {
 }
 .is-hidden {
   display: none;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
