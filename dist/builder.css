@@ -39,7 +39,7 @@ button:focus {
 }
 .controller-list {
   position: fixed;
-  z-index: 9999;
+  z-index: 300;
   top: 0;
   left: 0;
   bottom: 0;
@@ -113,7 +113,7 @@ li.is-visiable .controller-icon {
 
 .styler {
   position: relative;
-  z-index: 100;
+  z-index: 200;
   visibility: hidden;
   opacity: 0;
   margin: 10px 0;
