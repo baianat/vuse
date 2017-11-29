@@ -168,7 +168,14 @@ After create HTML structure you have to config the section schema for instance
       columns: [
       {
         title: types.Title,
-        content: types.Text
+        content: types.Text,
+        // grid object use for responsive classes
+        grid: {
+          mobile: '',
+          tablet: '',
+          screen: 'is-screen-5',
+          widescreen: ''
+        }
       },
       {
         title: types.Title,
