@@ -114,7 +114,7 @@ function download (assets) {
       `<html>
           <head>
             <title>${title}</title>
-            <link href="${assets.css}" rel="stylesheet">
+            <link href="assets/css/app.css" rel="stylesheet">
           </head>
           <body>
             ${artboard.innerHTML}

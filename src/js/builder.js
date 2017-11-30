@@ -225,8 +225,8 @@ class Builder {
       `<!DOCTYPE html>
         <html>
           <head>
-            <titile>${this.title}</title>
-            <link href="assets/css/app.css" rel="stylesheet">
+            <title>${this.title}</title>
+            <link href="${this.assets.css}" rel="stylesheet">
           </head>
           <body>
             ${artboard.innerHTML}

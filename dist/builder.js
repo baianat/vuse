@@ -3745,11 +3745,11 @@ function getTypeFromTagName (tagName) {
 
 function cleanDOM (artboard) {
   var editables = Array.from(artboard.querySelectorAll('.is-editable'));
-  var uploaders = Array.from(artboard.querySelectorAll('.is-uploader'));
+  var uploaders = Array.from(artboard.querySelectorAll('.uploader'));
   var stylers = Array.from(artboard.querySelectorAll('.styler'));
 
   editables.forEach(function (el) {
-    el.contentEditable = 'false';
+    el.contentEditable = 'inherit';
     el.classList.remove('is-editable');
   });
   uploaders.forEach(function (el) {
@@ -8317,7 +8317,7 @@ Builder.prototype.preview = function preview () {
   cleanDOM(frag);
   printDocument.open();
   printDocument.write(
-    ("<!DOCTYPE html>\n        <html>\n          <head>\n            <titile>" + (this.title) + "</title>\n            <link href=\"" + (this.assets.css) + "\" rel=\"stylesheet\">\n          </head>\n          <body>\n            " + (artboard.innerHTML) + "\n          <body>\n        </html>")
+    ("<!DOCTYPE html>\n        <html>\n          <head>\n            <title>" + (this.title) + "</title>\n            <link href=\"" + (this.assets.css) + "\" rel=\"stylesheet\">\n          </head>\n          <body>\n            " + (artboard.innerHTML) + "\n          <body>\n        </html>")
   );
 };
 
@@ -8329,7 +8329,7 @@ Builder.prototype.preview = function preview () {
 Builder.prototype.export = function export$1 (method) {
     if ( method === void 0 ) method = 'json';
 
-  if (method === 'zip') {
+  if (method === 'pwa' || method === 'zip') {
     if (typeof this.download === 'function') {
       return this.download(this.assets);
     }

@@ -87,11 +87,11 @@ export function getTypeFromTagName (tagName) {
 
 export function cleanDOM (artboard) {
   const editables = Array.from(artboard.querySelectorAll('.is-editable'));
-  const uploaders = Array.from(artboard.querySelectorAll('.is-uploader'));
+  const uploaders = Array.from(artboard.querySelectorAll('.uploader'));
   const stylers = Array.from(artboard.querySelectorAll('.styler'));
 
   editables.forEach((el) => {
-    el.contentEditable = 'false';
+    el.contentEditable = 'inherit';
     el.classList.remove('is-editable');
   });
   uploaders.forEach((el) => {
