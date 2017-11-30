@@ -226,7 +226,7 @@ class Builder {
         <html>
           <head>
             <titile>${this.title}</title>
-            <link href="${this.assets.css}" rel="stylesheet">
+            <link href="assets/css/app.css" rel="stylesheet">
           </head>
           <body>
             ${artboard.innerHTML}
@@ -241,7 +241,7 @@ class Builder {
    * @param {String} method 
    */
   export (method = 'json') {
-    if (method === 'zip') {
+    if (method === 'pwa' || method === 'zip') {
       if (typeof this.download === 'function') {
         return this.download(this.assets);
       }

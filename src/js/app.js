@@ -40,7 +40,7 @@ new Vue({
   methods: {
     onSave (builder) {
       builder.export('preview');
-      builder.download();
+      builder.export('pwa');
     }
   }
 });
