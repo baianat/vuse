@@ -133,12 +133,14 @@ class Builder {
 
   static install (Vue, options = {}) {
     // already installed
-    if (_Vue) {
-      return;
-    }
+    if (_Vue) return;
 
     _Vue = Vue;
     const builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
+    // configer assets output location
+    builder.assets = {
+      css: options.css || 'dist/css/app.css'
+    }
     Vue.util.defineReactive(builder, 'sections', builder.sections);
     Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
     Vue.util.defineReactive(builder, 'isSorting', builder.isSorting);
@@ -215,17 +217,16 @@ class Builder {
   preview () {
     const frag = this.outputFragment();
     const artboard = frag.querySelector('#artboard');
-    const head = frag.querySelector('head');
     const printPreview = window.open('about:blank', 'print_preview');
     const printDocument = printPreview.document;
-
     cleanDOM(frag);
     printDocument.open();
     printDocument.write(
       `<!DOCTYPE html>
         <html>
           <head>
-             ${head.innerHTML}
+            <titile>${this.title}</title>
+            <link href="${this.assets.css}" rel="stylesheet">
           </head>
           <body>
             ${artboard.innerHTML}
@@ -242,7 +243,7 @@ class Builder {
   export (method = 'json') {
     if (method === 'zip') {
       if (typeof this.download === 'function') {
-        return this.download();
+        return this.download(this.assets);
       }
 
       return console.warn('You do not have the zip plugin installed.');

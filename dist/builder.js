@@ -8224,12 +8224,14 @@ Builder.install = function install (Vue, options) {
     if ( options === void 0 ) options = {};
 
   // already installed
-  if (_Vue) {
-    return;
-  }
+  if (_Vue) { return; }
 
   _Vue = Vue;
   var builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
+  // configer assets output location
+  builder.assets = {
+    css: options.css || 'dist/css/app.css'
+  };
   Vue.util.defineReactive(builder, 'sections', builder.sections);
   Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
   Vue.util.defineReactive(builder, 'isSorting', builder.isSorting);
@@ -8310,14 +8312,12 @@ Builder.prototype.toJSON = function toJSON () {
 Builder.prototype.preview = function preview () {
   var frag = this.outputFragment();
   var artboard = frag.querySelector('#artboard');
-  var head = frag.querySelector('head');
   var printPreview = window.open('about:blank', 'print_preview');
   var printDocument = printPreview.document;
-
   cleanDOM(frag);
   printDocument.open();
   printDocument.write(
-    ("<!DOCTYPE html>\n        <html>\n          <head>\n             " + (head.innerHTML) + "\n          </head>\n          <body>\n            " + (artboard.innerHTML) + "\n          <body>\n        </html>")
+    ("<!DOCTYPE html>\n        <html>\n          <head>\n            <titile>" + (this.title) + "</title>\n            <link href=\"" + (this.assets.css) + "\" rel=\"stylesheet\">\n          </head>\n          <body>\n            " + (artboard.innerHTML) + "\n          <body>\n        </html>")
   );
 };
 
@@ -8331,7 +8331,7 @@ Builder.prototype.export = function export$1 (method) {
 
   if (method === 'zip') {
     if (typeof this.download === 'function') {
-      return this.download();
+      return this.download(this.assets);
     }
 
     return console.warn('You do not have the zip plugin installed.');

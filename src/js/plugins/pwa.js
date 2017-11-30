@@ -76,14 +76,15 @@ function createPWA (output, payload) {
   createSW(output, payload);
 }
 
-function download () {
+function download (assets) {
   const frag = this.outputFragment();
   const images = Array.from(frag.querySelectorAll('img'));
   const artboard = frag.querySelector('#artboard');
-  const head = frag.querySelector('head');
+  const title = document.title;
   const zip = new JSZip();
   const output = zip.folder('project');
   const imgFolder = output.folder('assets/img');
+  // const cssFolder = output.folder('assets/css');
 
   Promise.all(images.map((image) => {
     const imageLoader = getImageBlob(image.src);
@@ -95,12 +96,25 @@ function download () {
     });
   })).then(images => {
     createPWA(output, { images });
+  // }).then(() => {
+  //   return new Promise((resolve, reject) => {
+  //     const assetsClient = new XMLHttpRequest();
+  //     assetsClient.open('GET', assets.css);
+  //     assetsClient.onload = function () {
+  //       resolve(this.response);
+  //     }
+  //     assetsClient.send(null);
+  //   }).then((content) => {
+  //     cssFolder.file('app.css', content);
+  //     return content;
+  //   });
   }).then(() => {
     cleanDOM(frag);
     output.file('index.html',
       `<html>
           <head>
-            ${head.innerHTML}
+            <title>${title}</title>
+            <link href="${assets.css}" rel="stylesheet">
           </head>
           <body>
             ${artboard.innerHTML}
