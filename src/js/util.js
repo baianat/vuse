@@ -96,8 +96,11 @@ export function cleanDOM (artboard) {
   });
   uploaders.forEach((el) => {
     const input = el.querySelector(':scope > input');
+    const image = el.querySelector(':scope > img');
+
+    image.classList.add('add-full-width');
+    el.classList.remove('uploader');
     input.remove();
-    el.classList.remove('is-uploader');
   });
   stylers.forEach((styler) => {
     styler.remove();

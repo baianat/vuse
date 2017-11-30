@@ -249,4 +249,35 @@ button:focus
   border: 2px solid $blue
   opacity: 0.3
 
+.is-editable:not(section):not(header)
+.uploader
+  position: relative
+  &:focus
+    outline: 0
+  &:hover
+    &:before
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      display: block
+      margin: -10px
+      border: 1px solid alpha($black, 10%)
+      content: ''
+
+section.is-editable
+  position: relative
+  &:hover
+    &:before
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      display: block
+      margin: 1px
+      border: 1px solid alpha($black, 10%)
+      content: ''
+
 </style>
