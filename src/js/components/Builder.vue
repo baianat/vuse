@@ -118,7 +118,7 @@ export default {
         }
       });
 
-      // group sections toghter
+      // group sections together
       sections.forEach((section) => {
         let sectionGroup = section.group;
         if (!sectionGroup) {

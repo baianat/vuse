@@ -10,6 +10,8 @@ import social1 from './components/social/social1';
 import social2 from './components/social/social2';
 import social3 from './components/social/social3';
 import social4 from './components/social/social4';
+import newsletter from './components/forms/newsletter';
+
 import pwa from './plugins/pwa';
 
 // add the uploader to the list of sub-components.
@@ -28,6 +30,7 @@ Builder.component(social1);
 Builder.component(social2);
 Builder.component(social3);
 Builder.component(social4);
+Builder.component(newsletter);
 
 // install pwa plugin.
 Builder.use(pwa);
