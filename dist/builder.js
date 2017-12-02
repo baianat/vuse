@@ -3754,8 +3754,11 @@ function cleanDOM (artboard) {
   });
   uploaders.forEach(function (el) {
     var input = el.querySelector(':scope > input');
+    var image = el.querySelector(':scope > img');
+
+    image.classList.add('add-full-width');
+    el.classList.remove('uploader');
     input.remove();
-    el.classList.remove('is-uploader');
   });
   stylers.forEach(function (styler) {
     styler.remove();
@@ -8187,7 +8190,7 @@ Builder.prototype.component = function component (name, definition) {
     definition = name;
     name = definition.name;
   }
-
+  console.log(definition);
   // if passed a plain object.
   if (!definition.extend) {
     definition = _Vue.extend(definition);

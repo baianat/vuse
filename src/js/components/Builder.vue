@@ -252,32 +252,16 @@ button:focus
 .is-editable:not(section):not(header)
 .uploader
   position: relative
+  border: 1px solid alpha($black, 0%)
   &:focus
     outline: 0
   &:hover
-    &:before
-      position: absolute
-      top: 0
-      right: 0
-      bottom: 0
-      left: 0
-      display: block
-      margin: -10px
-      border: 1px solid alpha($black, 10%)
-      content: ''
+    border: 1px solid alpha($black, 10%)
 
 section.is-editable
   position: relative
+  border: 1px solid transparent
   &:hover
-    &:before
-      position: absolute
-      top: 0
-      right: 0
-      bottom: 0
-      left: 0
-      display: block
-      margin: 1px
-      border: 1px solid alpha($black, 10%)
-      content: ''
+    border: 1px solid alpha($black, 10%)
 
 </style>

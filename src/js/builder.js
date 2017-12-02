@@ -100,7 +100,7 @@ class Builder {
       definition = name;
       name = definition.name;
     }
-
+    console.log(definition);
     // if passed a plain object.
     if (!definition.extend) {
       definition = _Vue.extend(definition);
