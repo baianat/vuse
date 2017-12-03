@@ -17,9 +17,16 @@
             .column.is-screen-6
               .input.is-rounded
                 input(placeholder="project name" v-model="title")
+            .column.is-screen-12(v-if="themes")
+              .row.is-center
+                .column.is-mobile-6.is-screen-3(v-for="theme in themes")
+                  button.controller-theme(
+                    @click="addTheme(theme.sections)"
+                  )
+                    | {{ theme.name }}
 
       ul.controller-list(:class="{ 'is-visiable': listShown }" ref="controllerList")
-        li(v-for="(group, name) in sections"  v-if="group.length" :id="`group-${name}`")
+        li(v-for="(group, name) in groups"  v-if="group.length" :id="`group-${name}`")
           .controller-header(@click="toggleGroupVisibility(`#group-${name}`)")
             span.controller-title {{ name }}
             span.controller-icon
@@ -67,7 +74,8 @@ export default {
     return {
       title: null,
       listShown: false,
-      sections: this.getSections()
+      sections: this.getSections(),
+      groups: {}
     }
   },
   watch: {
@@ -85,9 +93,16 @@ export default {
       }
       this.toggleListVisibility();
     },
-    addSection (name) {
-      this.$builder.create(name);
+    addSection (section) {
+      this.$builder.create(section);
       this.listShown = false;
+    },
+    addTheme (themeSections) {
+      console.log(this.sections);
+      themeSections.forEach((sectionName) => {
+        const section = this.sections.find((section) => section.name === sectionName);
+        this.addSection(section);
+      })
     },
     toggleState () {
       this.$builder.isEditing = !this.$builder.isEditing;
@@ -104,22 +119,11 @@ export default {
     submit () {
       this.$emit('saved', this.$builder);
     },
-    getSections () {
-      let sections = [];
+    generateGroups () {
       let groups = { random: [] };
 
-      // get sections data
-      sections = Object.keys(this.$builder.components).map((sec) => {
-        return {
-          name: sec,
-          group: this.$builder.components[sec].options.group,
-          cover: this.$builder.components[sec].options.cover,
-          schema: this.$builder.components[sec].options.$schema
-        }
-      });
-
       // group sections together
-      sections.forEach((section) => {
+      this.sections.forEach((section) => {
         let sectionGroup = section.group;
         if (!sectionGroup) {
           groups.random.push(section);
@@ -131,7 +135,21 @@ export default {
         }
         groups[sectionGroup].push(section);
       })
-      return groups;
+      this.groups = groups;
+    },
+    getSections () {
+      let sections = [];
+
+      // get sections data
+      sections = Object.keys(this.$builder.components).map((sec) => {
+        return {
+          name: sec,
+          group: this.$builder.components[sec].options.group,
+          cover: this.$builder.components[sec].options.cover,
+          schema: this.$builder.components[sec].options.$schema
+        }
+      });
+      return sections;
     }
   },
 
@@ -139,6 +157,8 @@ export default {
     // sets the initial data.
     this.$builder.set(this.data);
     this.title = this.$builder.title;
+    this.themes = this.$builder.themes;
+    this.generateGroups();
   },
 
   mounted () {
@@ -218,6 +238,15 @@ button:focus
     transition: 0.4s
     li.is-visiable &
      transform: rotate(180deg)
+
+  &-theme
+    width: 100%
+    padding: 10px
+    border: 1px solid $gray
+    background-color: $white
+    border-radius: 4px
+    cursor: pointer
+    font-size: 12px
 
   &-element
     display: flex

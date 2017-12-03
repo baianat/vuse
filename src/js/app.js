@@ -36,13 +36,21 @@ Builder.component(newsletter);
 Builder.use(pwa);
 
 // install the builder
-Vue.use(Builder);
+Vue.use(Builder, {
+  themes: [{
+    name: 'Theme 1',
+    sections: ['hero1', 'section1', 'social1', 'social3', 'newsletter']
+  }, {
+    name: 'Theme 2',
+    sections: ['hero2', 'section2', 'social3', 'social4', 'newsletter']
+  }]
+});
 
 new Vue({
   el: '#app',
   methods: {
     onSave (builder) {
-      builder.export('preview');
+      builder.export('json');
       builder.export('pwa');
     }
   }

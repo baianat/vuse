@@ -141,6 +141,7 @@ class Builder {
     builder.assets = {
       css: options.css || 'dist/css/app.css'
     }
+    builder.themes = options.themes || [];
     Vue.util.defineReactive(builder, 'sections', builder.sections);
     Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
     Vue.util.defineReactive(builder, 'isSorting', builder.isSorting);

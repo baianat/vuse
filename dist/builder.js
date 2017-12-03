@@ -3839,7 +3839,7 @@ Section.prototype.get = function get$$1 (name) {
   return obj[prop];
 };
 
-var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"artboard",staticClass:"artboard",class:{ 'is-sorting': _vm.$builder.isSorting },attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro && !this.$builder.sections.length)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])])])])]):_vm._e(),_c('ul',{ref:"controllerList",staticClass:"controller-list",class:{ 'is-visiable': _vm.listShown }},_vm._l((_vm.sections),function(group,name){return (group.length)?_c('li',{attrs:{"id":("group-" + name)}},[_c('div',{staticClass:"controller-header",on:{"click":function($event){_vm.toggleGroupVisibility(("#group-" + name));}}},[_c('span',{staticClass:"controller-title"},[_vm._v(_vm._s(name))]),_c('span',{staticClass:"controller-icon"},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-arrowDown"}},[_c('path',{attrs:{"d":"M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"}})])])]),_c('ul',{staticClass:"controller-group"},_vm._l((group),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addSection(section);}}},[(section.cover)?_c('img',{attrs:{"src":section.cover}}):_c('span',[_vm._v(_vm._s(section.name))])])])}))]):_vm._e()})),_c('div',{staticClass:"controller-buttons"},[_c('button',{staticClass:"controller-submit button is-green is-rounded",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-tic"}},[_c('path',{attrs:{"d":"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"}})])]),_c('button',{staticClass:"controller-sort button is-blue is-rounded",class:{ 'is-red': _vm.$builder.isSorting },on:{"click":_vm.toggleState}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-sort"}},[_c('path',{attrs:{"d":"M14 5h8v2h-8zm0 5.5h8v2h-8zm0 5.5h8v2h-8zM2 11.5C2 15.08 4.92 18 8.5 18H9v2l3-3-3-3v2h-.5C6.02 16 4 13.98 4 11.5S6.02 7 8.5 7H12V5H8.5C4.92 5 2 7.92 2 11.5z"}})])]),_c('button',{staticClass:"controller-add button is-blue is-rounded",class:{ 'is-red': _vm.listShown },attrs:{"disabled":_vm.$builder.isSorting},on:{"click":_vm.newSection}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-plus"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])])])])},staticRenderFns: [],
+var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"artboard",staticClass:"artboard",class:{ 'is-sorting': _vm.$builder.isSorting },attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro && !this.$builder.sections.length)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])]),(_vm.themes)?_c('div',{staticClass:"column is-screen-12"},[_c('div',{staticClass:"row is-center"},_vm._l((_vm.themes),function(theme){return _c('div',{staticClass:"column is-mobile-6 is-screen-3"},[_c('button',{staticClass:"controller-theme",on:{"click":function($event){_vm.addTheme(theme.sections);}}},[_vm._v(_vm._s(theme.name))])])}))]):_vm._e()])])]):_vm._e(),_c('ul',{ref:"controllerList",staticClass:"controller-list",class:{ 'is-visiable': _vm.listShown }},_vm._l((_vm.groups),function(group,name){return (group.length)?_c('li',{attrs:{"id":("group-" + name)}},[_c('div',{staticClass:"controller-header",on:{"click":function($event){_vm.toggleGroupVisibility(("#group-" + name));}}},[_c('span',{staticClass:"controller-title"},[_vm._v(_vm._s(name))]),_c('span',{staticClass:"controller-icon"},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-arrowDown"}},[_c('path',{attrs:{"d":"M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"}})])])]),_c('ul',{staticClass:"controller-group"},_vm._l((group),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addSection(section);}}},[(section.cover)?_c('img',{attrs:{"src":section.cover}}):_c('span',[_vm._v(_vm._s(section.name))])])])}))]):_vm._e()})),_c('div',{staticClass:"controller-buttons"},[_c('button',{staticClass:"controller-submit button is-green is-rounded",on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-tic"}},[_c('path',{attrs:{"d":"M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"}})])]),_c('button',{staticClass:"controller-sort button is-blue is-rounded",class:{ 'is-red': _vm.$builder.isSorting },on:{"click":_vm.toggleState}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-sort"}},[_c('path',{attrs:{"d":"M14 5h8v2h-8zm0 5.5h8v2h-8zm0 5.5h8v2h-8zM2 11.5C2 15.08 4.92 18 8.5 18H9v2l3-3-3-3v2h-.5C6.02 16 4 13.98 4 11.5S6.02 7 8.5 7H12V5H8.5C4.92 5 2 7.92 2 11.5z"}})])]),_c('button',{staticClass:"controller-add button is-blue is-rounded",class:{ 'is-red': _vm.listShown },attrs:{"disabled":_vm.$builder.isSorting},on:{"click":_vm.newSection}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-plus"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])])])])},staticRenderFns: [],
   name: 'b-builder',
   props: {
     showIntro: {
@@ -3858,7 +3858,8 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
     return {
       title: null,
       listShown: false,
-      sections: this.getSections()
+      sections: this.getSections(),
+      groups: {}
     }
   },
   watch: {
@@ -3876,9 +3877,18 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
       }
       this.toggleListVisibility();
     },
-    addSection: function addSection (name) {
-      this.$builder.create(name);
+    addSection: function addSection (section) {
+      this.$builder.create(section);
       this.listShown = false;
+    },
+    addTheme: function addTheme (themeSections) {
+      var this$1 = this;
+
+      console.log(this.sections);
+      themeSections.forEach(function (sectionName) {
+        var section = this$1.sections.find(function (section) { return section.name === sectionName; });
+        this$1.addSection(section);
+      });
     },
     toggleState: function toggleState () {
       this.$builder.isEditing = !this.$builder.isEditing;
@@ -3895,24 +3905,11 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
     submit: function submit () {
       this.$emit('saved', this.$builder);
     },
-    getSections: function getSections () {
-      var this$1 = this;
-
-      var sections = [];
+    generateGroups: function generateGroups () {
       var groups = { random: [] };
 
-      // get sections data
-      sections = Object.keys(this.$builder.components).map(function (sec) {
-        return {
-          name: sec,
-          group: this$1.$builder.components[sec].options.group,
-          cover: this$1.$builder.components[sec].options.cover,
-          schema: this$1.$builder.components[sec].options.$schema
-        }
-      });
-
       // group sections together
-      sections.forEach(function (section) {
+      this.sections.forEach(function (section) {
         var sectionGroup = section.group;
         if (!sectionGroup) {
           groups.random.push(section);
@@ -3924,7 +3921,23 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
         }
         groups[sectionGroup].push(section);
       });
-      return groups;
+      this.groups = groups;
+    },
+    getSections: function getSections () {
+      var this$1 = this;
+
+      var sections = [];
+
+      // get sections data
+      sections = Object.keys(this.$builder.components).map(function (sec) {
+        return {
+          name: sec,
+          group: this$1.$builder.components[sec].options.group,
+          cover: this$1.$builder.components[sec].options.cover,
+          schema: this$1.$builder.components[sec].options.$schema
+        }
+      });
+      return sections;
     }
   },
 
@@ -3932,6 +3945,8 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
     // sets the initial data.
     this.$builder.set(this.data);
     this.title = this.$builder.title;
+    this.themes = this.$builder.themes;
+    this.generateGroups();
   },
 
   mounted: function mounted () {
@@ -8238,6 +8253,7 @@ Builder.install = function install (Vue, options) {
   builder.assets = {
     css: options.css || 'dist/css/app.css'
   };
+  builder.themes = options.themes || [];
   Vue.util.defineReactive(builder, 'sections', builder.sections);
   Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
   Vue.util.defineReactive(builder, 'isSorting', builder.isSorting);

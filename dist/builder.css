@@ -80,6 +80,15 @@ li.is-visiable .controller-group {
 li.is-visiable .controller-icon {
   transform: rotate(180deg);
 }
+.controller-theme {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cedee8;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
 .controller-element {
   display: flex;
   justify-content: center;
