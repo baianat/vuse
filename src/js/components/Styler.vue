@@ -6,7 +6,7 @@
     id="styler"
     v-if="$builder.isEditing"
     :class="{ 'is-visible': isVisible }"
-    @click.prevent.stop=""
+    @click.stop=""
   )
     ul.styler-list
       li(v-if="type === 'button' || type === 'section'")
@@ -38,14 +38,13 @@
     ul.styler-list
       li(v-if="currentOption === 'colorer'")
         ul.colorer
-          li(v-for="color in colors")
-            input(
-              type="radio"
-              :id="`color${color.charAt(0).toUpperCase() + color.slice(1)}`"
-              name="colorer"
-              :value="color"
-              v-model="colorerColor"
-              )
+          input(v-for="color in colors"
+            type="radio"
+            :id="`color${color.charAt(0).toUpperCase() + color.slice(1)}`"
+            name="colorer"
+            :value="color"
+            v-model="colorerColor"
+            )
       li(v-if="currentOption === 'textColor'")
           ul.colorer
             li(v-for="(color, index) in colors")
@@ -55,7 +54,6 @@
                 name="colorer"
                 :value="textColors[index]"
                 v-model="textColor"
-                @click="execute('forecolor', textColor)"
                 )
       li(v-if="currentOption === 'link'")
         .input.is-rounded.is-button
@@ -113,6 +111,9 @@ export default {
   watch: {
     colorerColor () {
       this.changeColor();
+    },
+    textColor () {
+      this.execute('forecolor', this.textColor)
     },
     gridValue () {
       if (this.gridValue < 0) this.gridValue = 0;
@@ -267,6 +268,7 @@ export default {
     margin: 0 5px 0 0
     text-align: center
     -webkit-appearance: none
+    -moz-appearance: textfield
     appearance: none
   &-button
     display: flex
@@ -302,6 +304,8 @@ export default {
   height: 42px
   li >input
     -webkit-appearance: none
+    -moz-appearance: textfield
+    appearance: none
     width: 30px
     height: 30px
     border-radius: 40px

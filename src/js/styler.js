@@ -12,7 +12,7 @@ function installStyler ({ builder, Vue }) {
     inserted (el, binding, vnode) {
       const newNode = document.createElement('div');
       newNode.id = 'newNode'
-      el.parentNode.appendChild(newNode);
+      document.body.appendChild(newNode);
       new StylerInstance({
         propsData: {
           el,

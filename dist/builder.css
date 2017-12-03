@@ -113,26 +113,19 @@ li.is-visiable .controller-icon {
 .is-editable:not(section):not(header),
 .uploader {
   position: relative;
+  border: 1px solid rgba(0,0,0,0);
 }
 .is-editable:not(section):not(header):focus,
 .uploader:focus {
   outline: 0;
 }
-.is-editable:not(section):not(header):hover:before,
-.uploader:hover:before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: block;
-  margin: -10px;
+.is-editable:not(section):not(header):hover,
+.uploader:hover {
   border: 1px solid rgba(0,0,0,0.1);
-  content: '';
 }
 section.is-editable {
   position: relative;
-  border: 1 solid transparent;
+  border: 1px solid transparent;
 }
 section.is-editable:hover {
   border: 1px solid rgba(0,0,0,0.1);
@@ -173,6 +166,7 @@ section.is-editable:hover {
   margin: 0 5px 0 0;
   text-align: center;
   -webkit-appearance: none;
+  -moz-appearance: textfield;
   appearance: none;
 }
 .styler-button {
@@ -213,6 +207,8 @@ section.is-editable:hover {
 }
 .colorer li >input {
   -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: none;
   width: 30px;
   height: 30px;
   border-radius: 40px;
