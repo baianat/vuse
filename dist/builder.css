@@ -1,5 +1,4 @@
-.controller-submit:hover,
-.controller-add:hover,
+.controller-buttons button:hover,
 .controller-element:hover {
   cursor: pointer;
   box-shadow: 0 14px 28px rgba(50,60,71,0.125), 0 10px 10px rgba(50,60,71,0.11);
@@ -17,18 +16,18 @@ button:focus {
   position: fixed;
   z-index: 200;
   bottom: 30px;
-  right: 30px;
+  right: 40px;
+}
+.controller-buttons svg {
+  transition: 0.4s;
+}
+.controller-buttons button {
+  transition: 0.4s;
 }
 .controller-buttons button:not(:last-child) {
   margin-right: 20px;
 }
-.controller-submit {
-  transition: 0.3s;
-}
-.controller-add {
-  transition: 0.3s;
-}
-.controller-add.is-red {
+.controller-buttons button.is-rotated >svg {
   transform: rotate(45deg);
 }
 .controller-intro {

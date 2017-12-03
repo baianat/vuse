@@ -38,16 +38,38 @@
                 span(v-else) {{ section.name }}
 
       .controller-buttons
-        button.controller-submit.button.is-green.is-rounded(@click="submit")
-          +icon('tic')
-        button.controller-sort.button.is-blue.is-rounded(
+        button.button.is-green.is-rounded(
+          tooltip-position="top"
+          tooltip="export"
+          @click="submit"
+        )
+          +icon('download')
+        button.button.is-blue.is-rounded(
+          v-if="!tempSections"
+          tooltip-position="top"
+          tooltip="clear sections"
+          @click="clearSections"
+        )
+          +icon('trash')
+        button.button.is-red.is-rounded(
+          v-if="tempSections"
+          tooltip-position="top"
+          tooltip="undo"
+          @click="undo"
+        )
+          +icon('undo')
+        button.button.is-blue.is-rounded(
+          tooltip-position="top"
+          tooltip="sorting"
           :class="{ 'is-red': $builder.isSorting }"
           @click="toggleState"
         )
           +icon('sort')
-        button.controller-add.button.is-blue.is-rounded(
-          :class="{ 'is-red': listShown }"
-          :disabled="$builder.isSorting"
+        button.button.is-blue.is-rounded(
+          tooltip-position="top"
+          tooltip="add section"
+          :class="{ 'is-red': listShown, 'is-rotated': listShown }"
+          :disabled="!$builder.isEditing"
           @click="newSection"
         )
           +icon('plus')
@@ -74,6 +96,7 @@ export default {
     return {
       title: null,
       listShown: false,
+      tempSections: null,
       sections: this.getSections(),
       groups: {}
     }
@@ -97,17 +120,27 @@ export default {
       this.$builder.create(section);
       this.listShown = false;
     },
+    clearSections () {
+      this.tempSections = this.$builder.clear();
+      setTimeout(() => {
+        this.tempSections = null;
+      }, 3000);
+    },
+    undo () {
+      this.$builder.sections = this.tempSections;
+      this.tempSections = null;
+    },
     addTheme (themeSections) {
-      console.log(this.sections);
       themeSections.forEach((sectionName) => {
         const section = this.sections.find((section) => section.name === sectionName);
         this.addSection(section);
       })
     },
     toggleState () {
-      this.$builder.isEditing = !this.$builder.isEditing;
       this.$builder.isSorting = !this.$builder.isSorting;
+      this.$builder.isEditing = !this.$builder.isSorting;
       this.$builder.toggleSort();
+      this.listShown = false;
     },
     toggleListVisibility () {
       this.listShown = !this.listShown;
@@ -184,19 +217,17 @@ button:focus
     position: fixed
     z-index: 200
     bottom: 30px
-    right: 30px
-    button:not(:last-child)
-      margin-right: 20px
-  &-submit
-    transition: 0.3s
-    &:hover
-      @extends $floatHover
-  &-add
-    transition: 0.3s
-    &.is-red
-      transform: rotate(45deg)
-    &:hover
-      @extends $floatHover
+    right: 40px
+    svg
+      transition: 0.4s
+    button
+      transition: 0.4s
+      &:not(:last-child)
+        margin-right: 20px
+      &.is-rotated >svg
+        transform: rotate(45deg)
+      &:hover
+        @extends $floatHover
   &-intro
     text-align: center
     font-size: 30px

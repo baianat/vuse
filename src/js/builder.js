@@ -117,7 +117,9 @@ class Builder {
    * clears the builder sections.
   */
   clear () {
+    const tmepSections = this.sections;
     this.sections = [];
+    return tmepSections;
   }
 
   /**
