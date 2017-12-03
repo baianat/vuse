@@ -130,6 +130,9 @@ section.is-editable {
 section.is-editable:hover {
   border: 1px solid rgba(0,0,0,0.1);
 }
+.column {
+  transition: 0.4s;
+}
 
 .styler {
   position: relative;

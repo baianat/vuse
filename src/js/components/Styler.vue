@@ -38,12 +38,13 @@
     ul.styler-list
       li(v-if="currentOption === 'colorer'")
         ul.colorer
-          input(v-for="color in colors"
-            type="radio"
-            :id="`color${color.charAt(0).toUpperCase() + color.slice(1)}`"
-            name="colorer"
-            :value="color"
-            v-model="colorerColor"
+          li(v-for="color in colors")
+            input(
+              type="radio"
+              :id="`color${color.charAt(0).toUpperCase() + color.slice(1)}`"
+              name="colorer"
+              :value="color"
+              v-model="colorerColor"
             )
       li(v-if="currentOption === 'textColor'")
           ul.colorer

@@ -106,7 +106,7 @@ export default {
     },
     getSections () {
       let sections = [];
-      let groups = { root: [] };
+      let groups = { random: [] };
 
       // get sections data
       sections = Object.keys(this.$builder.components).map((sec) => {
@@ -122,7 +122,7 @@ export default {
       sections.forEach((section) => {
         let sectionGroup = section.group;
         if (!sectionGroup) {
-          groups.root.push(section);
+          groups.random.push(section);
           return;
         }
         if (!groups[sectionGroup]) {
@@ -264,4 +264,6 @@ section.is-editable
   &:hover
     border: 1px solid alpha($black, 10%)
 
+.column
+  transition: 0.4s
 </style>
