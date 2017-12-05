@@ -21,7 +21,7 @@
               .row.is-center
                 .column.is-mobile-6.is-screen-3(v-for="theme in themes")
                   button.controller-theme(
-                    @click="addTheme(theme.sections)"
+                    @click="addTheme(theme)"
                   )
                     | {{ theme.name }}
 
@@ -35,7 +35,7 @@
             li(v-for="section in group")
               a.controller-element(@click="addSection(section)")
                 img(v-if="section.cover" :src="section.cover")
-                span(v-else) {{ section.name }}
+                span(:class="{ 'add-center-bottom': section.cover}") {{ section.name }}
 
       .controller-buttons
         button.button.is-green.is-rounded(
@@ -124,17 +124,14 @@ export default {
       this.tempSections = this.$builder.clear();
       setTimeout(() => {
         this.tempSections = null;
-      }, 3000);
+      }, 5000);
     },
     undo () {
       this.$builder.sections = this.tempSections;
       this.tempSections = null;
     },
-    addTheme (themeSections) {
-      themeSections.forEach((sectionName) => {
-        const section = this.sections.find((section) => section.name === sectionName);
-        this.addSection(section);
-      })
+    addTheme (theme) {
+      this.$builder.set(theme);
     },
     toggleState () {
       this.$builder.isSorting = !this.$builder.isSorting;
@@ -246,7 +243,7 @@ button:focus
     padding: 20px 10px
     display: flex
     flex-direction: column
-    overflow: auto
+    overflow: scroll
     list-style: none
     transition: 0.4s
     box-shadow: 1px 0 10px alpha($dark, 20%)
@@ -259,7 +256,7 @@ button:focus
     list-style: none
     li
       width: 90%
-      margin: 5px auto
+      margin: 10px auto
     li.is-visiable &
       display: block
   &-icon
@@ -280,11 +277,12 @@ button:focus
     font-size: 12px
 
   &-element
+    position: relative
     display: flex
     justify-content: center
     align-items: center
     width: 100%
-    min-height: 100px
+    min-height: 50px
     border-radius: 5px
     background: darken($gray, 10%)
     transition: 0.3s
@@ -308,6 +306,14 @@ button:focus
 .sortable-ghost
   border: 2px solid $blue
   opacity: 0.3
+.add-center-bottom
+  position: absolute
+  right: 0
+  bottom: 0
+  left: 0
+  text-shadow: 1px 1px 2px alpha($black, 80%)
+  text-align: center
+  padding: 5px
 
 .is-editable:not(section):not(header)
 .uploader

@@ -39,10 +39,10 @@ Builder.use(pwa);
 Vue.use(Builder, {
   themes: [{
     name: 'Theme 1',
-    sections: ['hero1', 'section1', 'social1', 'social3', 'newsletter']
+    sections: [hero1, section1, social1, social3, newsletter]
   }, {
     name: 'Theme 2',
-    sections: ['hero2', 'section2', 'social3', 'social4', 'newsletter']
+    sections: [hero2, section2, social3, social4, newsletter]
   }]
 });
 
@@ -50,7 +50,7 @@ new Vue({
   el: '#app',
   methods: {
     onSave (builder) {
-      builder.export('json');
+      builder.export('preview');
       builder.export('pwa');
     }
   }

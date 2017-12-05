@@ -4,18 +4,20 @@
     :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
   )
     .grid.is-center
-      .column.is-screen-12.add-center-horizontal
+      .row
         h3.header-title Sign up for our newsletter
-        form(@submit.prevent="onSubmit" style="width: 30%;")
-          .input
-            input(type="text" name="email" placeholder="Email address" v-model="$sectionData.form.email")
-          a.button(
-            @click.prevent="onSubmit"
-            :class="[{'is-editable': $builder.isEditing}, $sectionData.action.classes]"
-            :href="$sectionData.action.href"
-            v-html="$sectionData.action.text"
-            v-styler="$sectionData.action"
-          )
+
+      form.row(@submit.prevent="onSubmit")
+        .column.is-screen-4
+          .input.is-button
+            input.input(type="text" name="email" placeholder="Email address" v-model="$sectionData.form.email")
+            a.button(
+              @click.prevent="onSubmit"
+              :class="[{'is-editable': $builder.isEditing}, $sectionData.action.classes]"
+              :href="$sectionData.action.href"
+              v-html="$sectionData.action.text"
+              v-styler="$sectionData.action"
+              )
 </template>
 
 <script>
@@ -23,6 +25,7 @@ import * as types from '../../types';
 
 export default {
   name: 'newsletter',
+  cover: 'static/covers/newsletter.png',
   group: 'forms',
   $schema: {
     classes: types.ClassList,

@@ -44,6 +44,7 @@ import * as types from '../../types';
 
 export default {
   name: 'social1',
+  cover: 'static/covers/social1.png',
   group: 'social',
   $schema: {
     classes: types.ClassList,
