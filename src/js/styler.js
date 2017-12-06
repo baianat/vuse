@@ -11,17 +11,18 @@ function installStyler ({ builder, Vue }) {
   builder.styler = {
     inserted (el, binding, vnode) {
       const newNode = document.createElement('div');
-      newNode.id = 'newNode'
-      document.body.appendChild(newNode);
-      new StylerInstance({
+      const section = vnode.context.$section;
+      const rootApp = vnode.context.$root.$el;
+      rootApp.appendChild(newNode);
+      section.stylers.push(new StylerInstance({
         propsData: {
           el,
-          section: vnode.context.$section,
-          type: binding.arg || getTypeFromSchema(binding.expression, vnode.context.$section.schema) || getTypeFromTagName(el.tagName),
+          section: section,
+          type: binding.arg || getTypeFromSchema(binding.expression, section.schema) || getTypeFromTagName(el.tagName),
           name: binding.expression,
           editable: el.classList.contains('is-editable')
         }
-      }).$mount('#newNode');
+      }).$mount(newNode));
     }
   };
 };

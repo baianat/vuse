@@ -3814,6 +3814,7 @@ var Section = function Section (options) {
   this.name = options.name;
   this.schema = options.schema;
   this.data = options.data || Seeder.seed(options.schema);
+  this.stylers = [];
 };
 
 Section.prototype.set = function set (name, value) {
@@ -3837,6 +3838,10 @@ Section.prototype.get = function get$$1 (name) {
   var obj = path.length === 0 ? this.data : get(this.data, path);
 
   return obj[prop];
+};
+
+Section.prototype.destroy = function destroy () {
+  this.stylers.forEach(function (styler) { return styler.$destroy(); });
 };
 
 var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"artboard",staticClass:"artboard",class:{ 'is-sorting': _vm.$builder.isSorting },attrs:{"id":"artboard"}},_vm._l((_vm.$builder.sections),function(section){return _c(section.name,{key:section.id,tag:"component",attrs:{"id":section.id}})})),_c('div',{staticClass:"controller"},[(_vm.showIntro && !this.$builder.sections.length)?_c('div',{staticClass:"controller-intro"},[_c('h1',[_vm._v("Hello, start your project")]),_c('div',{staticClass:"container"},[_c('div',{staticClass:"grid is-center"},[_c('div',{staticClass:"column is-screen-6"},[_c('div',{staticClass:"input is-rounded"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.title),expression:"title"}],attrs:{"placeholder":"project name"},domProps:{"value":(_vm.title)},on:{"input":function($event){if($event.target.composing){ return; }_vm.title=$event.target.value;}}})])]),(_vm.themes)?_c('div',{staticClass:"column is-screen-12"},[_c('div',{staticClass:"row is-center"},_vm._l((_vm.themes),function(theme){return _c('div',{staticClass:"column is-mobile-6 is-screen-3"},[_c('button',{staticClass:"controller-theme",on:{"click":function($event){_vm.addTheme(theme);}}},[_vm._v(_vm._s(theme.name))])])}))]):_vm._e()])])]):_vm._e(),_c('ul',{ref:"controllerList",staticClass:"controller-list",class:{ 'is-visiable': _vm.listShown }},_vm._l((_vm.groups),function(group,name){return (group.length)?_c('li',{attrs:{"id":("group-" + name)}},[_c('div',{staticClass:"controller-header",on:{"click":function($event){_vm.toggleGroupVisibility(("#group-" + name));}}},[_c('span',{staticClass:"controller-title"},[_vm._v(_vm._s(name))]),_c('span',{staticClass:"controller-icon"},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-arrowDown"}},[_c('path',{attrs:{"d":"M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"}})])])]),_c('ul',{staticClass:"controller-group"},_vm._l((group),function(section){return _c('li',[_c('a',{staticClass:"controller-element",on:{"click":function($event){_vm.addSection(section);}}},[(section.cover)?_c('img',{attrs:{"src":section.cover}}):_vm._e(),_c('span',{class:{ 'add-center-bottom': section.cover}},[_vm._v(_vm._s(section.name))])])])}))]):_vm._e()})),_c('div',{staticClass:"controller-buttons"},[_c('button',{staticClass:"button is-green is-rounded",attrs:{"tooltip-position":"top","tooltip":"export"},on:{"click":_vm.submit}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-download"}},[_c('path',{attrs:{"d":"M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"}})])]),(!_vm.tempSections)?_c('button',{staticClass:"button is-blue is-rounded",attrs:{"tooltip-position":"top","tooltip":"clear sections"},on:{"click":_vm.clearSections}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-trash"}},[_c('path',{attrs:{"d":"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"}})])]):_vm._e(),(_vm.tempSections)?_c('button',{staticClass:"button is-red is-rounded",attrs:{"tooltip-position":"top","tooltip":"undo"},on:{"click":_vm.undo}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-undo"}},[_c('path',{attrs:{"d":"M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"}})])]):_vm._e(),_c('button',{staticClass:"button is-blue is-rounded",class:{ 'is-red': _vm.$builder.isSorting },attrs:{"tooltip-position":"top","tooltip":"sorting"},on:{"click":_vm.toggleState}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-sort"}},[_c('path',{attrs:{"d":"M14 5h8v2h-8zm0 5.5h8v2h-8zm0 5.5h8v2h-8zM2 11.5C2 15.08 4.92 18 8.5 18H9v2l3-3-3-3v2h-.5C6.02 16 4 13.98 4 11.5S6.02 7 8.5 7H12V5H8.5C4.92 5 2 7.92 2 11.5z"}})])]),_c('button',{staticClass:"button is-blue is-rounded",class:{ 'is-red': _vm.listShown, 'is-rotated': _vm.listShown },attrs:{"tooltip-position":"top","tooltip":"add section","disabled":!_vm.$builder.isEditing},on:{"click":_vm.newSection}},[_c('svg',{staticClass:"icon is-large",attrs:{"viewBox":"0 0 24 24","id":"icon-plus"}},[_c('path',{attrs:{"d":"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"}})])])])])])},staticRenderFns: [],
@@ -6491,11 +6496,7 @@ var Styler = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       });
     },
     removeSection: function removeSection () {
-      document.removeEventListener('click', this.hideStyler);
-      // TODO: destroy all popperjs instances
-      this.popper.destroy();
-      this.$refs.styler.remove();
-      this.$builder.remove(Number(this.section.id));
+      this.$builder.remove(this.section);
     },
     execute: function execute (command, value) {
       if ( value === void 0 ) value = null;
@@ -6552,6 +6553,11 @@ var Styler = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     this.popper = new Popper(this.el, this.$refs.styler, {
       placement: position
     });
+  },
+  beforeDestroy: function beforeDestroy () {
+    document.removeEventListener('click', this.hideStyler);
+    this.popper.destroy();
+    this.$refs.styler.remove();
   }
 };
 
@@ -6568,17 +6574,18 @@ function installStyler (ref) {
   builder.styler = {
     inserted: function inserted (el, binding, vnode) {
       var newNode = document.createElement('div');
-      newNode.id = 'newNode';
-      document.body.appendChild(newNode);
-      new StylerInstance({
+      var section = vnode.context.$section;
+      var rootApp = vnode.context.$root.$el;
+      rootApp.appendChild(newNode);
+      section.stylers.push(new StylerInstance({
         propsData: {
           el: el,
-          section: vnode.context.$section,
-          type: binding.arg || getTypeFromSchema(binding.expression, vnode.context.$section.schema) || getTypeFromTagName(el.tagName),
+          section: section,
+          type: binding.arg || getTypeFromSchema(binding.expression, section.schema) || getTypeFromTagName(el.tagName),
           name: binding.expression,
           editable: el.classList.contains('is-editable')
         }
-      }).$mount('#newNode');
+      }).$mount(newNode));
     }
   };
 }
@@ -8179,9 +8186,21 @@ Builder.prototype.find = function find (id) {
  * Removes a section with the specified id.
  * @param {String|Number} id 
  */
-Builder.prototype.remove = function remove (id) {
-  var idx = this.sections.findIndex(function (s) { return s.id === id; });
-  this.sections.splice(idx, 1);
+Builder.prototype.remove = function remove (section) {
+  console.log(this.sections[0]);
+  var id = this.sections.findIndex(function (s) { return s.id === section.id; });
+  this.sections.splice(id, 1);
+  section.destroy();
+};
+
+/**
+* clears the builder sections.
+*/
+Builder.prototype.clear = function clear () {
+  var tmepSections = this.sections;
+  this.sections.forEach(function (section) { return section.destroy(); });
+  this.sections = [];
+  return tmepSections;
 };
 
 /**
@@ -8227,15 +8246,6 @@ Builder.prototype.component = function component (name, definition) {
     mixins: [this.mixin],
     components: mixier.components
   });
-};
-
-/**
- * clears the builder sections.
-*/
-Builder.prototype.clear = function clear () {
-  var tmepSections = this.sections;
-  this.sections = [];
-  return tmepSections;
 };
 
 /**

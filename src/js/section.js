@@ -16,6 +16,7 @@ export default class Section {
     this.name = options.name;
     this.schema = options.schema;
     this.data = options.data || Seeder.seed(options.schema);
+    this.stylers = [];
   }
 
   set (name, value) {
@@ -39,5 +40,9 @@ export default class Section {
     const obj = path.length === 0 ? this.data : getPath(this.data, path);
 
     return obj[prop];
+  }
+
+  destroy () {
+    this.stylers.forEach(styler => styler.$destroy())
   }
 };

@@ -63,9 +63,21 @@ class Builder {
    * Removes a section with the specified id.
    * @param {String|Number} id 
    */
-  remove (id) {
-    const idx = this.sections.findIndex(s => s.id === id);
-    this.sections.splice(idx, 1);
+  remove (section) {
+    console.log(this.sections[0]);
+    const id = this.sections.findIndex(s => s.id === section.id);
+    this.sections.splice(id, 1);
+    section.destroy();
+  }
+
+  /**
+  * clears the builder sections.
+  */
+  clear () {
+    const tmepSections = this.sections;
+    this.sections.forEach(section => section.destroy());
+    this.sections = [];
+    return tmepSections;
   }
 
   /**
@@ -111,15 +123,6 @@ class Builder {
       mixins: [this.mixin],
       components: mixier.components
     });
-  }
-
-  /**
-   * clears the builder sections.
-  */
-  clear () {
-    const tmepSections = this.sections;
-    this.sections = [];
-    return tmepSections;
   }
 
   /**

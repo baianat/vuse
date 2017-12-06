@@ -172,11 +172,7 @@ export default {
       });
     },
     removeSection () {
-      document.removeEventListener('click', this.hideStyler);
-      // TODO: destroy all popperjs instances
-      this.popper.destroy();
-      this.$refs.styler.remove();
-      this.$builder.remove(Number(this.section.id));
+      this.$builder.remove(this.section);
     },
     execute (command, value = null) {
       this.el.focus();
@@ -231,6 +227,11 @@ export default {
     this.popper = new Popper(this.el, this.$refs.styler, {
       placement: position
     });
+  },
+  beforeDestroy () {
+    document.removeEventListener('click', this.hideStyler);
+    this.popper.destroy();
+    this.$refs.styler.remove();
   }
 };
 </script>
