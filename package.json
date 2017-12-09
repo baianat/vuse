@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "dolober": "0.0.6",
+    "intersection-observer": "^0.5.0",
     "jszip": "^3.1.4",
     "popper.js": "^1.12.5",
     "save-as": "^0.1.8",

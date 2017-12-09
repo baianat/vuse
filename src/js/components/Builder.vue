@@ -193,6 +193,12 @@ export default {
 
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
+  },
+
+  updated () {
+    if (this.$builder.scrolling) {
+      this.$builder.scrolling(this.$refs.artboard);
+    }
   }
 };
 </script>

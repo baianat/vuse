@@ -3964,6 +3964,12 @@ var BuilderComponent = {render: function(){var _vm=this;var _h=_vm.$createElemen
 
   mounted: function mounted () {
     this.$builder.rootEl = this.$refs.artboard;
+  },
+
+  updated: function updated () {
+    if (this.$builder.scrolling) {
+      this.$builder.scrolling(this.$refs.artboard);
+    }
   }
 };
 
