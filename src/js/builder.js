@@ -181,11 +181,16 @@ class Builder {
     this.title = data.title !== undefined ? data.title : this.title;
     if (data.sections && Array.isArray(data.sections)) {
       this.sections = data.sections.map(section => {
-        if (!section.schema) {
-          section.schema = this.components[section.name].options.$schema
+        const sectionData = {
+          name: section.name,
+          schema: section.schema,
+          data: section.data
+        };
+        if (!sectionData.schema) {
+          sectionData.schema = this.components[sectionData.name].options.$schema
         }
 
-        return new Section(section);
+        return new Section(sectionData);
       });
     }
   }
