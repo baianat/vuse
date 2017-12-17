@@ -1,6 +1,6 @@
 {
   "name": "@baianat/builder",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Page Builder",
   "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
   "unpkg": "dist/builder.min.js",
