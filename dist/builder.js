@@ -1,5 +1,5 @@
 /**
-* Builder v0.0.8
+* Builder v0.0.9
 * (c) 2017 Abdelrahman Ismail
 * @license MIT
 */
@@ -8407,7 +8407,7 @@ if (typeof Vue !== 'undefined') {
   Vue.use(Builder);
 }
 
-Builder.version = '0.0.8';
+Builder.version = '0.0.9';
 Builder.types = types;
 
 return Builder;
