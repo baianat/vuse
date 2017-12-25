@@ -1,4 +1,4 @@
-# builder
+# Vuse
 
 Advanced page/email builder based on [Vue.js](https://vuejs.org/).
 
@@ -21,21 +21,21 @@ The builder is just a Vue plugin, so you can integrate this into your own projec
 First step is to install it using `yarn` or `npm`:
 
 ```bash
-npm install @baianat/builder
+npm install vuse
 
 # or use yarn
-yarn add @baianat/builder
+yarn add vuse
 ```
 
 ### CDNs
 
 Or add it as a script tag in your projects.
 
-- [unpkg](https://unpkg.com/@baianat/builder@latest)
+- [unpkg](https://unpkg.com/vuse)
 
 ```html
 <script src="https://unpkg.com/vue@2.4.2"></script>
-<script src="https://unpkg.com/@baianat/builder@latest"></script>
+<script src="https://unpkg.com/vuse"></script>
 ```
 
 ### Usage
@@ -43,7 +43,7 @@ Or add it as a script tag in your projects.
 > **If you added it using a script tag, you can skip this section. as it will be auto-installed for you**
 
 ```js
-import Builder from '@baianat/builder';
+import Builder from 'vuse';
 
 Vue.use(Builder);
 ```
@@ -63,11 +63,11 @@ Your section components will have some properties injected to help you customize
 
 #### $section
 
-An instance of the [section class](https://github.com/baianat/builder/blob/master/src/js/section.js) that represents this component.
+An instance of the [section class](https://github.com/baianat/vuse/blob/master/src/js/section.js) that represents this component.
 
 #### $builder
 
-An instance of the singleton [builder class](https://github.com/baianat/builder/blob/master/src/js/builder.js)
+An instance of the singleton [builder class](https://github.com/baianat/vuse/blob/master/src/js/builder.js)
 
 #### $sectionData
 
@@ -110,7 +110,7 @@ A section is the building block of the page, below is an example of a header sec
 </template>
 
 <script>
-  import { types } from '@baianat/builder';
+  import { types } from 'vuse';
 
   export default {
     name: 'hero1',
@@ -153,7 +153,7 @@ After creating the HTML structure you should configure the section schema to use
 
 ```html
 <script>
-  import { types } from '@baianat/builder';
+  import { types } from 'vuse';
 
   export default {
     // section name
@@ -213,7 +213,7 @@ If you want to sepcify the type you can pass it as a directive modifier e.g.: `v
 Until now we have only been creating our section component, we now need to introduce it to our builder so it can use it:
 
 ```js
-import Builder from '@baianat/builder';
+import Builder from 'vuse';
 import section from './components/sections/section';
 
 // Builder has Vue-like API when registering components.
