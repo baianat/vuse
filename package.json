@@ -1,7 +1,7 @@
 {
-  "name": "@baianat/builder",
-  "version": "0.0.9",
-  "description": "Page Builder",
+  "name": "vuse",
+  "version": "0.0.0",
+  "description": "Vue.js Page Builder",
   "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
   "unpkg": "dist/builder.min.js",
   "main": "dist/builder.js",
