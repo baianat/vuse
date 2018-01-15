@@ -1,6 +1,6 @@
 /**
-* Builder v0.0.9
-* (c) 2017 Abdelrahman Ismail
+* Builder v0.0.0
+* (c) 2018 Abdelrahman Ismail
 * @license MIT
 */
 (function (global, factory) {
@@ -8407,7 +8407,7 @@ if (typeof Vue !== 'undefined') {
   Vue.use(Builder);
 }
 
-Builder.version = '0.0.9';
+Builder.version = '0.0.0';
 Builder.types = types;
 
 return Builder;

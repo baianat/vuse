@@ -13,7 +13,6 @@ import social4 from './components/social/social4';
 import newsletter from './components/forms/newsletter';
 
 import pwa from './plugins/pwa';
-import scrolling from './plugins/scrolling';
 
 // add the uploader to the list of sub-components.
 Builder.mix({
@@ -35,7 +34,6 @@ Builder.component(newsletter);
 
 // install pwa plugin.
 Builder.use(pwa);
-Builder.use(scrolling);
 
 // install the builder
 Vue.use(Builder, {
