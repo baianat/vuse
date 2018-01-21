@@ -8,11 +8,11 @@ This builder (sections builder) reuses your Vue components as **editable section
 
 The user/developer can then export the builder for usability in multiple formats, the following are the officially supported ones:
 
-- `json` A json object which can be later used to re-render a page, particualry useful if you plan to have dynamic pages or want to store them in a Database.
-- `preview` opens a new page without the editable logic in new tap to see the end result.
+- `json` A json object which can be later used to re-render a page, particularly useful if you plan to have dynamic pages or want to store them in a Database.
+- `preview` opens a new page without the editable logic in new tab to see the end result.
 - `pwa` produces a zip file which contains all the page files and images neatly packed, this is probably the format you will use for page/prototype landing page builder, The project is augmented by default with service workers to support offline viewing.
 
-The builder is just a Vue plugin, so you can integrate this into your own projects without needing to create seperate bundles for it.
+The builder is just a Vue plugin, so you can integrate this into your own projects without needing to create separate bundles for it.
 
 ## Installation
 
@@ -54,10 +54,10 @@ This package does not include any sections. The builder is just a system of help
 
 ## API
 
-<!-- > Examples use [NARX](https://github.com/baianat/NARX) patterns library for grid and UI elements. -->
+<!-- > Examples use [Base.framework](https://github.com/baianat/base.framework) design system for grid and UI elements. -->
 > Examples use [pug](https://pugjs.org) template language to make it easier to work with templates.
 
-### Injected Properties and Methods
+### Injected properties and methods
 
 Your section components will have some properties injected to help you customize their behavior in building phase and production/render phase.
 
@@ -71,7 +71,7 @@ An instance of the singleton [builder class](https://github.com/baianat/vuse/blo
 
 #### $sectionData
 
-Is a computed property that mirriors `$section.data` which contains the current values (text, images, etc...) for the section.
+Is a computed property that mirrors `$section.data` which contains the current values (text, images, etc...) for the section.
 
 ### Section
 
@@ -129,16 +129,16 @@ A section is the building block of the page, below is an example of a header sec
 </script>
 ```
 
-Each section has several elements that can be edited. Elements data are stored in `$sectionData` object which is reactive.
+Each section has several elements that can be edited. Section data are stored in `$sectionData` object which is reactive.
 
-So, how you can make any element editable
+### Adding the ability to edit elements in a section
 
-1. Add `is-editable` class to it. since editable state can be toggled off/on it always good to bind is-editable class to change when editing mode changes `:class="{'is-editable': $builder.isEditing}"`
+1. Add `is-editable` class to it. Since editable state can be toggled off/on, it's always good to bind `is-editable` class to change when editing mode changes. e.g. `:class="{'is-editable': $builder.isEditing}"`
 1. Add [`v-styler`](https://github.com/baianat/builder#v-styler) directive to the element
-1. Updates the element’s innerHTML when data changes like this `v-html="$sectionData.button.text"`
-1. If you have any other data that `v-styler` changes you have to update it too e.g. `:href="$sectionData.button.href"`
+1. Bind the element’s innerHTML with its equivalent data e.g. `v-html="$sectionData.button.text"`
+1. If you have any other data that `v-styler` changes, you have to bind it too. e.g. `:href="$sectionData.button.href"`
 
-Put all toghter
+Putting it all together
 
 ```html
   <a
@@ -149,7 +149,7 @@ Put all toghter
   ></a>
 ```
 
-After creating the HTML structure you should configure the section schema to use the built in seeder to provide you with initial/fake values when the component is instantiated in build/edit mode.
+After creating the HTML structure, you should configure the section schema to use the built-in seeder to provide you with initial/fake values when the component is instantiated in build/edit mode. Or you can set the initial values yourself instead of seeding them.
 
 ```html
 <script>
@@ -160,7 +160,7 @@ After creating the HTML structure you should configure the section schema to use
     name: 'hero1',
     // section cover image
     cover: '../cover-hero1.png',
-    // group mutiple sections
+    // group multiple sections
     group: 'heros',
     // section data schema
     $schema: {
@@ -168,7 +168,7 @@ After creating the HTML structure you should configure the section schema to use
       title: types.Text,
       // main content
       content: types.Text,
-      // section classese
+      // section classes
       classes: types.ClassList,
       // array of section's images
       images: [
@@ -178,7 +178,7 @@ After creating the HTML structure you should configure the section schema to use
       // object holds button data, href etc..
       button: types.Button,
       // if section has many columns you can use
-      // columns to sperate each column date
+      // a columns array to separate each column's data
       columns: [
       {
         title: types.Title,
@@ -200,17 +200,17 @@ After creating the HTML structure you should configure the section schema to use
 
 ### v-styler
 
-This directive is automatically injected in your section components, and can be used to facilitate editing elements greatly since it has support for multiple elements types like `div`, `a`, `button` and `p` tags as well.
+This directive is automatically injected in your section components, and can be used to facilitate editing elements greatly, since it has support for multiple element types like `div`, `a`, `button` and `p` tags as well.
 
-To tell styler which variable to update you pass it as directive expression e.g.: `v-styler="$sectionData.button"`
+To tell styler which variable to update, you pass it as directive expression e.g. `v-styler="$sectionData.button"`
 
-The styler directive has three types `text`, `button`, or `section`. By default the directive can tell the type from the element tag or from provided schema. 
+The styler directive has four types `text`, `button`, `section` or `grid`. By default, the directive can know the type implicitly, from the element tag or from the provided schema. 
 
-If you want to sepcify the type you can pass it as a directive modifier e.g.: `v-styler.button="$sectionData.button"`.
+If you want to explicitly specify the type, you can pass it as a directive modifier e.g. `v-styler.button="$sectionData.button"`.
 
 ### Using the section
 
-Until now we have only been creating our section component, we now need to introduce it to our builder so it can use it:
+Until now, we have only been creating our section component, we now need to introduce it to our builder so it can use it:
 
 ```js
 import Builder from 'vuse';
@@ -235,7 +235,7 @@ You only have to register the component on the Builder plugin, which has a Vue-l
 
 ### Exporting
 
-There is three ways to export the built page: preview, pwa or json. When clicking the save button the `b-builder` component emits a saved event with the builder instance as its payload, which exposes a `export` method.
+There are three ways to export the built page: preview, pwa or json. When clicking the save button the `b-builder` component emits a saved event with the builder instance as its payload, which exposes an `export` method.
 
 ```html
 <div id="app">
@@ -249,7 +249,7 @@ There is three ways to export the built page: preview, pwa or json. When clickin
   methods: {
     onSave (builder) {
       // you can use 'preview', 'pwa' or 'json' strings
-      // 'json' is the default exproting mode
+      // 'json' is the default exporting mode
       builder.export('preview');
     }
   }
