@@ -3987,6 +3987,7 @@ var Renderer = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   created: function created () {
     this.$builder.set(this.data);
     this.$builder.isEditing = false;
+    this.$builder.isRendered = true;
   }
 };
 
@@ -8154,6 +8155,7 @@ var Builder = function Builder (options) {
   this.title = options.title;
   this.isEditing = true;
   this.isSorting = false;
+  this.isRendered = false;
   this.intro = options.intro;
   this.sections = options.sections;
   this.components = {};
@@ -8182,7 +8184,7 @@ Builder.prototype.outputFragment = function outputFragment () {
 /**
  * Finds a section with the specified id.
  *
- * @param {String|Number} id 
+ * @param {String|Number} id
  */
 Builder.prototype.find = function find (id) {
   return this.sections.find(function (s) { return s.id === id; });
@@ -8190,7 +8192,7 @@ Builder.prototype.find = function find (id) {
 
 /**
  * Removes a section with the specified id.
- * @param {String|Number} id 
+ * @param {String|Number} id
  */
 Builder.prototype.remove = function remove (section) {
   console.log(this.sections[0]);
@@ -8211,9 +8213,9 @@ Builder.prototype.clear = function clear () {
 
 /**
  * Static helper for components registration pre-installation.
- * 
- * @param {String} name 
- * @param {Object} definition 
+ *
+ * @param {String} name
+ * @param {Object} definition
  */
 Builder.component = function component (name, definition) {
   // Just make a plugin that installs a component.
@@ -8224,7 +8226,7 @@ Builder.component = function component (name, definition) {
 
 /**
  * Acts as a mixin for subcomponents.
- * @param {Object} mixinObj 
+ * @param {Object} mixinObj
  */
 Builder.mix = function mix (mixinObj) {
   mixier = merge(mixier, mixinObj);
@@ -8232,8 +8234,8 @@ Builder.mix = function mix (mixinObj) {
 
 /**
  * Adds a component section to the builder and augments it with the styler.
- * @param {*} name 
- * @param {*} definition 
+ * @param {*} name
+ * @param {*} definition
  */
 Builder.prototype.component = function component (name, definition) {
   // reoslve the component name automatically.
@@ -8298,8 +8300,8 @@ Builder.install = function install (Vue, options) {
  * The plugin to be installed with the builder. The function receives the installation context which
  * contains the builder instance and the Vue prototype.
  *
- * @param {Function} plugin 
- * @param {Object} options 
+ * @param {Function} plugin
+ * @param {Object} options
  */
 Builder.use = function use (plugin, options) {
     if ( options === void 0 ) options = {};
@@ -8377,7 +8379,7 @@ Builder.prototype.preview = function preview () {
 /**
  * Exports the builder instance to a specified output. default is json.
  *
- * @param {String} method 
+ * @param {String} method
  */
 Builder.prototype.export = function export$1 (method) {
     if ( method === void 0 ) method = 'json';
