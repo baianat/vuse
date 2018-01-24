@@ -22,6 +22,7 @@ export default {
   created () {
     this.$builder.set(this.data);
     this.$builder.isEditing = false;
+    this.$builder.isRendered = true;
   }
 };
 </script>
