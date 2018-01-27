@@ -25,6 +25,7 @@ class Builder {
     this.title = options.title;
     this.isEditing = true;
     this.isSorting = false;
+    this.isRendered = false;
     this.intro = options.intro;
     this.sections = options.sections;
     this.components = {};
@@ -53,7 +54,7 @@ class Builder {
   /**
    * Finds a section with the specified id.
    *
-   * @param {String|Number} id 
+   * @param {String|Number} id
    */
   find (id) {
     return this.sections.find(s => s.id === id);
@@ -61,7 +62,7 @@ class Builder {
 
   /**
    * Removes a section with the specified id.
-   * @param {String|Number} id 
+   * @param {String|Number} id
    */
   remove (section) {
     console.log(this.sections[0]);
@@ -82,9 +83,9 @@ class Builder {
 
   /**
    * Static helper for components registration pre-installation.
-   * 
-   * @param {String} name 
-   * @param {Object} definition 
+   *
+   * @param {String} name
+   * @param {Object} definition
    */
   static component (name, definition) {
     // Just make a plugin that installs a component.
@@ -95,7 +96,7 @@ class Builder {
 
   /**
    * Acts as a mixin for subcomponents.
-   * @param {Object} mixinObj 
+   * @param {Object} mixinObj
    */
   static mix (mixinObj) {
     mixier = merge(mixier, mixinObj);
@@ -103,8 +104,8 @@ class Builder {
 
   /**
    * Adds a component section to the builder and augments it with the styler.
-   * @param {*} name 
-   * @param {*} definition 
+   * @param {*} name
+   * @param {*} definition
    */
   component (name, definition) {
     // reoslve the component name automatically.
@@ -165,8 +166,8 @@ class Builder {
    * The plugin to be installed with the builder. The function receives the installation context which
    * contains the builder instance and the Vue prototype.
    *
-   * @param {Function} plugin 
-   * @param {Object} options 
+   * @param {Function} plugin
+   * @param {Object} options
    */
   static use (plugin, options = {}) {
     if (typeof plugin !== 'function') {
@@ -249,7 +250,7 @@ class Builder {
   /**
    * Exports the builder instance to a specified output. default is json.
    *
-   * @param {String} method 
+   * @param {String} method
    */
   export (method = 'json') {
     if (method === 'pwa' || method === 'zip') {
