@@ -2,7 +2,10 @@
   include ../../pug/mixin/icon
 
   div
-    div#artboard.artboard(ref="artboard" :class="{ 'is-sorting': $builder.isSorting }")
+    div#artboard.artboard(
+      ref="artboard"
+      :class="{ 'is-sorting': $builder.isSorting }"
+    )
       component(v-for='section in $builder.sections'
         :is='section.name'
         :key='section.id'
@@ -62,7 +65,7 @@
           tooltip-position="top"
           tooltip="sorting"
           :class="{ 'is-red': $builder.isSorting }"
-          @click="toggleState"
+          @click="toggleSort"
         )
           +icon('sort')
         button.button.is-blue.is-rounded(
@@ -77,6 +80,8 @@
 </template>
 
 <script>
+import Sortable from 'sortablejs';
+
 export default {
   name: 'b-builder',
   props: {
@@ -116,8 +121,8 @@ export default {
       }
       this.toggleListVisibility();
     },
-    addSection (section) {
-      this.$builder.create(section);
+    addSection (section, position) {
+      this.$builder.addSection(section, position);
       this.listShown = false;
     },
     clearSections () {
@@ -133,11 +138,19 @@ export default {
     addTheme (theme) {
       this.$builder.set(theme);
     },
-    toggleState () {
+    toggleSort () {
       this.$builder.isSorting = !this.$builder.isSorting;
       this.$builder.isEditing = !this.$builder.isSorting;
-      this.$builder.toggleSort();
       this.listShown = false;
+      if (!this.$builder.isSorting && this.sortable) {
+        this.sortable.destroy();
+        return;
+      }
+      this.sortable = Sortable.create(this.$refs.artboard, {
+        animation: 150,
+        scroll: true,
+        scrollSpeed: 10
+      });
     },
     toggleListVisibility () {
       this.listShown = !this.listShown;
