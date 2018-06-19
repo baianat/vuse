@@ -34,9 +34,12 @@
             span.controller-title {{ name }}
             span.controller-icon
               +icon('arrowDown')
-          ul.controller-group
-            li(v-for="section in group")
-              a.controller-element(@click="addSection(section)")
+          .controller-group
+            template(v-for="section in group")
+              a.controller-element(
+                @click="addSection(section)"
+                @drag="currentSection = section"
+              )
                 img(v-if="section.cover" :src="section.cover")
                 span(:class="{ 'add-center-bottom': section.cover}") {{ section.name }}
 
@@ -103,6 +106,7 @@ export default {
       listShown: false,
       tempSections: null,
       sections: this.getSections(),
+      currentSection: '',
       groups: {}
     }
   },
@@ -122,8 +126,7 @@ export default {
       this.toggleListVisibility();
     },
     addSection (section, position) {
-      this.$builder.addSection(section, position);
-      this.listShown = false;
+      this.$builder.add(section, position);
     },
     clearSections () {
       this.tempSections = this.$builder.clear();
@@ -141,19 +144,25 @@ export default {
     toggleSort () {
       this.$builder.isSorting = !this.$builder.isSorting;
       this.$builder.isEditing = !this.$builder.isSorting;
-      this.listShown = false;
       if (!this.$builder.isSorting && this.sortable) {
-        this.sortable.destroy();
+        this.sortable.option('sort', false);
+        this.sortable.option('disabled', true);
         return;
       }
-      this.sortable = Sortable.create(this.$refs.artboard, {
-        animation: 150,
-        scroll: true,
-        scrollSpeed: 10
-      });
+      this.sortable.option('disabled', false);
+      this.sortable.option('sort', true);
     },
     toggleListVisibility () {
       this.listShown = !this.listShown;
+      this.sortable.option('disabled', !this.listShown);
+    },
+    showList () {
+      this.listShown = true;
+      this.sortable.option('disabled', false);
+    },
+    hideList () {
+      this.listShown = false;
+      this.sortable.option('disabled', true);
     },
     toggleGroupVisibility (group) {
       group = this.$refs.controllerList.querySelector(group);
@@ -206,6 +215,37 @@ export default {
 
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
+    const groups = this.$refs.controllerList.querySelectorAll('.controller-group');
+    const _self = this;
+    groups.forEach((group) => {
+      Sortable.create(group, {
+        group: {
+          name: 'sections-group',
+          put: false,
+          pull: 'clone'
+        },
+        sort: false
+      });
+    });
+    this.sortable = Sortable.create(this.$refs.artboard, {
+      group: {
+        name: 'artboard',
+        put: 'sections-group'
+      },
+      animation: 150,
+      scroll: true,
+      scrollSpeed: 10,
+      sort: false,
+      disabled: true,
+      preventOnFilter: false,
+      onAdd (evt) {
+        _self.addSection(_self.currentSection, evt.newIndex);
+        evt.item.remove();
+      },
+      onUpdate (evt) {
+        _self.$builder.sort(evt.oldIndex, evt.newIndex);
+      }
+    });
   },
 
   updated () {
@@ -250,6 +290,8 @@ button:focus
     color: $dark
     font-weight: normal
   &-list
+    user-select: none
+    -moz-user-select: none
     position: fixed
     z-index 300
     top: 0
@@ -308,8 +350,13 @@ button:focus
     cursor: pointer
     color: $white
     overflow: hidden
+    user-select: none
+    -moz-user-select: none
+    &:not(:last-child)
+      margin-bottom: 10px
     img
       max-width: 100%
+      pointer-events: none
     &:hover
       @extends $floatHover
 

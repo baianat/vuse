@@ -35,23 +35,12 @@ class Builder {
    * Creates and adds a new section to the list of sections.
    * @param {*} options
    */
-  addSection (options, position) {
+  add (options, position) {
     if (position !== undefined) {
       this.sections.splice(position, 0, new Section(options));
       return;
     }
     this.sections.push(new Section(options));
-  }
-
-  /**
-   * Constructs a document fragment.
-   */
-  outputFragment () {
-    const frag = document.createDocumentFragment();
-    frag.appendChild(document.head.cloneNode(true));
-    frag.appendChild(this.rootEl.cloneNode(true));
-
-    return frag;
   }
 
   /**
@@ -72,6 +61,28 @@ class Builder {
     const id = this.sections.findIndex(s => s.id === section.id);
     this.sections.splice(id, 1);
     section.destroy();
+  }
+
+  /**
+   * Removes a section with the specified id.
+   * @param {String|Number} oldIndex
+   * @param {String|Number} newIndex
+   */
+  sort (oldIndex, newIndex) {
+    const section = this.sections[oldIndex];
+    this.sections.splice(oldIndex, 1);
+    this.sections.splice(newIndex, 0, section);
+  }
+
+  /**
+  * Constructs a document fragment.
+  */
+  outputFragment () {
+    const frag = document.createDocumentFragment();
+    frag.appendChild(document.head.cloneNode(true));
+    frag.appendChild(this.rootEl.cloneNode(true));
+
+    return frag;
   }
 
   /**
