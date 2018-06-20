@@ -2,23 +2,24 @@
 navbar: false
 sidebar: false
 editLink: false
+pageClass: example
 ---
 
 <b-builder></b-builder>
 
 <style>
-.content {
+.example .content {
   padding: 0 !important;
   margin: 0 !important;
   max-width: 100% !important;
 }
-.page {
+.example .page {
   padding: 0 !important;
 }
-.content > *:first-child {
+.example .content > *:first-child {
   margin: 0 !important;
 }
-.page-edit {
+.example .page-edit {
  display: none !important;
 }
 </style>
