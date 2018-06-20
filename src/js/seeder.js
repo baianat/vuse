@@ -1,13 +1,13 @@
 import * as types from './types';
 import { isObject } from './util';
-
+const ASSETS_DIR = '.';
 const data = new Map([
   [types.Title, 'Awesome title'],
   [types.Text, 'We\'re creating the best place to go when starting a new business or company.With Baianat you can instantly search domain names, social media handles, and see your logo in beautiful logotypes.'],
-  [types.Avatar, 'static/img/avatar.png'],
-  [types.Logo, 'static/img/google.svg'],
+  [types.Avatar, `${ASSETS_DIR}/img/avatar.png`],
+  [types.Logo, `${ASSETS_DIR}/img/google.svg`],
   [types.Link, 'http://example.com'],
-  [types.Image, 'static/img/baianat.png'],
+  [types.Image, `${ASSETS_DIR}/img/baianat.png`],
   [types.ClassList, () => []],
   [types.Button, () => ({ text: 'Click Me!', classes: [], href: 'http://example.com' })],
   [types.Quote, 'When you were made a leader, you weren\'t given a crown; you were given the responsibility to bring out the best in others.'],
