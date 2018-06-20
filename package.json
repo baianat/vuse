@@ -11,6 +11,9 @@
     "build": "npm run lint && npm run build:demo && npm run build:bundle",
     "build:bundle": "cross-env NODE_ENV=production node scripts/build.js",
     "build:demo": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.config.js --hide-modules --progress",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "scripts/deploy",
     "lint": "eslint ./src --fix"
   },
   "devDependencies": {
@@ -51,6 +54,7 @@
     "uglify-js": "^3.0.28",
     "vue-loader": "^13.0.2",
     "vue-template-compiler": "2.4.2",
+    "vuepress": "^0.10.1",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.6.1"
   },
