@@ -26,3 +26,6 @@ jspm_packages/
 
 # macOS custom Icon
 Icon/
+
+# vuepress output
+docs/.vuepress/dist
