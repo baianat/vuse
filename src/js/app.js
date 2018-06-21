@@ -2,15 +2,15 @@ import Vue from 'vue';
 import Uploader from './components/Uploader'
 import '../stylus/app.styl';
 import Builder from './builder';
-import hero1 from './components/hero/hero1';
-import hero2 from './components/hero/hero2';
-import section1 from './components/section/section1';
-import section2 from './components/section/section2';
-import social1 from './components/social/social1';
-import social2 from './components/social/social2';
-import social3 from './components/social/social3';
-import social4 from './components/social/social4';
-import newsletter from './components/forms/newsletter';
+import hero1 from './sections/hero/hero1';
+import hero2 from './sections/hero/hero2';
+import section1 from './sections/section/section1';
+import section2 from './sections/section/section2';
+import social1 from './sections/social/social1';
+import social2 from './sections/social/social2';
+import social3 from './sections/social/social3';
+import social4 from './sections/social/social4';
+import newsletter from './sections/forms/newsletter';
 
 import pwa from './plugins/pwa';
 
