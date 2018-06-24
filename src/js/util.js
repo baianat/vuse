@@ -16,8 +16,8 @@ export function isParentTo (target, parent) {
 
 /**
  *
- * @param {String} target 
- * @param {Object} schema 
+ * @param {String} target
+ * @param {Object} schema
  */
 export function getTypeFromSchema (target, schema) {
   const tempTarget = target.split('.');
