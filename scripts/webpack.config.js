@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -12,18 +13,18 @@ const production = env === 'production';
 const page = (name) => {
   return new HtmlWebpackPlugin({
     inject: true,
-    template: path.join(__dirname, '/../', `src/pug/${name}.pug`),
-    filename: path.join(__dirname, '/../', `docs/${name}.html`)
+    template: path.join(__dirname, `/../src/pug/${name}.pug`),
+    filename: path.join(__dirname, `/../dev/${name}.html`)
   });
 };
 
 const config = {
   devtool: production ? 'source-map' : 'cheap-source-map',
   entry: {
-    app: path.join(__dirname, '/../', '/src/js/app.js')
+    app: path.join(__dirname, '/../src/js/app.js')
   },
   output: {
-    path: path.join(__dirname, '/../', 'docs/dist'),
+    path: path.join(__dirname, '/../dev/dist'),
     filename: 'js/[name].js',
     publicPath: 'dist/'
   },
@@ -32,6 +33,7 @@ const config = {
     new FriendlyErrorsWebpackPlugin(),
     new ProgressBarPlugin(),
     new ExtractTextPlugin({ filename: 'css/app.css' }),
+    new CopyWebpackPlugin([{ from: path.join(__dirname, '/../src/img'), to: '../img/' }]),
     page('index'),
     page('render')
   ],
@@ -46,7 +48,7 @@ const config = {
     stats: 'errors-only',
     host: '0.0.0.0',
     port: 8080,
-    contentBase: path.join(__dirname, '../docs')
+    contentBase: path.join(__dirname, '../dev')
   },
 
   module: {

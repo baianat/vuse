@@ -30,6 +30,8 @@ Icon/
 # vuepress output
 docs/.vuepress/dist
 
-# dist files
+# dist folder
 dist
-*.html
+
+# dev folder
+dev
