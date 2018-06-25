@@ -54,7 +54,7 @@ import * as types from '../../types';
 
 export default {
   name: 'section2',
-  cover: 'static/covers/section2.png',
+  cover: 'img/covers/section2.png',
   group: 'section',
   $schema: {
     classes: types.ClassList,

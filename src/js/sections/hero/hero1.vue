@@ -34,7 +34,7 @@ import * as types from '../../types';
 
 export default {
   name: 'hero1',
-  cover: 'static/covers/hero1.png',
+  cover: 'img/covers/hero1.png',
   group: 'hero',
   $schema: {
     title: types.Title,

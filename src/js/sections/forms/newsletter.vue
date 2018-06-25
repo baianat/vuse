@@ -25,7 +25,7 @@ import * as types from '../../types';
 
 export default {
   name: 'newsletter',
-  cover: 'static/covers/newsletter.png',
+  cover: 'img/covers/newsletter.png',
   group: 'forms',
   $schema: {
     classes: types.ClassList,
