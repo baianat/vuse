@@ -89,10 +89,10 @@ class Builder {
   * clears the builder sections.
   */
   clear () {
-    const tmepSections = this.sections;
+    const tempSections = this.sections;
     this.sections.forEach(section => section.destroy());
     this.sections = [];
-    return tmepSections;
+    return tempSections;
   }
 
   /**
