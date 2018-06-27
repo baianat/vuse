@@ -252,6 +252,10 @@ export default {
     if (this.$builder.scrolling) {
       this.$builder.scrolling(this.$refs.artboard);
     }
+  },
+
+  beforeDestroy () {
+    this.$builder.clear();
   }
 };
 </script>
