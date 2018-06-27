@@ -131,7 +131,9 @@ export default {
   methods: {
     updateOption (option) {
       this.currentOption = option;
-      // this.popper.update();
+      this.$nextTick(() => {
+        this.popper.update();
+      })
     },
     addLink () {
       this.section.set(`${this.name}.href`, this.url);
@@ -180,26 +182,42 @@ export default {
     },
     showStyler (event) {
       event.stopPropagation();
+      if (this.isVisible) return;
+      this.isVisible = true;
 
-      if (!this.isVisible) {
-        document.addEventListener('click', this.hideStyler, true);
-        this.isVisible = true;
-        this.currentOption = '';
-        this.popper.update();
+      // exute popper element
+      if (!this.popper) {
+        const position = this.$props.type === 'section' ? 'left-start' : 'top';
+        this.popper = new Popper(this.el, this.$refs.styler, {
+          placement: position
+        });
       }
+      document.addEventListener('click', this.hideStyler, true);
+      this.currentOption = '';
     },
     hideStyler (event) {
-      if (!event.target.closest('#styler') && !isParentTo(event.target, this.el)) {
-        this.isVisible = false;
-        document.removeEventListener('click', this.hideStyler, true);
-        if (this.type === 'section' || this.type === 'grid') return;
-        if (this.type === 'button') {
-          this.section.set(`${this.name}.text`, this.el.innerHTML);
-          return;
-        }
-
-        this.section.set(this.name, this.el.innerHTML);
+      if (
+        event && isParentTo(event.target, this.$el) ||
+        event && isParentTo(event.target, this.el)
+      ) {
+        return
       }
+      this.isVisible = false;
+      if (this.popper) {
+        this.popper.destroy();
+        this.popper = null;
+      }
+      document.removeEventListener('click', this.hideStyler, true);
+
+      if (this.type === 'section' || this.type === 'grid') {
+        return;
+      }
+      if (this.type === 'button') {
+        this.section.set(`${this.name}.text`, this.el.innerHTML);
+        return;
+      }
+
+      this.section.set(this.name, this.el.innerHTML);
     }
   },
   created () {
@@ -210,27 +228,11 @@ export default {
   mounted () {
     if (!this.$builder.isEditing) return;
 
-    // exute popper element
-    const position = this.$props.type === 'section' ? 'left-start' : 'top';
-    this.popper = new Popper(this.el, this.$refs.styler, {
-      placement: position
-    });
-
     // add listeners to show/hide styler
     this.el.addEventListener('click', this.showStyler);
   },
-  updated () {
-    if (!this.$builder.isEditing) return;
-
-    // update styler and popper
-    const position = this.$props.type === 'section' ? 'left-start' : 'top';
-    this.popper = new Popper(this.el, this.$refs.styler, {
-      placement: position
-    });
-  },
   beforeDestroy () {
-    document.removeEventListener('click', this.hideStyler);
-    this.popper.destroy();
+    this.hideStyler();
     this.$refs.styler.remove();
   }
 };
