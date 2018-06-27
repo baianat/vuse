@@ -1,6 +1,6 @@
 {
   "name": "vuse",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Vue.js Page Builder",
   "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
   "unpkg": "dist/builder.min.js",
