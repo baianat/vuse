@@ -1,7 +1,7 @@
-/build
 /docs
+/dev
 /src
 /static
-.eslintrc.json
-.gitignore
+/scripts
+.*
 yarn.lock
