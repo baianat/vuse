@@ -4,7 +4,7 @@
     :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
   )
     .grid.is-center
-      .column.is-screen-2.social-item
+      .column.is-desktop-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
           v-html="$sectionData.columns[0].content"
@@ -15,7 +15,7 @@
           v-html="$sectionData.columns[0].title"
           v-styler="$sectionData.columns[0].title"
         )
-      .column.is-screen-2.social-item
+      .column.is-desktop-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
           v-html="$sectionData.columns[1].content"
@@ -26,7 +26,7 @@
           v-html="$sectionData.columns[1].title"
           v-styler="$sectionData.columns[1].title"
         )
-      .column.is-screen-2.social-item
+      .column.is-desktop-2.social-item
         h6.social-number(
           :class="{'is-editable': $builder.isEditing}"
           v-html="$sectionData.columns[2].content"

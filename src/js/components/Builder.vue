@@ -17,13 +17,12 @@
         h1 Hello, start your project
         .container
           .grid.is-center
-            .column.is-screen-6
-              .input.is-rounded
-                input(placeholder="project name" v-model="title")
-            .column.is-screen-12(v-if="themes")
+            .column.is-desktop-6
+              input.input.is-dark(placeholder="project name" v-model="title")
+            .column.is-desktop-12(v-if="themes")
               .row.is-center
-                .column.is-mobile-6.is-screen-3(v-for="theme in themes")
-                  button.controller-theme(
+                .column.is-mobile-6.is-desktop-3(v-for="theme in themes")
+                  button.button.is-block.is-inverse.is-dark(
                     @click="addTheme(theme)"
                   )
                     | {{ theme.name }}
@@ -44,34 +43,34 @@
                 span(:class="{ 'add-center-bottom': section.cover}") {{ section.name }}
 
       .controller-buttons
-        button.button.is-green.is-rounded(
+        button.button.is-success.is-rounded(
           tooltip-position="top"
           tooltip="export"
           @click="submit"
         )
           +icon('download')
-        button.button.is-blue.is-rounded(
+        button.button.is-danger.is-rounded(
           v-if="!tempSections"
           tooltip-position="top"
           tooltip="clear sections"
           @click="clearSections"
         )
           +icon('trash')
-        button.button.is-red.is-rounded(
+        button.button.is-warning.is-rounded(
           v-if="tempSections"
           tooltip-position="top"
           tooltip="undo"
           @click="undo"
         )
           +icon('undo')
-        button.button.is-blue.is-rounded(
+        button.button.is-priamry.is-rounded(
           tooltip-position="top"
           tooltip="sorting"
           :class="{ 'is-red': $builder.isSorting }"
           @click="toggleSort"
         )
           +icon('sort')
-        button.button.is-blue.is-rounded(
+        button.button.is-primary.is-rounded(
           tooltip-position="top"
           tooltip="add section"
           :class="{ 'is-red': listShown, 'is-rotated': listShown }"
@@ -261,7 +260,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../../node_modules/dolober/src/stylus/color'
+@import '~@baianat/base.framework/src/stylus/util/colors'
 
 $floatHover
   cursor: pointer
@@ -331,15 +330,6 @@ button:focus
     transition: 0.4s
     li.is-visiable &
      transform: rotate(180deg)
-
-  &-theme
-    width: 100%
-    padding: 10px
-    border: 1px solid $gray
-    background-color: $white
-    border-radius: 4px
-    cursor: pointer
-    font-size: 12px
 
   &-element
     position: relative

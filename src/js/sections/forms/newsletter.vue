@@ -8,8 +8,8 @@
         h3.header-title Sign up for our newsletter
 
       form.row(@submit.prevent="onSubmit")
-        .column.is-screen-4
-          .input.is-button
+        .column.is-desktop-4
+          .input-group.has-itemAfter
             input.input(type="text" name="email" placeholder="Email address" v-model="$sectionData.form.email")
             a.button(
               @click.prevent="onSubmit"

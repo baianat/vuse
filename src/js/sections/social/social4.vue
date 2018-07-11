@@ -13,7 +13,7 @@
               v-styler="$sectionData.title"
             )
         .row.is-center
-          .column.is-12.is-screen-4
+          .column.is-12.is-desktop-4
             p(
               :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.columns[0].content"
@@ -28,7 +28,7 @@
                 h4.user-name Ahmed
                 span.user-caption SEO at Baianat
 
-          .column.is-12.is-screen-4
+          .column.is-12.is-desktop-4
               p(
                 :class="{'is-editable': $builder.isEditing}"
                 v-html="$sectionData.columns[1].content"
@@ -43,7 +43,7 @@
                   h4.user-name Ahmed
                   span.user-caption SEO at Baianat
 
-          .column.is-12.is-screen-4
+          .column.is-12.is-desktop-4
             p(
               :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.columns[2].content"

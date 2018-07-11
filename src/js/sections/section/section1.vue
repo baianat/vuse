@@ -50,7 +50,7 @@ export default {
         content: types.Text,
         grid: {
           mobile: '',
-          screen: 'is-screen-5'
+          screen: 'is-desktop-5'
         }
       },
       {
@@ -58,7 +58,7 @@ export default {
         content: types.Text,
         grid: {
           mobile: '',
-          screen: 'is-screen-5'
+          screen: 'is-desktop-5'
         }
       }
     ]

@@ -6,20 +6,20 @@
     .container
       .grid
         .row.is-center
-          .column.is-12.is-screen-7
+          .column.is-12.is-desktop-7
             h3.social-title(
               :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.title"
               v-styler="$sectionData.title"
             )
-          .column.is-12.is-screen-7
+          .column.is-12.is-desktop-7
             p.social-content(
               :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.content"
               v-styler="$sectionData.content"
             )
         .row.is-center
-          .column.is-screen-2(v-for="(logo, index) in $sectionData.images")
+          .column.is-desktop-2(v-for="(logo, index) in $sectionData.images")
             uploader(
               class="social-logo"
               :path="`$sectionData.images[${index}]`"

@@ -1173,6 +1173,10 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@baianat/base.framework@^2.0.0-beta.0":
+  version "2.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@baianat/base.framework/-/base.framework-2.0.0-beta.0.tgz#3e9668222a68387fa63d158c80c4bdf5257ba2bb"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -2962,10 +2966,6 @@ doctrine@^2.1.0:
 doctypes@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/doctypes/-/doctypes-1.1.0.tgz#ea80b106a87538774e8a3a4a5afe293de489e0a9"
-
-dolober@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/dolober/-/dolober-0.0.6.tgz#9cb7244dd464203899b80222481687a61cbbb196"
 
 dom-converter@~0.1:
   version "0.1.4"

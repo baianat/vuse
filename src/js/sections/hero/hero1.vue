@@ -5,7 +5,7 @@
     )
     .container
       .grid
-        .column.is-screen-6.add-center-vertical
+        .column.is-desktop-6.add-center-vertical
           h3.header-title(
             :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.title"
@@ -22,7 +22,7 @@
             v-html="$sectionData.button.text"
             v-styler="$sectionData.button"
           )
-        .column.is-screen-6
+        .column.is-desktop-6
           uploader(
             class="header-image"
             path="$sectionData.images[0]"

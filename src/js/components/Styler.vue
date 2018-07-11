@@ -57,9 +57,9 @@
                 v-model="textColor"
                 )
       li(v-if="currentOption === 'link'")
-        .input.is-rounded.is-button
-          input(type="text" placeholder="type your link" v-model="url")
-          button.button.is-green(@click="addLink")
+        .input-group.is-rounded.has-itemAfter.is-primary
+          input.input(type="text" placeholder="type your link" v-model="url")
+          button.button(@click="addLink")
             +icon('link')
 
       li(v-if="currentOption === 'align'")
@@ -239,7 +239,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../../node_modules/dolober/src/stylus/color'
+@import '~@baianat/base.framework/src/stylus/util/colors'
 
 .styler
   position: relative
@@ -296,8 +296,8 @@ export default {
   &.is-visible
     visibility: visible
     opacity: 1
-  .input
-    margin: 0
+  .input-group
+    margin: 5px
 
 .align
   @extend .styler-list

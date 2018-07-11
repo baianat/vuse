@@ -6,14 +6,14 @@
     .container
       .grid
         .row.is-center
-          .column.is-screen-6
+          .column.is-desktop-6
             p.social-quote(
               :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.content"
               v-styler="$sectionData.content"
             )
         .row.is-center
-          .column.is-screen-2
+          .column.is-desktop-2
             .user.is-alt
               uploader(
                 class="user-avatar"
