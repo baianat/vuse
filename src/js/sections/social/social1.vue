@@ -3,40 +3,41 @@
     v-styler:section="$sectionData.classes"
     :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
   )
-    .grid.is-center
-      .column.is-desktop-2.social-item
-        h6.social-number(
-          :class="{'is-editable': $builder.isEditing}"
-          v-html="$sectionData.columns[0].content"
-          v-styler="$sectionData.columns[0].content"
-        )
-        b.social-keyword(
-          :class="{'is-editable': $builder.isEditing}"
-          v-html="$sectionData.columns[0].title"
-          v-styler="$sectionData.columns[0].title"
-        )
-      .column.is-desktop-2.social-item
-        h6.social-number(
-          :class="{'is-editable': $builder.isEditing}"
-          v-html="$sectionData.columns[1].content"
-          v-styler="$sectionData.columns[1].content"
-        )
-        b.social-keyword(
-          :class="{'is-editable': $builder.isEditing}"
-          v-html="$sectionData.columns[1].title"
-          v-styler="$sectionData.columns[1].title"
-        )
-      .column.is-desktop-2.social-item
-        h6.social-number(
-          :class="{'is-editable': $builder.isEditing}"
-          v-html="$sectionData.columns[2].content"
-          v-styler="$sectionData.columns[2].content"
-        )
-        b.social-keyword(
-          :class="{'is-editable': $builder.isEditing}"
-          v-html="$sectionData.columns[2].title"
-          v-styler="$sectionData.columns[2].title"
-        )
+    .container
+      .grid.is-center
+        .column.is-desktop-2.social-item
+          h6.social-number(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.columns[0].content"
+            v-styler="$sectionData.columns[0].content"
+          )
+          b.social-keyword(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.columns[0].title"
+            v-styler="$sectionData.columns[0].title"
+          )
+        .column.is-desktop-2.social-item
+          h6.social-number(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.columns[1].content"
+            v-styler="$sectionData.columns[1].content"
+          )
+          b.social-keyword(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.columns[1].title"
+            v-styler="$sectionData.columns[1].title"
+          )
+        .column.is-desktop-2.social-item
+          h6.social-number(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.columns[2].content"
+            v-styler="$sectionData.columns[2].content"
+          )
+          b.social-keyword(
+            :class="{'is-editable': $builder.isEditing}"
+            v-html="$sectionData.columns[2].title"
+            v-styler="$sectionData.columns[2].title"
+          )
 </template>
 
 <script>
