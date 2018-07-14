@@ -1,21 +1,19 @@
 <template lang="pug">
   section.social(
     v-styler:section="$sectionData.classes"
-    :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
+    :class="$sectionData.classes"
   )
     .container
       .grid
         .row.is-center
           .column.is-12
             h3.social-title(
-              :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.title"
               v-styler="$sectionData.title"
             )
         .row.is-center
           .column.is-12.is-desktop-4
             p(
-              :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.columns[0].content"
               v-styler="$sectionData.columns[0].content"
             )
@@ -30,7 +28,6 @@
 
           .column.is-12.is-desktop-4
               p(
-                :class="{'is-editable': $builder.isEditing}"
                 v-html="$sectionData.columns[1].content"
                 v-styler:text="$sectionData.columns[1].content"
               )
@@ -45,7 +42,6 @@
 
           .column.is-12.is-desktop-4
             p(
-              :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.columns[2].content"
               v-styler:text="$sectionData.columns[2].content"
             )

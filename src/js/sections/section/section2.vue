@@ -1,35 +1,31 @@
 <template lang="pug">
   section.section(
     v-styler:section="$sectionData.classes"
-    :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
+    :class="$sectionData.classes"
   )
     .container
       .grid.is-center
         .column(
-          :class="[{'is-editable': $builder.isEditing}, gridClasses[0]]"
+          :class="gridClasses[0]"
           v-styler="$sectionData.columns[0].grid"
         )
           h2.section-title(
-            :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[0].title"
             v-styler="$sectionData.columns[0].title"
           )
           p.section-paragraph(
-            :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[0].content"
             v-styler="$sectionData.columns[0].content"
           )
         .column(
-          :class="[{'is-editable': $builder.isEditing}, gridClasses[1]]"
+          :class="gridClasses[1]"
           v-styler="$sectionData.columns[1].grid"
         )
           h2.section-title(
-            :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[1].title"
             v-styler="$sectionData.columns[1].title"
           )
           p.section-paragraph(
-            :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[1].content"
             v-styler="$sectionData.columns[1].content"
           )
@@ -38,12 +34,10 @@
           v-styler="$sectionData.columns[2].grid"
         )
           h2.section-title(
-            :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[2].title"
             v-styler="$sectionData.columns[2].title"
           )
           p.section-paragraph(
-            :class="{'is-editable': $builder.isEditing}"
             v-html="$sectionData.columns[2].content"
             v-styler="$sectionData.columns[2].content"
           )

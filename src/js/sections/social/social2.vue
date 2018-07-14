@@ -1,14 +1,13 @@
 <template lang="pug">
   section.social(
     v-styler:section="$sectionData.classes"
-    :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
+    :class="$sectionData.classes"
   )
     .container
       .grid
         .row.is-center
           .column.is-desktop-6
             p.social-quote(
-              :class="{'is-editable': $builder.isEditing}"
               v-html="$sectionData.content"
               v-styler="$sectionData.content"
             )
