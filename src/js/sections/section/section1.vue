@@ -45,16 +45,16 @@ export default {
         title: types.Title,
         content: types.Text,
         grid: {
-          mobile: '',
-          screen: 'is-desktop-5'
+          mobile: 0,
+          desktop: 5
         }
       },
       {
         title: types.Title,
         content: types.Text,
         grid: {
-          mobile: '',
-          screen: 'is-desktop-5'
+          mobile: 0,
+          desktop: 5
         }
       }
     ]

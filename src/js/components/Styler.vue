@@ -30,7 +30,7 @@
             +icon('mobile')
         //- li: button.styler-button(@click="selectDevice('tablet')")
         //-     +icon('tablet')
-        li: button.styler-button(@click="selectDevice('screen')")
+        li: button.styler-button(@click="selectDevice('desktop')")
             +icon('laptop')
         //- li: button.styler-button(@click="selectDevice('widescreen')")
         //-     +icon('monitor')
@@ -110,21 +110,16 @@ export default {
     isVisible: false
   }),
   watch: {
-    colorerColor () {
+    colorerColor: function () {
       this.changeColor();
     },
-    textColor () {
+    textColor: function () {
       this.execute('forecolor', this.textColor)
     },
-    gridValue () {
-      if (this.gridValue < 0) this.gridValue = 0;
-      if (this.gridValue > 12) this.gridValue = 12;
+    gridValue: function () {
+      this.gridValue = Math.min(Math.max(this.gridValue, 0), 12);
       this.section.set(this.name, (grid) => {
-        if (this.gridValue === 0) {
-          grid[this.device] = '';
-          return;
-        }
-        grid[this.device] = (`is-${this.device}-${this.gridValue}`);
+        grid[this.device] = this.gridValue;
       });
     }
   },
@@ -148,13 +143,11 @@ export default {
         if (value && value.classes && Array.isArray(value.classes)) {
           value = value.classes;
         }
-
         value.push(className);
       });
     },
     selectDevice (device) {
-      const grid = this.section.get(this.name)[device];
-      const gridValue = grid.split('-').pop() || 0;
+      const gridValue = this.section.get(this.name)[device];
       this.updateOption('columnWidth');
       this.device = device;
       this.gridValue = gridValue;
@@ -223,6 +216,10 @@ export default {
   created () {
     if (this.type === 'button') {
       this.url = this.section.get(`${this.name}.href`);
+      this.el.contentEditable = 'true';
+    }
+    if (this.type === 'text') {
+      this.el.contentEditable = 'true';
     }
   },
   mounted () {
@@ -234,6 +231,9 @@ export default {
   beforeDestroy () {
     this.hideStyler();
     this.$refs.styler.remove();
+    this.el.classList.remove('is-editable');
+    this.el.removeEventListener('click', this.showStyler);
+    document.removeEventListener('click', this.hideStyler, true);
   }
 };
 </script>

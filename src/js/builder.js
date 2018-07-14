@@ -13,7 +13,15 @@ const BUILDER_OPTIONS = {
   title: '',
   intro: true,
   sections: [],
-  plugins: []
+  plugins: [],
+  themes: [],
+  columnsPrefix: {
+    mobile: 'is-mobile-',
+    tablet: 'is-tablet-',
+    desktop: 'is-desktop-',
+    widescreen: 'is-widescreen-',
+    ultrawide: 'is-ultrawide-'
+  }
 };
 
 // To tell if it is installed or not
@@ -21,13 +29,18 @@ let _Vue = null;
 
 class Builder {
   constructor (options) {
-    this.title = options.title;
     this.isEditing = true;
     this.isSorting = false;
     this.isRendered = false;
+    this.title = options.title;
     this.intro = options.intro;
     this.sections = options.sections;
+    this.columnsPrefix = options.columnsPrefix;
+    this.themes = options.themes;
     this.components = {};
+    this.assets = {
+      css: options.css || 'dist/css/app.css'
+    }
     this.installPlugins();
   }
 
@@ -57,7 +70,6 @@ class Builder {
    * @param {String|Number} id
    */
   remove (section) {
-    console.log(this.sections[0]);
     const id = this.sections.findIndex(s => s.id === section.id);
     this.sections.splice(id, 1);
     section.destroy();
@@ -156,12 +168,11 @@ class Builder {
     if (_Vue) return;
 
     _Vue = Vue;
-    const builder = new Builder(Object.assign({}, BUILDER_OPTIONS, options));
+    const builder = new Builder({
+      ...BUILDER_OPTIONS,
+      ...options
+    });
     // configer assets output location
-    builder.assets = {
-      css: options.css || 'dist/css/app.css'
-    }
-    builder.themes = options.themes || [];
     Vue.util.defineReactive(builder, 'sections', builder.sections);
     Vue.util.defineReactive(builder, 'isEditing', builder.isEditing);
     Vue.util.defineReactive(builder, 'isSorting', builder.isSorting);

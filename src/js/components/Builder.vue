@@ -4,7 +4,7 @@
   div
     div#artboard.artboard(
       ref="artboard"
-      :class="{ 'is-sorting': $builder.isSorting }"
+      :class="{ 'is-sorting': $builder.isSorting, 'is-editable': $builder.isEditing }"
     )
       component(v-for='section in $builder.sections'
         :is='section.name'
@@ -267,6 +267,10 @@ export default {
 
 .artboard
   transform-origin: top center
+  &.is-editable .is-editable
+    outline: none
+    &:hover
+      box-shadow: inset 0 0 0 2px $gray
 .controller
   box-sizing: border-box
   &-panel

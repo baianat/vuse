@@ -30,7 +30,7 @@
             v-styler="$sectionData.columns[1].content"
           )
         .column(
-          :class="[{'is-editable': $builder.isEditing}, gridClasses[2]]"
+          :class="gridClasses[2]"
           v-styler="$sectionData.columns[2].grid"
         )
           h2.section-title(

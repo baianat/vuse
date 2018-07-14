@@ -1,7 +1,7 @@
 <template lang="pug">
   section.header(
     v-styler:section="$sectionData.classes"
-    :class="[{'is-editable': $builder.isEditing}, $sectionData.classes]"
+    :class="$sectionData.classes"
   )
     .container
       .grid.is-center
@@ -14,7 +14,7 @@
               input.input(type="text" name="email" placeholder="Email address" v-model="$sectionData.form.email")
               a.button(
                 @click.prevent="onSubmit"
-                :class="[{'is-editable': $builder.isEditing}, $sectionData.action.classes]"
+                :class="$sectionData.action.classes"
                 :href="$sectionData.action.href"
                 v-html="$sectionData.action.text"
                 v-styler="$sectionData.action"
