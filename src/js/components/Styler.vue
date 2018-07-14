@@ -242,7 +242,8 @@ export default {
 @import '~@baianat/base.framework/src/stylus/util/colors'
 
 .styler
-  position: relative
+  position: absolute
+  top: 0
   z-index: 200
   visibility: hidden
   opacity: 0

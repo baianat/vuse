@@ -349,6 +349,7 @@ export default {
     border-radius: 4px
     width: 100%
     cursor: pointer
+    font-size: 16px
     &:hover
       border-color: $blue
 .menu
@@ -431,21 +432,10 @@ export default {
     border-bottom: 1px solid alpha($black, 5%)
 
 .sortable-ghost
-  border: 2px solid $blue
   opacity: 0.3
+  box-shadow: 0 0 2px 1px $blue
 
-.is-editable:not(section):not(header)
-.uploader
-  position: relative
-  border: 1px solid alpha($black, 0%)
-  &:focus
-    outline: 0
+.is-editable
   &:hover
-    box-shadow: 0 0 0 2px solid alpha($black, 20%)
-
-section.is-editable
-  position: relative
-  border: 1px solid transparent
-  &:hover
-    box-shadow: 0 0 0 2px solid alpha($black, 20%)
+    box-shadow: inset 0 0 0 2px $gray
 </style>
