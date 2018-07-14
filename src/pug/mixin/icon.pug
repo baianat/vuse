@@ -62,5 +62,9 @@ mixin icon(icon, exrtraClass)
   - var sprite = 'dist/img/icons.svg'
   - var prefix = 'icon-'
 
-  svg.icon.is-large(viewBox='0 0 ' + size + ' ' + size, class=exrtraClass id='icon-' + icon)
+  svg(
+    viewBox='0 0 ' + size + ' ' + size,
+    class="vuse-icon",
+    id='icon-' + icon
+  )
     path(d=sprites[icon])

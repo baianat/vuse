@@ -14,63 +14,49 @@
 
     .controller
       .controller-intro(v-if="showIntro && !this.$builder.sections.length")
-        h1 Hello, start your project
-        .container
-          .grid.is-center
-            .column.is-desktop-6
-              input.input.is-dark(placeholder="project name" v-model="title")
-            .column.is-desktop-12(v-if="themes")
-              .row.is-center
-                .column.is-mobile-6.is-desktop-3(v-for="theme in themes")
-                  button.button.is-block.is-inverse.is-dark(
-                    @click="addTheme(theme)"
-                  )
-                    | {{ theme.name }}
+        label(for="projectName") Hello, start your project
+        input.controller-input(
+          id="projectName"
+          placeholder="project name"
+          v-model="title"
+        )
+        template(v-if="themes")
+          .controller-themes
+            button.controller-theme(
+              v-for="theme in themes"
+              @click="addTheme(theme)"
+            )
+              | {{ theme.name }}
 
-      ul.controller-list(:class="{ 'is-visiable': listShown }" ref="controllerList")
-        li(v-for="(group, name) in groups"  v-if="group.length" :id="`group-${name}`")
-          .controller-header(@click="toggleGroupVisibility(`#group-${name}`)")
-            span.controller-title {{ name }}
-            span.controller-icon
-              +icon('arrowDown')
-          .controller-group
-            template(v-for="section in group")
-              a.controller-element(
-                @click="addSection(section)"
-                @drag="currentSection = section"
-              )
-                img(v-if="section.cover" :src="section.cover")
-                span(:class="{ 'add-center-bottom': section.cover}") {{ section.name }}
-
-      .controller-buttons
-        button.button.is-success.is-rounded(
+      .controller-panel
+        button.controller-button.is-green(
           tooltip-position="top"
           tooltip="export"
           @click="submit"
         )
           +icon('download')
-        button.button.is-danger.is-rounded(
+        button.controller-button.is-red(
           v-if="!tempSections"
           tooltip-position="top"
           tooltip="clear sections"
           @click="clearSections"
         )
           +icon('trash')
-        button.button.is-warning.is-rounded(
+        button.controller-button.is-gray(
           v-if="tempSections"
           tooltip-position="top"
           tooltip="undo"
           @click="undo"
         )
           +icon('undo')
-        button.button.is-priamry.is-rounded(
+        button.controller-button.is-blue(
           tooltip-position="top"
           tooltip="sorting"
           :class="{ 'is-red': $builder.isSorting }"
           @click="toggleSort"
         )
           +icon('sort')
-        button.button.is-primary.is-rounded(
+        button.controller-button.is-blue(
           tooltip-position="top"
           tooltip="add section"
           :class="{ 'is-red': listShown, 'is-rotated': listShown }"
@@ -78,6 +64,21 @@
           @click="newSection"
         )
           +icon('plus')
+
+    ul.menu(:class="{ 'is-visiable': listShown }" ref="menu")
+      li.menu-group(v-for="(group, name) in groups"  v-if="group.length")
+        .menu-header(@click="toggleGroupVisibility")
+          span.menu-title {{ name }}
+          span.menu-icon
+            +icon('arrowDown')
+        .menu-body
+          template(v-for="section in group")
+            a.menu-element(
+              @click="addSection(section)"
+              @drag="currentSection = section"
+            )
+              img.menu-elementImage(v-if="section.cover" :src="section.cover")
+              span.menu-elementTitle {{ section.name }}
 
 </template>
 
@@ -163,8 +164,9 @@ export default {
       this.listShown = false;
       this.sortable.option('disabled', true);
     },
-    toggleGroupVisibility (group) {
-      group = this.$refs.controllerList.querySelector(group);
+    toggleGroupVisibility (e) {
+      const element = e.target;
+      const group = element.closest('.menu-group');
       group.classList.toggle('is-visiable');
     },
     submit () {
@@ -214,7 +216,8 @@ export default {
 
   mounted () {
     this.$builder.rootEl = this.$refs.artboard;
-    const groups = this.$refs.controllerList.querySelectorAll('.controller-group');
+    const groups = this.$refs.menu.querySelectorAll('.menu-body');
+    console.log(groups);
     const _self = this;
     groups.forEach((group) => {
       Sortable.create(group, {
@@ -260,76 +263,132 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~@baianat/base.framework/src/stylus/util/colors'
+@import '../../stylus/_app.styl'
 
-$floatHover
-  cursor: pointer
-  box-shadow: 0 14px 28px alpha($dark, 0.125), 0 10px 10px alpha($dark, 0.11)
-
-button:focus
-  outline: 0
 .artboard
   transform-origin: top center
 .controller
   box-sizing: border-box
-  &-buttons
+  &-panel
     position: fixed
     z-index: 200
     bottom: 30px
     right: 40px
+  &-input
+    outline: none
+    border: 1px solid $gray
+    padding: 0.5em 1em
+    margin: 20px 0
+    border-radius: 40px
+    width: 100%
+    font-size: 16px
+    &:focus
+      border-color: $blue
+      box-shadow: 0 0 0 2px alpha($blue, 50%)
+  &-button
+    transition: 0.2s
+    border: none
+    outline: none
+    border-radius: 20px
+    padding: 5px
+    color: $white
+    fill: $white
+    font-size: 16px
     svg
-      transition: 0.4s
-    button
-      transition: 0.4s
-      &:not(:last-child)
-        margin-right: 20px
-      &.is-rotated >svg
-        transform: rotate(45deg)
+      transition: 0.2s
+    &:not(:last-child)
+      margin-right: 20px
+    &.is-rotated >svg
+      transform: rotate(45deg)
+    &:hover
+      @extends $floatHover
+    &.is-blue
+      background-color: $blue
       &:hover
-        @extends $floatHover
+        background-color: darken($blue, 20%)
+    &.is-red
+      background-color: $red
+      &:hover
+        background-color: darken($red, 20%)
+    &.is-green
+      background-color: $green
+      &:hover
+        background-color: darken($green, 20%)
+    &.is-dark
+      background-color: $dark
+      &:hover
+        background-color: darken($dark, 20%)
+    &.is-gray
+      background-color: $gary
+      &:hover
+        background-color: darken($gray, 20%)
   &-intro
+    width: 100%
+    max-width: 500px
+    margin: auto
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    padding: 70px 50px
     text-align: center
     font-size: 30px
     color: $dark
-    font-weight: normal
-  &-list
-    user-select: none
-    -moz-user-select: none
-    position: fixed
-    z-index 300
-    top: 0
-    left: 0
-    bottom: 0
-    margin: 0
-    width: 250px
-    background: $white
-    margin-left: (- @width - 10)
-    padding: 20px 10px
+
+  &-themes
     display: flex
     flex-direction: column
-    overflow: scroll
-    list-style: none
-    transition: 0.4s
-    box-shadow: 1px 0 10px alpha($dark, 20%)
-    &.is-visiable
-      margin-left: 0
-  &-group
+    width: 100%
+
+  &-theme
+    background-color: $white
+    color: $dark
+    border: 1px solid $gray
+    margin: 5px
+    padding: 20px
+    border-radius: 4px
+    width: 100%
+    cursor: pointer
+    &:hover
+      border-color: $blue
+.menu
+  user-select: none
+  -moz-user-select: none
+  position: fixed
+  z-index 300
+  top: 0
+  left: 0
+  bottom: 0
+  margin: 0
+  width: 250px
+  background: $white
+  padding: 20px 10px
+  display: flex
+  flex-direction: column
+  overflow-y: auto
+  list-style: none
+  transition: 0.4s
+  box-shadow: 1px 0 10px alpha($dark, 20%)
+  transform: translate3d(-100%, 0, 0)
+  &.is-visiable
+    transform: translate3d(0, 0, 0)
+  &-body
     display: none
     padding: 0
     margin: 0
     list-style: none
-    li
+    ~/-group &
       width: 90%
       margin: 10px auto
-    li.is-visiable &
+    ~/-group.is-visiable &
       display: block
   &-icon
     width: 24px
     height: 24px
     fill: $gray
-    transition: 0.4s
-    li.is-visiable &
-     transform: rotate(180deg)
+    transition: 0.2s
+    ~/-group.is-visiable &
+      transform: rotate(180deg)
 
   &-element
     position: relative
@@ -348,11 +407,21 @@ button:focus
     -moz-user-select: none
     &:not(:last-child)
       margin-bottom: 10px
-    img
-      max-width: 100%
-      pointer-events: none
     &:hover
       @extends $floatHover
+
+  &-elementImage
+    max-width: 100%
+    pointer-events: none
+    +
+      ~/-elementTitle
+        position: absolute
+        right: 0
+        bottom: 0
+        left: 0
+        text-shadow: 1px 1px 2px alpha($black, 80%)
+        text-align: center
+        padding: 5px
 
   &-header
     display: flex
@@ -361,19 +430,9 @@ button:focus
     padding: 10px 5px
     border-bottom: 1px solid alpha($black, 5%)
 
-.is-hidden
-  display: none
 .sortable-ghost
   border: 2px solid $blue
   opacity: 0.3
-.add-center-bottom
-  position: absolute
-  right: 0
-  bottom: 0
-  left: 0
-  text-shadow: 1px 1px 2px alpha($black, 80%)
-  text-align: center
-  padding: 5px
 
 .is-editable:not(section):not(header)
 .uploader
@@ -382,14 +441,11 @@ button:focus
   &:focus
     outline: 0
   &:hover
-    border: 1px solid alpha($black, 10%)
+    box-shadow: 0 0 0 2px solid alpha($black, 20%)
 
 section.is-editable
   position: relative
   border: 1px solid transparent
   &:hover
-    border: 1px solid alpha($black, 10%)
-
-.column
-  transition: 0.4s
+    box-shadow: 0 0 0 2px solid alpha($black, 20%)
 </style>
