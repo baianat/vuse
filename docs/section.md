@@ -51,7 +51,10 @@ A section is the building block of the page, below is an example of a header sec
       classes: types.ClassList
     },
     props: {
-         id: {       type: Number,       required: true     }
+      id: {
+        type: Number,
+        required: true
+      }
     }
   };
 </script>
