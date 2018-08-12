@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'b-renderer',
+  name: 'VuseRenderer',
   props: {
     data: {
       type: Object,

@@ -1,6 +1,4 @@
 <template lang="pug">
-  include ../../pug/mixin/icon
-
   .styler(
     ref="styler"
     id="styler"
@@ -11,29 +9,29 @@
     ul.styler-list
       li(v-if="type === 'button' || type === 'section'")
         button.styler-button(@click="updateOption('colorer')")
-          +icon('palettes')
+          VuseIcon(name='palettes')
       li(v-if="type === 'button'")
         button.styler-button(@click="updateOption('link')")
-          +icon('link')
+          VuseIcon(name='link')
       li(v-if="type === 'header' || type === 'section'")
         button.styler-button(@click="removeSection")
-          +icon('trash')
+          VuseIcon(name='trash')
       template(v-if="type === 'text'")
         li: button.styler-button(@click="updateOption('textColor')")
-            +icon('palettes')
+            VuseIcon(name='palettes')
         li: button.styler-button(@click="updateOption('align')")
-            +icon('align')
+            VuseIcon(name='align')
         li: button.styler-button(@click="updateOption('textStyle')")
-            +icon('textStyle')
+            VuseIcon(name='textStyle')
       template(v-if="type === 'grid'")
         li: button.styler-button(@click="selectDevice('mobile')")
-            +icon('mobile')
+            VuseIcon(name='mobile')
         //- li: button.styler-button(@click="selectDevice('tablet')")
-        //-     +icon('tablet')
+        //-     VuseIcon(name='tablet')
         li: button.styler-button(@click="selectDevice('desktop')")
-            +icon('laptop')
+            VuseIcon(name='laptop')
         //- li: button.styler-button(@click="selectDevice('widescreen')")
-        //-     +icon('monitor')
+        //-     VuseIcon(name='monitor')
 
     ul.styler-list
       li(v-if="currentOption === 'colorer'")
@@ -60,43 +58,64 @@
         .input-group.is-rounded.has-itemAfter.is-primary
           input.input(type="text" placeholder="type your link" v-model="url")
           button.button(@click="addLink")
-            +icon('link')
+            VuseIcon(name='link')
 
       li(v-if="currentOption === 'align'")
         ul.align
           li: button.styler-button(@click="execute('justifyleft')")
-            +icon('left')
+            VuseIcon(name='left')
           li: button.styler-button(@click="execute('justifycenter')")
-            +icon('center')
+            VuseIcon(name='center')
           li: button.styler-button(@click="execute('justifyright')")
-            +icon('right')
+            VuseIcon(name='right')
 
       li(v-if="currentOption === 'textStyle'")
         ul.align
           li: button.styler-button(@click="execute('bold')")
-            +icon('bold')
+            VuseIcon(name='bold')
           li: button.styler-button(@click="execute('italic')")
-            +icon('italic')
+            VuseIcon(name='italic')
           li: button.styler-button(@click="execute('underline')")
-            +icon('underline')
+            VuseIcon(name='underline')
 
       li(v-if="currentOption === 'columnWidth'")
         ul.align
           li: button.styler-button(@click="gridValue--")
-            +icon('arrowLeft')
+            VuseIcon(name='arrowLeft')
           li: input(type="number" min="0" max="12" v-model="gridValue").styler-input
           li: button.styler-button(@click="gridValue++")
-            +icon('arrowRight')
+            VuseIcon(name='arrowRight')
 
 </template>
 
 <script>
 import Popper from 'popper.js';
+import VuseIcon from './VuseIcon';
 import { isParentTo } from './../util';
 
 export default {
-  name: 'styler',
-  props: ['el', 'type', 'name', 'section'],
+  name: 'Styler',
+  components: {
+    VuseIcon
+  },
+  props: {
+    el: {
+      type: Object,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    section: {
+      type: Object,
+      required: true
+    }
+  },
   data: () => ({
     colors: ['blue', 'green', 'red', 'black', 'white'],
     textColors: ['#4da1ff', '#38E4B7', '#EA4F52', '#000000', '#FFFFFF'],
@@ -122,6 +141,28 @@ export default {
         grid[this.device] = this.gridValue;
       });
     }
+  },
+  created () {
+    if (this.type === 'button') {
+      this.url = this.section.get(`${this.name}.href`);
+      this.el.contentEditable = 'true';
+    }
+    if (this.type === 'text') {
+      this.el.contentEditable = 'true';
+    }
+  },
+  mounted () {
+    if (!this.$builder.isEditing) return;
+
+    // add listeners to show/hide styler
+    this.el.addEventListener('click', this.showStyler);
+  },
+  beforeDestroy () {
+    this.hideStyler();
+    this.$refs.styler.remove();
+    this.el.classList.remove('is-editable');
+    this.el.removeEventListener('click', this.showStyler);
+    document.removeEventListener('click', this.hideStyler, true);
   },
   methods: {
     updateOption (option) {
@@ -212,28 +253,6 @@ export default {
 
       this.section.set(this.name, this.el.innerHTML);
     }
-  },
-  created () {
-    if (this.type === 'button') {
-      this.url = this.section.get(`${this.name}.href`);
-      this.el.contentEditable = 'true';
-    }
-    if (this.type === 'text') {
-      this.el.contentEditable = 'true';
-    }
-  },
-  mounted () {
-    if (!this.$builder.isEditing) return;
-
-    // add listeners to show/hide styler
-    this.el.addEventListener('click', this.showStyler);
-  },
-  beforeDestroy () {
-    this.hideStyler();
-    this.$refs.styler.remove();
-    this.el.classList.remove('is-editable');
-    this.el.removeEventListener('click', this.showStyler);
-    document.removeEventListener('click', this.hideStyler, true);
   }
 };
 </script>

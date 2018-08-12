@@ -1,4 +1,4 @@
-import Styler from './components/Styler';
+import Styler from './components/VuseStyler.vue';
 import { getTypeFromTagName, getTypeFromSchema } from './util';
 
 function installStyler ({ builder, Vue }) {

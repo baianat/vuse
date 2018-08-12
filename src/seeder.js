@@ -1,5 +1,6 @@
 import * as types from './types';
 import { isObject } from './util';
+
 const ASSETS_DIR = '.';
 const data = new Map([
   [types.Title, 'Awesome title'],

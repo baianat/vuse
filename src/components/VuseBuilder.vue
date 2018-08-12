@@ -1,6 +1,4 @@
 <template lang="pug">
-  include ../../pug/mixin/icon
-
   div
     div#artboard.artboard(
       ref="artboard"
@@ -34,28 +32,28 @@
           tooltip="export"
           @click="submit"
         )
-          +icon('download')
+          VuseIcon(name='download')
         button.controller-button.is-red(
           v-if="!tempSections"
           tooltip-position="top"
           tooltip="clear sections"
           @click="clearSections"
         )
-          +icon('trash')
+          VuseIcon(name='trash')
         button.controller-button.is-gray(
           v-if="tempSections"
           tooltip-position="top"
           tooltip="undo"
           @click="undo"
         )
-          +icon('undo')
+          VuseIcon(name='undo')
         button.controller-button.is-blue(
           tooltip-position="top"
           tooltip="sorting"
           :class="{ 'is-red': $builder.isSorting }"
           @click="toggleSort"
         )
-          +icon('sort')
+          VuseIcon(name='sort')
         button.controller-button.is-blue(
           tooltip-position="top"
           tooltip="add section"
@@ -63,14 +61,14 @@
           :disabled="!$builder.isEditing"
           @click="newSection"
         )
-          +icon('plus')
+          VuseIcon(name='plus')
 
     ul.menu(:class="{ 'is-visiable': listShown }" ref="menu")
       li.menu-group(v-for="(group, name) in groups"  v-if="group.length")
         .menu-header(@click="toggleGroupVisibility")
           span.menu-title {{ name }}
           span.menu-icon
-            +icon('arrowDown')
+            VuseIcon(name='arrowDown')
         .menu-body
           template(v-for="section in group")
             a.menu-element(
@@ -84,9 +82,13 @@
 
 <script>
 import Sortable from 'sortablejs';
+import VuseIcon from './VuseIcon';
 
 export default {
-  name: 'b-builder',
+  name: 'VuseBuilder',
+  components: {
+    VuseIcon
+  },
   props: {
     showIntro: {
       type: Boolean,
@@ -110,11 +112,63 @@ export default {
       groups: {}
     }
   },
+
   watch: {
     title (value) {
       this.$builder.title = value;
       document.title = value;
     }
+  },
+  created () {
+    // sets the initial data.
+    this.$builder.set(this.data);
+    this.title = this.$builder.title;
+    this.themes = this.$builder.themes;
+    this.generateGroups();
+  },
+  mounted () {
+    this.$builder.rootEl = this.$refs.artboard;
+    const groups = this.$refs.menu.querySelectorAll('.menu-body');
+    const _self = this;
+    groups.forEach((group) => {
+      Sortable.create(group, {
+        group: {
+          name: 'sections-group',
+          put: false,
+          pull: 'clone'
+        },
+        sort: false
+      });
+    });
+    this.sortable = Sortable.create(this.$refs.artboard, {
+      group: {
+        name: 'artboard',
+        put: 'sections-group'
+      },
+      animation: 150,
+      scroll: true,
+      scrollSpeed: 10,
+      sort: false,
+      disabled: true,
+      preventOnFilter: false,
+      onAdd (evt) {
+        _self.addSection(_self.currentSection, evt.newIndex);
+        evt.item.remove();
+      },
+      onUpdate (evt) {
+        _self.$builder.sort(evt.oldIndex, evt.newIndex);
+      }
+    });
+  },
+
+  updated () {
+    if (this.$builder.scrolling) {
+      this.$builder.scrolling(this.$refs.artboard);
+    }
+  },
+
+  beforeDestroy () {
+    this.$builder.clear();
   },
   methods: {
     newSection () {
@@ -204,66 +258,12 @@ export default {
       });
       return sections;
     }
-  },
-
-  created () {
-    // sets the initial data.
-    this.$builder.set(this.data);
-    this.title = this.$builder.title;
-    this.themes = this.$builder.themes;
-    this.generateGroups();
-  },
-
-  mounted () {
-    this.$builder.rootEl = this.$refs.artboard;
-    const groups = this.$refs.menu.querySelectorAll('.menu-body');
-    console.log(groups);
-    const _self = this;
-    groups.forEach((group) => {
-      Sortable.create(group, {
-        group: {
-          name: 'sections-group',
-          put: false,
-          pull: 'clone'
-        },
-        sort: false
-      });
-    });
-    this.sortable = Sortable.create(this.$refs.artboard, {
-      group: {
-        name: 'artboard',
-        put: 'sections-group'
-      },
-      animation: 150,
-      scroll: true,
-      scrollSpeed: 10,
-      sort: false,
-      disabled: true,
-      preventOnFilter: false,
-      onAdd (evt) {
-        _self.addSection(_self.currentSection, evt.newIndex);
-        evt.item.remove();
-      },
-      onUpdate (evt) {
-        _self.$builder.sort(evt.oldIndex, evt.newIndex);
-      }
-    });
-  },
-
-  updated () {
-    if (this.$builder.scrolling) {
-      this.$builder.scrolling(this.$refs.artboard);
-    }
-  },
-
-  beforeDestroy () {
-    this.$builder.clear();
   }
 };
 </script>
 
 <style lang="stylus">
-@import '../../stylus/_app.styl'
+@import '../stylus/_app.styl'
 
 .artboard
   transform-origin: top center
