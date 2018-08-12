@@ -53,7 +53,7 @@ function genConfig (options) {
       plugins: [
         commonjs(),
         replace({ __VERSION__: version }),
-        css({ output: 'dist/vuse.css' }),
+        css(),
         vue({ css: false }),
         resolve(),
         buble()
