@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "description": "Vue.js Page Builder",
   "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
-  "unpkg": "dist/builder.min.js",
-  "main": "dist/builder.js",
+  "module": "dist/vuse.esm.js",
+  "unpkg": "dist/vuse.min.js",
+  "main": "dist/vuse.js",
   "scripts": {
     "webpack:build": "webpack --config scripts/webpack.config.js --mode development",
     "webpack:dev": "webpack-dev-server --config scripts/webpack.config.js --mode development --hot --inline",
@@ -75,6 +76,10 @@
     "sortablejs": "^1.6.1"
   },
   "license": "MIT",
+  "files": [
+    "dist/*.js",
+    "dist/*.css"
+  ],
   "keywords": [
     "page-builder",
     "vuejs",
