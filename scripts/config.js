@@ -1,67 +1,102 @@
 const path = require('path');
-const buble = require('rollup-plugin-buble');
-const commonjs = require('rollup-plugin-commonjs');
-const nodeResolve = require('rollup-plugin-node-resolve');
+const fs = require('fs');
 const replace = require('rollup-plugin-replace');
 const vue = require('rollup-plugin-vue').default;
-const uglify = require('rollup-plugin-uglify').uglify;
-const version = require('../package.json').version;
+const resolve = require('rollup-plugin-node-resolve');
+const css = require('rollup-plugin-css-only');
+const buble = require('rollup-plugin-buble');
+const commonjs = require('rollup-plugin-commonjs');
+const filesize = require('filesize');
+const gzipSize = require('gzip-size');
+const { uglify } = require('rollup-plugin-uglify');
 
-const plugins = [
-  replace({ __VERSION__: version }),
-  nodeResolve({ extensions: ['.js', '.json', '.vue'], preferBuiltins: false }),
-  commonjs(),
-  vue({ compileTemplate: true, css: 'dist/builder.css' }),
-  buble()
-];
-const name = 'verte';
+const version = process.env.VERSION || require('../package.json').version;
 
-module.exports = {
+const common = {
   banner:
-  `/**
-  * Builder v${version}
-  * (c) ${new Date().getFullYear()} Abdelrahman Ismail
-  * @license MIT
-  */`,
+    `/**
+    * Vuse v${version}
+    * (c) ${new Date().getFullYear()} Baianat
+    * @license MIT
+    */`,
   paths: {
-    input: path.join(__dirname, '../src/js/builder.js'),
-    plugins: path.join(__dirname, '../src/js/plugins/'),
+    input: path.join(__dirname, '../src/index.js'),
     src: path.join(__dirname, '../src/'),
     dist: path.join(__dirname, '../dist/')
   },
-  plugins: {
-    format: 'umd',
-    plugins: [
-      nodeResolve({ preferBuiltins: false }),
-      commonjs(),
-      buble()
-    ]
-  },
   builds: {
     umd: {
-      output: `${name}.js`,
+      file: 'vuse.js',
       format: 'umd',
-      plugins
+      name: 'vuse',
+      env: 'development'
     },
     umdMin: {
-      output: `${name}.min.js`,
+      file: 'vuse.min.js',
       format: 'umd',
-      plugins: plugins.concat([uglify()])
-    },
-    cjs: {
-      output: `${name}.common.js`,
-      format: 'cjs',
-      plugins
+      name: 'vuse',
+      env: 'production'
     },
     esm: {
-      output: `${name}.esm.js`,
-      format: 'es',
-      plugins
-    }
-  },
-  utils: {
-    ucFirst (string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+      input: path.join(__dirname, '../src/index.esm.js'),
+      file: 'vuse.esm.js',
+      format: 'es'
     }
   }
-}
+};
+
+function genConfig (options) {
+  const config = {
+    description: '',
+    input: {
+      input: options.input || common.paths.input,
+      plugins: [
+        commonjs(),
+        replace({ __VERSION__: version }),
+        css({ output: 'dist/vuse.css' }),
+        vue({ css: false }),
+        resolve(),
+        buble()
+      ]
+    },
+    output: {
+      banner: common.banner,
+      name: options.name,
+      format: options.format,
+      file: path.join(common.paths.dist, options.file)
+    }
+  };
+
+  if (options.env) {
+    config.input.plugins.unshift(replace({
+      'process.env.NODE_ENV': JSON.stringify(options.env)
+    }));
+  }
+
+  if (options.env === 'production') {
+    config.input.plugins.push(uglify());
+  }
+
+  return config;
+};
+
+const configs = Object.keys(common.builds).reduce((prev, key) => {
+  prev[key] = genConfig(common.builds[key]);
+
+  return prev;
+}, {});
+
+module.exports = {
+  configs,
+  uglifyOptions: common.uglifyOptions,
+  paths: common.paths,
+  utils: {
+    stats ({ path }) {
+      const code = fs.readFileSync(path);
+      const { size } = fs.statSync(path);
+      const gzipped = gzipSize.sync(code);
+
+      return `| Size: ${filesize(size)} | Gzip: ${filesize(gzipped)}`;
+    }
+  }
+};
