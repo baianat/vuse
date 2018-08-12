@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -12,34 +14,31 @@ const production = env === 'production';
 const page = (name) => {
   return new HtmlWebpackPlugin({
     inject: true,
-    template: path.join(__dirname, `../src/pug/${name}.pug`),
-    filename: path.join(__dirname, `../dev/${name}.html`)
+    template: path.join(__dirname, `./${name}.html`),
+    filename: path.join(__dirname, `./dist/${name}.html`)
   });
 };
 
 const config = {
+  mode: production ? 'production' : 'development',
   devtool: production ? 'source-map' : 'cheap-source-map',
   entry: {
-    app: path.join(__dirname, '../src/js/app.js')
+    app: path.join(__dirname, './app.js')
   },
   output: {
-    path: path.join(__dirname, '../dev/dist'),
-    filename: 'js/[name].js',
-    publicPath: 'dist/'
+    path: path.join(__dirname, 'dist'),
+    filename: 'js/[name].js'
   },
   plugins: [
+    new CleanWebpackPlugin(['./dist']),
+    new VueLoaderPlugin(),
     new webpack.LoaderOptionsPlugin({ options: {} }),
     new FriendlyErrorsWebpackPlugin(),
     new ProgressBarPlugin(),
-    new CopyWebpackPlugin([{ from: path.join(__dirname, '/../src/img'), to: '../img/' }]),
+    new CopyWebpackPlugin([{ from: path.join(__dirname, 'img'), to: './img/' }]),
     page('index'),
     page('render')
   ],
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
-  },
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
@@ -53,7 +52,6 @@ const config = {
     port: 8080,
     contentBase: path.join(__dirname, '../dev')
   },
-
   module: {
     rules: [
       {
@@ -84,8 +82,12 @@ const config = {
         loader: ['style-loader', 'css-loader']
       },
       {
-        test: /.styl$/,
-        loader: ['style-loader', 'css-loader', 'stylus-loader?resolve url']
+        test: /\.styl(us)?$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
       },
       {
         test: /\.(ttf|eot|svg)(\?.*)?$/,
@@ -97,7 +99,7 @@ const config = {
       {
         test: /.pug$/,
         exclude: /node_modules/,
-        loader: 'pug-loader',
+        loader: 'pug-plain-loader',
         options: {
           pretty: true
         }
@@ -105,10 +107,7 @@ const config = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
-    alias: {
-      vue: 'vue/dist/vue.esm.js'
-    }
+    extensions: ['.js', '.vue', '.json']
   }
 };
 

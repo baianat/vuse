@@ -51,7 +51,7 @@ A section is the building block of the page, below is an example of a header sec
       classes: types.ClassList
     },
     props: {
-      id: Number
+         id: {       type: Number,       required: true     }
     }
   };
 </script>
@@ -120,7 +120,7 @@ After creating the HTML structure, you should configure the section schema to us
     ]
     },
     props: {
-      id: Number // it is required to have an id prop.
+         id: {       type: Number,       required: true     } // it is required to have an id prop.
     }
   };
 </script>
