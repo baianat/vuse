@@ -48,11 +48,5 @@ Vue.use(Vuse, {
 
 new Vue({
   el: '#app',
-  methods: {
-    onSave (vuse) {
-      vuse.export('preview');
-      vuse.export('pwa');
-    }
-  },
   render: h => h(App)
 });
