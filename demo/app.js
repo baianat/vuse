@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Uploader from './Uploader'
-import '../src/stylus/_sections.styl';
+import './style/_demo.styl';
 import Vuse from '../src';
 import App from './App.vue';
 import hero1 from './sections/hero/hero1';
