@@ -39,6 +39,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "gzip-size": "^5.0.0",
     "html-webpack-plugin": "^4.0.0-alpha",
+    "mini-css-extract-plugin": "^0.4.4",
     "mkdirp": "^0.5.1",
     "progress-bar-webpack-plugin": "^1.10.0",
     "pug": "^2.0.0-rc.3",

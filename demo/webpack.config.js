@@ -6,6 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const env = process.env.NODE_ENV;
 const production = env === 'production';
@@ -30,6 +31,9 @@ const config = {
     filename: 'js/[name].js'
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/style.css'
+    }),
     new CleanWebpackPlugin(['./dist']),
     new VueLoaderPlugin(),
     new webpack.LoaderOptionsPlugin({ options: {} }),
@@ -83,7 +87,7 @@ const config = {
       {
         test: /\.styl(us)?$/,
         use: [
-          'vue-style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'stylus-loader'
         ]
