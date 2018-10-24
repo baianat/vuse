@@ -7,9 +7,7 @@
   "unpkg": "dist/vuse.min.js",
   "main": "dist/vuse.js",
   "scripts": {
-    "webpack:build": "webpack --config scripts/webpack.config.js --mode development",
-    "webpack:dev": "webpack-dev-server --config scripts/webpack.config.js --mode development --hot --inline",
-    "dev": "npm run webpack:build && npm run webpack:dev",
+    "dev": "webpack-dev-server --hot --inline --config ./demo/webpack.config.js",
     "build": "cross-env NODE_ENV=production node scripts/build.js",
     "build:demo": "cross-env NODE_ENV=production webpack --config ./demo/webpack.config.js",
     "docs:dev": "vuepress dev docs",

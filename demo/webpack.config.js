@@ -49,8 +49,7 @@ const config = {
     inline: true,
     stats: 'errors-only',
     host: '0.0.0.0',
-    port: 8080,
-    contentBase: path.join(__dirname, '../dev')
+    port: 8080
   },
   module: {
     rules: [
