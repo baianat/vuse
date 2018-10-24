@@ -1,8 +1,12 @@
+// Vuse scripts
 import Vue from 'vue';
-import Uploader from './Uploader'
-import '../src/stylus/_sections.styl';
+import pwa from '../src/plugins/pwa';
 import Vuse from '../src';
+
+// demo scripts
+import './style/_demo.styl';
 import App from './App.vue';
+import Uploader from './Uploader'
 import hero1 from './sections/hero/hero1';
 import hero2 from './sections/hero/hero2';
 import section1 from './sections/section/section1';
@@ -12,7 +16,6 @@ import social2 from './sections/social/social2';
 import social3 from './sections/social/social3';
 import social4 from './sections/social/social4';
 import newsletter from './sections/forms/newsletter';
-import pwa from './plugins/pwa';
 
 // add the uploader to the list of sub-components.
 Vuse.mix({
@@ -37,6 +40,11 @@ Vuse.use(pwa);
 
 // install the builder
 Vue.use(Vuse, {
+  // main css file
+  assets: {
+    css: 'css/style.css'
+  },
+  // builder default themes
   themes: [{
     name: 'Theme 1',
     sections: [hero1, section1, social1, social3, newsletter]

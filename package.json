@@ -7,9 +7,7 @@
   "unpkg": "dist/vuse.min.js",
   "main": "dist/vuse.js",
   "scripts": {
-    "webpack:build": "webpack --config scripts/webpack.config.js --mode development",
-    "webpack:dev": "webpack-dev-server --config scripts/webpack.config.js --mode development --hot --inline",
-    "dev": "npm run webpack:build && npm run webpack:dev",
+    "dev": "webpack-dev-server --hot --inline --config ./demo/webpack.config.js",
     "build": "cross-env NODE_ENV=production node scripts/build.js",
     "build:demo": "cross-env NODE_ENV=production webpack --config ./demo/webpack.config.js",
     "docs:dev": "vuepress dev docs",
@@ -41,6 +39,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "gzip-size": "^5.0.0",
     "html-webpack-plugin": "^4.0.0-alpha",
+    "mini-css-extract-plugin": "^0.4.4",
     "mkdirp": "^0.5.1",
     "progress-bar-webpack-plugin": "^1.10.0",
     "pug": "^2.0.0-rc.3",

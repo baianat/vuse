@@ -38,7 +38,7 @@ class Vuse {
     this.themes = options.themes;
     this.components = {};
     this.assets = {
-      css: options.css || 'dist/css/app.css'
+      css: options.assets.css || 'dist/css/app.css'
     }
     this.installPlugins();
   }
