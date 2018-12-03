@@ -5,7 +5,17 @@ editLink: false
 pageClass: example
 ---
 
-<b-builder></b-builder>
+<vuse-builder @saved="onSave"></vuse-builder>
+
+<script>
+export default {
+  methods: {
+    onSave (vuse) {
+      vuse.export('preview');
+    }
+  }
+}
+</script>
 
 <style>
 .example .content {
