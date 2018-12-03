@@ -12,7 +12,7 @@
     "build:demo": "cross-env NODE_ENV=production webpack --config ./demo/webpack.config.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "scripts/deploy",
+    "docs:deploy": "scripts/deploy.sh",
     "lint": "eslint ./src --fix"
   },
   "devDependencies": {
@@ -60,7 +60,7 @@
     "vue": "^2.5.17",
     "vue-loader": "^15.3.0",
     "vue-template-compiler": "^2.5.17",
-    "vuepress": "^0.14.1",
+    "vuepress": "^0.14.8",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"
@@ -72,7 +72,8 @@
     "lodash-es": "^4.17.4",
     "popper.js": "^1.14.4",
     "save-as": "^0.1.8",
-    "sortablejs": "^1.6.1"
+    "sortablejs": "^1.6.1",
+    "vue-server-renderer": "^2.5.17"
   },
   "license": "MIT",
   "files": [
