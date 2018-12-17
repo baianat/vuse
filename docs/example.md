@@ -1,5 +1,5 @@
 ---
-navbar: false
+navbar: true
 sidebar: false
 editLink: false
 pageClass: example
@@ -26,10 +26,10 @@ export default {
 .example .page {
   padding: 0 !important;
 }
-.example .content > *:first-child {
-  margin: 0 !important;
-}
 .example .page-edit {
  display: none !important;
+}
+.example .menu {
+  margin: 0;
 }
 </style>
