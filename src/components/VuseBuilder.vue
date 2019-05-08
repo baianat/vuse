@@ -73,7 +73,6 @@
           template(v-for="section in group")
             a.menu-element(
               @click="addSection(section)"
-              @drag="currentSection = section"
             )
               img.menu-elementImage(v-if="section.cover" :src="section.cover")
               span.menu-elementTitle {{ section.name }}
@@ -83,6 +82,7 @@
 <script>
 import Sortable from 'sortablejs';
 import VuseIcon from './VuseIcon';
+import esFind from 'lodash-es/find';
 
 export default {
   name: 'VuseBuilder',
@@ -137,7 +137,12 @@ export default {
           put: false,
           pull: 'clone'
         },
-        sort: false
+        sort: false,
+        onChoose: function (evt) {
+          const evtFindSection = esFind(evt.item.attributes, function(o) { return o.nodeName == 'sectionname'; });             
+          const findSection = esFind(_self.sections, function(o) { return o.name == evtFindSection.value; });
+          _self.currentSection = findSection;
+        }
       });
     });
     this.sortable = Sortable.create(this.$refs.artboard, {
