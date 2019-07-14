@@ -73,7 +73,7 @@
     "popper.js": "^1.14.4",
     "save-as": "^0.1.8",
     "sortablejs": "^1.6.1",
-    "vue-server-renderer": "^2.5.17"
+    "vue-server-renderer": "2.5.17"
   },
   "license": "MIT",
   "files": [
