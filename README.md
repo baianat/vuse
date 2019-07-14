@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/baianat/vuse" target="_blank">
-    <img width="200" src="https://github.com/baianat/vuse/blob/master/Logo/Vuse_Logo_Horizontal_Gradient.png">
+    <img width="450" src="https://github.com/baianat/vuse/blob/master/Logo/Vuse_Logo_Horizontal_Gradient.png">
   </a>
 </p>
 
