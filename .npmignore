@@ -1,0 +1,7 @@
+/docs
+/dev
+/src
+/static
+/scripts
+.*
+yarn.lock

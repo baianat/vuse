@@ -1,0 +1,27 @@
+.header
+  width: 100%
+  padding: 50px
+  color: $white
+  &-title
+    font-size: 50px
+    line-height: 1em
+    margin: 20px 0
+    font-weight: lighter
+  &-content
+    font-size: 16px
+    margin-bottom: 50px
+    font-weight: lighter
+  &-image
+    >img
+      width 100%
+  &,
+  &.is-red
+    background-image: linear-gradient(30deg, $red, $yellow)
+  &.is-black
+    background-image: linear-gradient(30deg, $black, lighten($black, 30%))
+  &.is-green
+    background-image: linear-gradient(30deg, $green, $yellow)
+  &.is-blue
+    background-image: linear-gradient(30deg, $blue, lighten($blue, 30%))
+  &.is-white
+    background-image: linear-gradient(45deg, darken($white, 10%), $white)

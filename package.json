@@ -1,0 +1,98 @@
+{
+  "name": "vuse",
+  "version": "0.1.1",
+  "description": "Vue.js Page Builder",
+  "author": "Abdelrahman Ismail <abdelrahman3d@gmail.com>",
+  "module": "dist/vuse.esm.js",
+  "unpkg": "dist/vuse.min.js",
+  "main": "dist/vuse.js",
+  "scripts": {
+    "dev": "webpack-dev-server --hot --inline --config ./demo/webpack.config.js",
+    "build": "cross-env NODE_ENV=production node scripts/build.js",
+    "build:demo": "cross-env NODE_ENV=production webpack --config ./demo/webpack.config.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "scripts/deploy.sh",
+    "lint": "eslint ./src --fix"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-rc.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "babel-loader": "^8.0.0-beta",
+    "chalk": "^2.4.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.3.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.7.1",
+    "file-loader": "^1.1.11",
+    "filesize": "^3.6.1",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "gzip-size": "^5.0.0",
+    "html-webpack-plugin": "^4.0.0-alpha",
+    "mini-css-extract-plugin": "^0.4.4",
+    "mkdirp": "^0.5.1",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "pug": "^2.0.0-rc.3",
+    "pug-plain-loader": "^1.0.0",
+    "rollup": "^0.64.1",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-css-only": "^0.4.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify": "^4.0.0",
+    "rollup-plugin-vue": "^4.3.2",
+    "style-loader": "^0.22.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "stylus-relative-loader": "^3.4.0",
+    "util": "^0.11.0",
+    "vue": "^2.5.17",
+    "vue-loader": "^15.3.0",
+    "vue-template-compiler": "^2.5.17",
+    "vuepress": "^0.14.8",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "dependencies": {
+    "@baianat/base.framework": "^2.0.0-beta.0",
+    "intersection-observer": "^0.5.0",
+    "jszip": "^3.1.4",
+    "lodash-es": "^4.17.4",
+    "popper.js": "^1.14.4",
+    "save-as": "^0.1.8",
+    "sortablejs": "^1.6.1",
+    "vue-server-renderer": "2.5.17"
+  },
+  "license": "MIT",
+  "files": [
+    "dist/*.js",
+    "dist/*.css"
+  ],
+  "keywords": [
+    "page-builder",
+    "vuejs",
+    "ES6"
+  ],
+  "maintainers": [
+    {
+      "name": "Abdelrahman Awad",
+      "email": "logaretm1@gmail.com"
+    },
+    {
+      "name": "Abdelrahman Ismail",
+      "email": "abdelrahman3d@gmail.com"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+.social
+  padding: 100px 0
+  &-number
+    font-size: 50px
+    margin: 20px 0 50px
+  &-item
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+  &-title
+    font-size: 30px
+    margin: 30px 0
+    text-align: center
+  &-content
+    font-size: 20px
+    margin: 0 0 40px
+    text-align: center
+  &-logo
+    width: 100%
+    margin: 20px 0
+    @extend $flexCenter
+
+  &-quote
+    font-size: 30px
+    color: $black
+    quotes: "“" "”" "‘" "’"
+    &:before
+      content: open-quote
+      margin-right: 20px
+      font-size: 40px
+    &:after
+      content: close-quote
+      margin-left: 20px
+      font-size: 40px
+  
+  &.is-red
+    background: $red
+  &.is-black
+    background: $black
+  &.is-green
+    background: $green
+  &.is-blue
+    background: $blue
